@@ -2,7 +2,7 @@
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)
 
-<p align="center"><img src="Picture/giphy.gif" alt="Ghost in the Shell (1995)" width="600"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://raw.githubusercontent.com/CecileLAROCHE/CecileLAROCHE/9e312bb7a0828f8bcf6d5171a14d99d431bee680/giphy.gif" alt="rent" width="300"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📖 Description
 
@@ -30,27 +30,24 @@
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
-| `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-simple_shell.git` |
-| `Compile` | `gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh` |
-| `Run shell:` | `./hsh` |
+| `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
+| `Compile` | `` |
+| `Run :` | `` |
 
 ## 🚀 Features / Limitations
 
 ### ✅ Features
 
-* Displays a prompt and waits for user input.
-* Executes commands found in the current directory or in the `$PATH`.
-* Supports command arguments.
-* Handles environment variables (custom `_getenv` and `print_env`).
-* Man page available (`man ./man_1_simple_shell`).
-* Interactive **and** non-interactive modes.
+*
+*
+*
+*
 
 ### ⚠️ Limitations
 
-* 
-* No shell scripting (`if`, `while`, `for`, etc.).
-* Error handling is basic compared to full-featured shells.
-* Limited set of built-in commands (only those implemented in this project).
+*
+*
+*
 
 ## 📚 Files in Repository
 
@@ -77,7 +74,7 @@
 
 ## 📋 Man page
 
-This project contains a man page in the repository files. You can directly run it in the shell doing : `man ./man_1_simple_shell`
+This project contains a man page in the repository files. You can directly run it in the shell doing : `man ./l`
 
 ## 🗺️ Flowchart
 
