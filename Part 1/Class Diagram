@@ -9,60 +9,66 @@ config:
     tertiaryColor: '#e03b98'
     noteBkgColor: '#dde9df'
     noteTextColor: '#101912'
-    noteBorderColor: '#347e4c'
-    arrowheadColor: '#0ea5e9'
   layout: dagre
 ---
 classDiagram
 direction TB
-    class ClassName {
-	    +created_at DateTime
-	    +updated_at DateTime
-      +id UUID
+    class BaseModel {
+	    -id : UUID
+	    +created_at : DateTime
+	    +updated_at : DateTime
+	    +deleted_at : DateTime
 	    +save() void
-      created()
-	    updated()
-	    deleted()
+	    +delete() void
     }
     class User {
-	    +FirstName String
-	    +LastName String
-	    +email
-	    -Password
-      +Administrator Boomean
-
+	    +firstname: str
+	    +lastname: str
+	    +email: str
+	    -password: str
+	    +administrator: Boolean
+	    +verify_email() : bool
+	    -hash_password(password: String, salt: Bytes) Bytes
+	    -verify_password(password: String) bool
     }
     class Place {
-	    Title String
-	    description String
-	    price float
-	    latitude Double
-	    longitude Double
+	    +title: str
+	    +description: str
+	    +price: float
+	    +latitude: float
+	    +longitude: float
+	    +is_available(start_date, end_date) bool
+	    +book(user, start_date, end_date)
+	    +add_review(review: Review)
+	    +get_average_rating() : float
+	    +add_amenity(amenity: Amenity)
+	    +remove_amenity(amenity: Amenity)
+	    +get_location(): (float, float)
     }
     class Review {
-	    place String
-	    user String
-	    rating String
-	    comment String
-
-	    listed()
+	    +rating: float
+	    +comment: str
+	    +language: str
+	    +review_date: DateTime
+		+is_valid() bool
+		+report_inappropriate() void
     }
     class Amenity {
-      Name string
-      description string
-	    created()
-	    updated()
-	    deleted()
-	    listed()
+	    +name: string
+	    +description: string
+	    +is_available() bool
+		+get_info() str
+		+get_summary() str
     }
 
-	note for Amenity "Equipements"
-	note for Review "gestion des avis"
+	<<abstract>> BaseModel
 
-    ClassName <-- User
-    ClassName <-- Place
-    ClassName <-- Review
-    ClassName <-- Amenity
-    Place --> Review : has
-    User --> Place : Owns
-    Place --> Amenity : includes
+    BaseModel <|-- User
+    BaseModel <|-- Place
+    BaseModel <|-- Review
+    BaseModel <|-- Amenity
+	
+    Place "1" --> "*" Review : has
+    User "1" --> "*" Place : owns
+    Place "*" --> "*" Amenity : includes
+    User "1" --> "*" Review : writes
