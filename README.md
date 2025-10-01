@@ -6,6 +6,12 @@
 
 ## 📖 Description
 
+This project is a 
+
+This repo will be uptdate until the end of the project.
+
+Last update : ![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb.git)
+
 
 ## 🧭 Index
 
