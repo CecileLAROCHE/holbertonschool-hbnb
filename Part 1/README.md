@@ -13,13 +13,12 @@
 1 - [⚙️ Cloning and Compilation](#️-cloning-and-compilation)\
 2 - [🚀 Features / Limitations](#-features--limitations)\
 3 - [📚 Files in Repository](#-files-in-repository)\
-4 - [📄 Man Page](#-man-page)\
-5 - [🗺️ Flowchart](#%EF%B8%8F-flowchart)\
-7 - [📁 Project Structure](#-project-structure)\
-8 - [👥 Authors](#-authors)\
-9 - [📜 License](#-license)
+4 - [🗺️ Flowchart](#%EF%B8%8F-flowchart)\
+5 - [📁 Project Structure](#-project-structure)\
+6 - [👥 Authors](#-authors)\
+7 - [📜 License](#-license)
 
-## ⚙️ Cloning and Compilation
+## ⚙️ Cloning
 
 ### ✅ Prerequisites
 
@@ -69,11 +68,11 @@
 
 ## 📁 Project Structure
 
-├── Doc
-│   ├── Class Diagram
-│   ├── Class Diagram.png
-│   └── High-Level Diagram.png
-├── High-Level Diagram
+├── Doc\
+│   ├── Class Diagram\
+│   ├── Class Diagram.png\
+│   └── High-Level Diagram.png\
+├── High-Level Diagram\
 └── README.md
 
 ## 👥 Authors

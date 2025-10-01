@@ -85,14 +85,14 @@ This repo and this README will be uptdate until the end of the project.
 
 tree -I "__pycache__|*.pyc|.git"
 
-├── AUTHORS
-├── Part 1
-│   ├── Doc
-│   │   ├── Class Diagram
-│   │   ├── Class Diagram.png
-│   │   └── High-Level Diagram.png
-│   ├── High-Level Diagram
-│   └── README.md
+├── AUTHORS\
+├── Part 1\
+│   ├── Doc\
+│   │   ├── Class Diagram\
+│   │   ├── Class Diagram.png\
+│   │   └── High-Level Diagram.png\
+│   ├── High-Level Diagram\
+│   └── README.md\
 └── README.md
 
 ## 👥 Authors
