@@ -1,17 +1,16 @@
 # README of the project HBnB
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)
+![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
+
 
 <p align="center"><img src="https://raw.githubusercontent.com/CecileLAROCHE/CecileLAROCHE/9e312bb7a0828f8bcf6d5171a14d99d431bee680/giphy.gif" alt="rent" width="300"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📖 Description
 
-This project is a 
+This project is a clone of AirB&B. The project have 4 parts.
 
-This repo will be uptdate until the end of the project.
-
-Last update : ![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb.git)
-
+This repo and this README will be uptdate until the end of the project.
 
 ## 🧭 Index
 
@@ -37,8 +36,8 @@ Last update : ![GitHub last commit](https://img.shields.io/github/last-commit/Ce
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
-| `Compile` | `` |
-| `Run :` | `` |
+| `Compile` | `in progress` |
+| `Run :` | `in progress` |
 
 ## 🚀 Features / Limitations
 
@@ -61,14 +60,8 @@ Last update : ![GitHub last commit](https://img.shields.io/github/last-commit/Ce
 
 | File                   | Description                                                                                         |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
-| `shell.h`              | Header file containing function prototypes, macros, and struct definitions used across the project. |
-| `main.c`               | Entry point of the shell, initializes the program and starts the main loop.                         |
-| `read_line.c`          | Handles user input by reading a line from standard input.                                           |
-| `process_command.c`    | Parses the input line into tokens and prepares the command for execution.                           |
-| `print_env.c`          | Prints the current environment variables.                                                           |
-| `execute_command.c`    | Handles the execution of built-in and external commands.                                            |
-| `_getenv.c`            | Custom implementation of `getenv`, retrieves environment variables.                                 |
-| `_find_path_command.c` | Finds the absolute path of a command by searching in the `PATH` environment variable.               |
+| ``              | . |
+| ``              | . |
 
 ### 📑 Documentation Files
 
@@ -80,27 +73,27 @@ Last update : ![GitHub last commit](https://img.shields.io/github/last-commit/Ce
 
 ## 📋 Man page
 
-This project contains a man page in the repository files. You can directly run it in the shell doing : `man ./l`
+`to do`
 
-## 🗺️ Flowchart
+## 🗺️ Diagram
 
 ## 🧪 Tests and Outputs
 
+`to do`
+
 ## 📁 Project Structure
 
-| 📂 Directory / File | 📝 Description |
-|---------------------|----------------|
-| **Part 1** | |
-| ├── **image** | Documentation assets  |
-| ├──  |  |
-| ├──  |  |
-| ├──  |  |
-| ├──  |  |
-| ├──  |  |
-| ├──  |  |
-| ├──  |  |
-| **AUTHORS** | List of contributors |
-| **README.md** | Main project documentation |
+tree -I "__pycache__|*.pyc|.git"
+
+├── AUTHORS
+├── Part 1
+│   ├── Doc
+│   │   ├── Class Diagram
+│   │   ├── Class Diagram.png
+│   │   └── High-Level Diagram.png
+│   ├── High-Level Diagram
+│   └── README.md
+└── README.md
 
 ## 👥 Authors
 
