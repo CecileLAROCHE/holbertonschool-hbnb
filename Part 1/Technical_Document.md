@@ -16,13 +16,13 @@ This diagram provide a conceptual overview of how the different components of th
 This high-level package diagram that illustrates the three-layer architecture of the HBnB application and the communication between these layers via the facade pattern.
 Below, there are the most important point of this diagram
 
-**User**\
+**User**
 
 * He is the who have interacction with apps, like:
   * create a place
   * let a review
   * check place.
-* He send request tothe app HBnB.
+* He send request to the app HBnB.
 * He can be an administrator ot not.
 
 **Presentation Layer**\
@@ -63,29 +63,29 @@ This layer contain 2 items\
 
 This diagram depict the entities within this layer, their attributes, methods, and the relationships between them. The goal is to provide a clear and detailed visual representation of the core business logic, focusing on the key entities: User, Place, Review, and Amenity.
 
-**BaseModel**
-This class is an abstract class. all the items which are in is needeed for all the others class.
-***attributes:*** id, create_at, usdate_at, delete_at
-***methods:*** save(), delete()
+**BaseModel**\
+This class is an abstract class. all the items which are in is needeed for all the others class.\
+***attributes:*** id, create_at, usdate_at, delete_at\
+***methods:*** save(), delete()\
 
-**User**
-This class is for people, they can be owner or renter
-***attributes:*** firstname, lastname, email, password
-***methods:*** verify_email, hash_password, verify_password
+**User**\
+This class is for people, they can be owner or renter\
+***attributes:*** firstname, lastname, email, password\
+***methods:*** verify_email, hash_password, verify_password\
 
-**Place**
-This class is for the details of the place to rent
-***attributes:*** tittle, description, price, latitude, longitude
-***methods:*** add_review, get_average, add_amenity
+**Place**\
+This class is for the details of the place to rent\
+***attributes:*** tittle, description, price, latitude, longitude\
+***methods:*** add_review, get_average, add_amenity\
 
-**Amenity**
-This class is for all the amenity able for a place
-***attributes:*** name, description
-***methods:*** is_avaible, get_info, get_summarry
+**Amenity**\
+This class is for all the amenity able for a place\
+***attributes:*** name, description\
+***methods:*** is_avaible, get_info, get_summarry\
 
-**Review**
-This class is for the revieux of the rent
-***attributes:*** rating, comment, language, revieux_fate
+**Review**\
+This class is for the revieux of the rent\
+***attributes:*** rating, comment, language, revieux_fate\
 ***methods:*** is_valid, reprt_innappropriate
 
 ### Link
