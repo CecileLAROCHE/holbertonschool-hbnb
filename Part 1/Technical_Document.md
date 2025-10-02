@@ -162,3 +162,4 @@ This diagram show the step the program will do to fetching a List of Places.
     🔙 list\
   🔙 return list\
 🔙 return list
+
