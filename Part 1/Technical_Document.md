@@ -106,7 +106,7 @@ This 4 sequence diagrams help to visualize how different components of the syste
 
 This diagram show the step the program will do to register a new user.
 
-**Steps**
+**Steps**\
 ➡ API call\
 ↩ return if unvalid data\
   ➡ process request\
@@ -121,7 +121,7 @@ This diagram show the step the program will do to register a new user.
 
 This diagram show the step the program will do to create a new Plave.
 
-**Steps**
+**Steps**\
 ➡ forme registration\
 ↩ return if unvalid data\
   ➡ Create place\
@@ -137,7 +137,7 @@ This diagram show the step the program will do to create a new Plave.
 
 This diagram show the step the program will do to submit a new review.
 
-**Steps**
+**Steps**\
 ➡ forme registration\
 ↩ return if unvalid data\
   ➡ Create review\
@@ -153,7 +153,7 @@ This diagram show the step the program will do to submit a new review.
 
 This diagram show the step the program will do to fetching a List of Places.
 
-**Steps**
+**Steps**\
 ➡ Filter\
 ↩ return if bad request\
   ➡ validate filter\
@@ -162,4 +162,3 @@ This diagram show the step the program will do to fetching a List of Places.
     🔙 list\
   🔙 return list\
 🔙 return list
-
