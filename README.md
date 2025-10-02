@@ -63,6 +63,14 @@ This repo and this README will be uptdate until the end of the project.
 
 | File                 | Description                                                       |
 | -------------------- | ----------------------------------------------------------------- |
+| `Class Diagram.png` | High-Level Package Diagram  |
+| `High-Level Diagram.png` | Detailed Class Diagram for Business Logic Layer  |
+| `Sequence Diagrams_Fetching a List of Places diagram.png` |  Sequence Diagrams for API Calls |
+| `Sequence Diagrams_Place Creation.png` | Sequence Diagrams for API Calls  |
+| `Sequence Diagrams_Review Submission.png` | Sequence Diagrams for API Calls  |
+| `Sequence Diagrams_User Registration.png` | Sequence Diagrams for API Calls  |
+| `Technical_Document.md` | Explenation of the Diagrams |
+| `README.md`          | Part 1 project documentation.                           |
 | `` |  |
 | `README.md`          | Main project documentation.                           |
 | `AUTHORS`            | List of project contributors.                                     |
