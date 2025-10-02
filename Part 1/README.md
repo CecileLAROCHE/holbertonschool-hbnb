@@ -68,11 +68,13 @@
 
 ## 📁 Project Structure
 
-├── Doc\
-│   ├── Class Diagram\
+├── Diagram pictures\
 │   ├── Class Diagram.png\
-│   └── High-Level Diagram.png\
-├── High-Level Diagram\
+│   ├── High-Level Diagram.png\
+│   ├── Sequence Diagrams_Fetching a List of Places diagram.png\
+│   ├── Sequence Diagrams_Place Creation.png\
+│   ├── Sequence Diagrams_Review Submission.png\
+│   └── Sequence Diagrams_User Registration.png\
 └── README.md
 
 ## 👥 Authors
