@@ -7,23 +7,22 @@
 
 ## 📖 Description
 
+In this initial phase, I  focus on creating comprehensive technical documentation that will serve as the foundation for the development of the HBnB Evolution application. This documentation will help in understanding the overall architecture, the detailed design of the business logic, and the interactions within the system.
 
 ## 🧭 Index
 
-1 - [⚙️ Cloning and Compilation](#️-cloning-and-compilation)\
+1 - [⚙️ Cloning](#️-cloning)\
 2 - [🚀 Features / Limitations](#-features--limitations)\
 3 - [📚 Files in Repository](#-files-in-repository)\
-4 - [🗺️ Flowchart](#%EF%B8%8F-flowchart)\
-5 - [📁 Project Structure](#-project-structure)\
-6 - [👥 Authors](#-authors)\
-7 - [📜 License](#-license)
+4 - [📁 Project Structure](#-project-structure)\
+5 - [👥 Authors](#-authors)\
+6 - [📜 License](#-license)
 
 ## ⚙️ Cloning
 
 ### ✅ Prerequisites
 
-**GCC** installed on your system.\
-**Ubuntu 20.04 LTS** (or equivalent).
+**GCC** installed on your system.
 
 ### 📥 Clone
 
@@ -35,36 +34,28 @@
 
 ### ✅ Features
 
-*
-*
-*
-*
+* Registration available
+* Ability to create and own a property
+* Ability to add reviews and ratings
 
 ### ⚠️ Limitations
 
-*
-*
-*
+* Ability to rent a property
 
 ## 📚 Files in Repository
-
-### 🖥️ Source Code Files
-
-| File                   | Description                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| ``              | |
-| ``              | |
-| ``              | |
-| ``              | |
 
 ### 📑 Documentation Files
 
 | File                 | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `` |  |
-| `README.md`          | Main project documentation.                           |
-
-## 🗺️ Flowchart
+| -------------------- | --------- |
+| `Class Diagram.png` | High-Level Package Diagram  |
+| `High-Level Diagram.png` | Detailed Class Diagram for Business Logic Layer  |
+| `Sequence Diagrams_Fetching a List of Places diagram.png` |  Sequence Diagrams for API Calls |
+| `Sequence Diagrams_Place Creation.png` | Sequence Diagrams for API Calls  |
+| `Sequence Diagrams_Review Submission.png` | Sequence Diagrams for API Calls  |
+| `Sequence Diagrams_User Registration.png` | Sequence Diagrams for API Calls  |
+| `Technical_Document.md` | Explenation of the Diagrams |
+| `README.md`          | Part 1 project documentation.                           |
 
 ## 📁 Project Structure
 
@@ -75,7 +66,8 @@
 │   ├── Sequence Diagrams_Place Creation.png\
 │   ├── Sequence Diagrams_Review Submission.png\
 │   └── Sequence Diagrams_User Registration.png\
-└── README.md
+├── README.md\
+└── Technical_Document.md
 
 ## 👥 Authors
 
