@@ -66,30 +66,31 @@ This diagram depict the entities within this layer, their attributes, methods, a
 **BaseModel**\
 This class is an abstract class. all the items which are in is needeed for all the others class.\
 ***attributes:*** id, create_at, usdate_at, delete_at\
-***methods:*** save(), delete()\
+***methods:*** save(), delete()
 
 **User**\
 This class is for people, they can be owner or renter\
 ***attributes:*** firstname, lastname, email, password\
-***methods:*** verify_email, hash_password, verify_password\
+***methods:*** verify_email, hash_password, verify_password
 
 **Place**\
 This class is for the details of the place to rent\
 ***attributes:*** tittle, description, price, latitude, longitude\
-***methods:*** add_review, get_average, add_amenity\
+***methods:*** add_review, get_average, add_amenity
 
 **Amenity**\
 This class is for all the amenity able for a place\
 ***attributes:*** name, description\
-***methods:*** is_avaible, get_info, get_summarry\
+***methods:*** is_avaible, get_info, get_summarry
 
 **Review**\
 This class is for the revieux of the rent\
-***attributes:*** rating, comment, language, revieux_fate\
+***attributes:*** rating, comment, language, revieux_date\
 ***methods:*** is_valid, reprt_innappropriate
 
 ### Link
 
+* User, Place, Amenity and Review are children of BaseModel
 * User can own many Place, but each Place has 1 owning User.
 * User can write many Review, but each Review belongs to 1 User.
 * Place can have many Review, but each Review belongs to 1 Place.
@@ -106,12 +107,12 @@ This 4 sequence diagrams help to visualize how different components of the syste
 This diagram show the step the program will do to register a new user.
 
 **Steps**
-➡ API call
-↩ return if unvalid data
-  ➡ process request
-    ➡ Save data
-    🔙 confirm save
-  🔙 return response
+➡ API call\
+↩ return if unvalid data\
+  ➡ process request\
+    ➡ Save data\
+    🔙 confirm save\
+  🔙 return response\
 🔙 return success
 
 ### Place Creation
@@ -121,13 +122,13 @@ This diagram show the step the program will do to register a new user.
 This diagram show the step the program will do to create a new Plave.
 
 **Steps**
-➡ forme registration
-↩ return if unvalid data
-  ➡ Create place
-  ↩ Return error
-    ➡ Save place
-    🔙 Place saved
-  🔙 return
+➡ forme registration\
+↩ return if unvalid data\
+  ➡ Create place\
+  ↩ Return error\
+    ➡ Save place\
+    🔙 Place saved\
+  🔙 return\
 🔙 return create
 
 ### Review Submission
@@ -137,13 +138,13 @@ This diagram show the step the program will do to create a new Plave.
 This diagram show the step the program will do to submit a new review.
 
 **Steps**
-➡ forme registration
-↩ return if unvalid data
-  ➡ Create review
-  ↩ Return error
-    ➡ Save revieux
-    🔙 Review saved
-  🔙 return
+➡ forme registration\
+↩ return if unvalid data\
+  ➡ Create review\
+  ↩ Return error\
+    ➡ Save revieux\
+    🔙 Review saved\
+  🔙 return\
 🔙 return create
 
 ## Fetching a List of Places
@@ -153,11 +154,11 @@ This diagram show the step the program will do to submit a new review.
 This diagram show the step the program will do to fetching a List of Places.
 
 **Steps**
-➡ Filter
-↩ return if bad request
-  ➡ validate filter
-  ↩ unvalidate filter
-    ➡ select place
-    🔙 list
-  🔙 return list
+➡ Filter\
+↩ return if bad request\
+  ➡ validate filter\
+  ↩ unvalidate filter\
+    ➡ select place\
+    🔙 list\
+  🔙 return list\
 🔙 return list
