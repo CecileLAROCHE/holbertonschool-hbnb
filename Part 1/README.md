@@ -1,7 +1,7 @@
 # README of HBnB - UML
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)
-![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
+![GitHub last commit](https://img.shields.io/badge/Last_commit-2_Oct_2025-green)
 
 <p align="center"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTljaXo4Z3Z1czdvOGpuNnM4anBpYWJzYm12YmJ2Njk2d2U3bHNyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QN49tbyrOlDXa5MIEp/giphy.gif" alt="rent" width="300"><!-- markdownlint-disable-line MD033 --></p>
 
