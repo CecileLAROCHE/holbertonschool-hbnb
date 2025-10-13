@@ -87,17 +87,6 @@ This repo and this README will be uptdate until the end of the project.
 
 tree -I "**pycache**|*.pyc|.git"
 
-├── AUTHORS\
-├── Part 1\
-│   ├── Diagram pictures\
-│   │   ├── Class Diagram.png\
-│   │   ├── High-Level Diagram.png\
-│   │   ├── Sequence Diagrams_Fetching a List of Places diagram.png\
-│   │   ├── Sequence Diagrams_Place Creation.png\
-│   │   ├── Sequence Diagrams_Review Submission.png\
-│   │   └── Sequence Diagrams_User Registration.png\
-│   ├── README.md\
-│   └── Technical_Document.md\
 ├── Part 2\
 │   ├── app\
 │   │   ├── api\
