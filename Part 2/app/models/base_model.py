@@ -1,21 +1,26 @@
-# app/models/base_model.py
+import uuid
+from datetime import datetime
 
-# Importations nécessaires (uuid, datetime, etc.)
 
 class BaseModel:
-    """Classe de base pour tous les modèles HBnB."""
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        self.deleted_at = None
 
-    # Méthode d'initialisation
-    def __init__(...):
-        # création d'un id unique
-        # enregistrement des dates
+    def save(self):
+        """Update the updated_at timestamp whenever the object is modified"""
+        self.updated_at = datetime.now()
 
-    # Méthode pour convertir en dictionnaire
-    def to_dict(...):
-        # retourne les attributs de l'objet sous forme de dict
+    def update(self, data):
+        """Update the attributes of the object based on the provided
+        dictionary"""
+        for key, value in data.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+        self.save()  # Update the updated_at timestamp
 
-    # Méthode de mise à jour
-    def update(...):
-        # met à jour les champs modifiables
-
-    # Méthode d'affichage optionnelle (__str__ ou __repr__)
+    def delete(self):
+        """Mark the object as deleted by setting deleted_at"""
+        self.deleted_at = datetime.now()
