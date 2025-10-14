@@ -3,13 +3,11 @@
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)\
 ![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
 
-<p align="center"><img src="https://raw.githubusercontent.com/CecileLAROCHE/CecileLAROCHE/9e312bb7a0828f8bcf6d5171a14d99d431bee680/giphy.gif" alt="rent" width="300"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3lsbHE5ZTV6dnFzZXg1ZnVhZTIwaWFyMzd2bzlqaWZrMHY2b2JjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1hBWHsBYoqYOfsmAsL/giphy.gif" alt="fire" width="300"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📖 Description
 
-This project is a clone of AirB&B. The project have 4 parts.
 
-This repo and this README will be uptdate until the end of the project.
 
 ## 🧭 Index
 
