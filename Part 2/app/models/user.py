@@ -5,23 +5,27 @@ import os
 
 
 class User(BaseModel):
-    def __init__(self, first_name, last_name, email, password,
-                 administrator=False):
+    def __init__(self, first_name, last_name, email, is_admin=False,
+                 password=None):
         super().__init__()
+        if not first_name or len(first_name) > 50:
+            raise ValueError("first_name must be 1-50 characters")
+        if not last_name or len(last_name) > 50:
+            raise ValueError("last_name must be 1-50 characters")
+        if not User._validate_email(email):
+            raise ValueError("Invalid email format")
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.is_admin = is_admin
         self._salt = os.urandom(16)
-        self._password = self._hash_password(password, self._salt)
-        self.administrator = administrator
+        self._password = self._hash_password(password or "", self._salt)
 
-    def verify_email(self):
+    @staticmethod
+    def _validate_email(email):
         """Check if the user's email is in a valid format"""
         pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
-        if re.match(pattern, self.email):
-            return True
-        else:
-            return False
+        return bool(re.match(pattern, email))
 
     def _hash_password(self, password, salt):
         """Hash the password using SHA256 and the provided salt"""
@@ -29,5 +33,4 @@ class User(BaseModel):
 
     def verify_password(self, password):
         """Verify if the given password matches the stored hash"""
-        new_hash = self._hash_password(password, self._salt)
-        return new_hash == self._password
+        return self._hash_password(password, self._salt) == self._password
