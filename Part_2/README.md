@@ -17,7 +17,7 @@
 4 - [📄 Man Page](#-man-page)\
 5 - [🧪 Tests and outputs](#-tests-and-outputs)\
 6 - [📁 Project Structure](#-project-structure)\
-7 - [👥 Authors](#-authors)\
+7 - [👥 Author](#-author)\
 8 - [📜 License](#-license)
 
 ## ⚙️ Cloning and Compilation
@@ -27,13 +27,26 @@
 **GCC** installed on your system.\
 **Ubuntu 20.04 LTS** (or equivalent).
 
-### 📥 Clone and execution
+### 📥 Clone
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
-| `Compile` | `in progress` |
-| `Run :` | `in progress` |
+
+### Install dependencies
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Create virtual environment:` | `gpython3 -m venv venv` |
+| `activate virtual environment:` | `source venv/bin/activate` |
+| `Install dependencies:` | `pip install -r requirements.txt` |
+
+### Run the application
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Clone repo:` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
+| `Run:` | `python3 -m run` |
 
 ## 🚀 Features / Limitations
 
@@ -114,7 +127,7 @@ tree -I "**pycache**|*.pyc|.git"
 │   └── run.py\
 └── README.md
 
-## 👥 Authors
+## 👥 Author
 
 This project was developed by Holberton student as a programming exercise.\
 \
