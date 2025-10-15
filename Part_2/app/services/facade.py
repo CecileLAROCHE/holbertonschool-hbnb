@@ -25,20 +25,7 @@ class HBnBFacade:
         if not user:
             return None
         for key, value in update_data.items():
-            setattr(user, key, value)
-        self.user_repo.update(user)
-        return user
-
-    def update_user(self, user_id, user_data):
-        user = self.user_repo.get(user_id)
-        if not user:
-            return None
-
-        # Met à jour uniquement les champs fournis
-        for key, value in user_data.items():
             if hasattr(user, key):
                 setattr(user, key, value)
-
         self.user_repo.update(user_id, user)
         return user
-
