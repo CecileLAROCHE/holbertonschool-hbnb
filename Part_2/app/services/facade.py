@@ -2,6 +2,7 @@ from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
+from app.models.review import Review
 
 
 class HBnBFacade:
@@ -53,7 +54,6 @@ class HBnBFacade:
             return None
         amenity.update(data)
         return amenity
-
 
     # --- Places ---
     def create_place(self, place_data):
@@ -108,3 +108,53 @@ class HBnBFacade:
                 setattr(place, key, value)
         self.place_repo._storage[place.id] = place
         return place
+
+    # --- Review ---
+    def create_review(self, review_data):
+        user = self.get_user(review_data['user_id'])
+        place = self.get_place(review_data['place_id'])
+        text = review_data.get('text')
+        rating = review_data.get('rating')
+        if not user or not place:
+            raise ValueError("User or Place does not exist")
+        if not text or not isinstance(text, str):
+            raise ValueError("Review text must be a non-empty string")
+        if not isinstance(rating, int) or not (1 <= rating <= 5):
+            raise ValueError("Rating must be an integer between 1 and 5")
+        review = Review(
+            text=review_data['text'],
+            rating=review_data['rating'],
+            user_id=user.id,
+            place_id=place.id,
+        )
+        place.add_review(review)
+        return review
+
+    def get_review(self, review_id):
+        for place in self.get_all_places():
+            for review in place.reviews:
+                if review.id == review_id:
+                    return review
+        return None
+
+    def get_all_reviews(self):
+        reviews = []
+        for place in self.get_all_places():
+            reviews.extend(place.reviews)
+        return reviews
+
+    def get_reviews_by_place(self, place_id):
+        place = self.get_place(place_id)
+        if not place:
+            return None
+        return place.reviews
+
+    def update_review(self, review_id, review_data):
+        review = self.get_review(review_id)
+        if not review:
+            return None
+        if 'text' in review_data:
+            review.text = review_data['text']
+        if 'rating' in review_data:
+            review.rating = review_data['rating']
+        return review

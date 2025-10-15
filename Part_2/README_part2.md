@@ -7,7 +7,7 @@
 
 ## 📖 Description
 
-
+this part
 
 ## 🧭 Index
 
@@ -79,7 +79,7 @@ pip install flask-restx
 ### 📑 Documentation Files
 
 | File                 | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |   
+| -------------------- | ----------------------------------------------------------------- |
 | `` | '' |
 
 ## 📋 Man page
@@ -124,12 +124,37 @@ pip install flask-restx
 
 <p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Update_a_user.png?raw=true" alt="update" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
-### Amenity Endpoints 
+### Amenity Endpoints
 
-#### Create
+#### Create Amenity
 
 `curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}'`
 
+### Place Endpoints
+
+#### Create Place
+
+`curl -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -d '{
+  "title": "Villa Sunset",
+  "description": "Belle villa avec vue sur la mer",
+  "price": 250.0,
+  "latitude": 43.2965,
+  "longitude": 5.3698,
+  "owner_id": "b6b36360-6488-4004-b7dd-85f15ec6f557"
+}'`
+
+### Review Endpoints
+
+#### Create REvieuw
+
+`curl -X POST http://localhost:5000/api/v1/reviews/
+-H "Content-Type: application/json"
+-d '{
+  "text": "Super séjour !",
+  "rating": 5,
+  "user_id": "0f78390b-a75d-4a05-8ec0-3d94b92a6879",
+  "place_id": "ea42e76c-7168-408f-b31c-5008604b7640"
+}'`
 
 ## 📁 Project Structure
 

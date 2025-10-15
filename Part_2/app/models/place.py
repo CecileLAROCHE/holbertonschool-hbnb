@@ -3,7 +3,8 @@ from app.models.user import User
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner_id):
+    def __init__(self, title, description, price, latitude, longitude,
+                 owner_id):
         super().__init__()
         if not title or len(title) > 100:
             raise ValueError("title must be 1-100 characters")
@@ -43,5 +44,6 @@ class Place(BaseModel):
             "amenities": self.amenities,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
-            "deleted_at": self.deleted_at.isoformat() if self.deleted_at else None
+            "deleted_at": self.deleted_at.isoformat() if self.deleted_at
+            else None
         }

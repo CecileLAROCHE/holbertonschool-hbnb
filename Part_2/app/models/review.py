@@ -2,17 +2,34 @@ from app.models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    def __init__(self, rating, text, place, user):
+    def __init__(self, rating, text, user_id, place_id):
         super().__init__()
         if not text:
             raise ValueError("text is required")
         if not (1 <= rating <= 5):
             raise ValueError("rating must be between 1 and 5")
-        if place is None:
+        if place_id is None:
             raise ValueError("place must be provided")
-        if user is None:
+        if user_id is None:
             raise ValueError("user must be provided")
         self.rating = rating
         self.text = text
-        self.place = place
-        self.user = user
+        self.user_id = user_id
+        self.place_id = place_id
+
+    def to_dict(self):
+        """
+        Transforme l'objet Review en dictionnaire JSON-serializable.
+        Les datetimes sont convertis en chaînes ISO 8601.
+        """
+        return {
+            "id": self.id,
+            "rating": self.rating,
+            "text": self.text,
+            "user_id": self.user_id,
+            "place_id": self.place_id,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+            "deleted_at": self.deleted_at.isoformat() if self.deleted_at
+            else None,
+        }
