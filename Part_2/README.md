@@ -37,9 +37,15 @@
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
-| `Create virtual environment:` | `gpython3 -m venv venv` |
+| `Create virtual environment:` | `python3 -m venv venv` |
 | `activate virtual environment:` | `source venv/bin/activate` |
 | `Install dependencies:` | `pip install -r requirements.txt` |
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `install flask-restx:` | `pip install flask-restx` |
+
+pip install flask-restx
 
 ### Run the application
 
@@ -101,26 +107,25 @@ tree -I "**pycache**|*.pyc|.git"
 ├── Part 2\
 │   ├── app\
 │   │   ├── api\
-│   │   │   ├── __init__.py\
 │   │   │   └── v1\
 │   │   │       ├── amenities.py\
-│   │   │       ├── __init__.py\
+│   │   │       ├── \_\_init\_\_.py\
 │   │   │       ├── places.py\
 │   │   │       ├── reviews.py\
 │   │   │       └── users.py\
-│   │   ├── __init__.py\
+│   │   ├── \_\_init\_\_.py\
 │   │   ├── models\
 │   │   │   ├── amenity.py\
-│   │   │   ├── __init__.py\
+│   │   │   ├── \_\_init\_\_.py\
 │   │   │   ├── place.py\
 │   │   │   ├── review.py\
 │   │   │   └── user.py\
 │   │   ├── persistence\
-│   │   │   ├── __init__.py\
+│   │   │   ├── \_\_init\_\_.py\
 │   │   │   └── repository.py\
 │   │   └── services\
 │   │       ├── facade.py\
-│   │       └── __init__.py\
+│   │       └── \_\_init\_\_.py\
 │   ├── config.py\
 │   ├── README.md\
 │   ├── requirements.txt\
