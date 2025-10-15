@@ -94,11 +94,37 @@ pip install flask-restx
 
 ## 📋 Man page
 
-`to do`
+`to do``
 
 ## 🧪 Tests and Outputs
 
 `to do`
+
+### User Endpoints
+
+#### Create a user
+
+`curl -X POST http://localhost:5000/api/v1/users/ \
+     -H "Content-Type: application/json" \
+     -d '{"first_name": "Jane", "last_name": "Do", "email": "Jane.Do@example.com"}'`
+
+#### Email already registered
+
+
+#### Get a user by ID
+
+`curl -X GET http://localhost:5000/api/v1/users/<user_id>`
+
+#### List all users
+
+`curl -X GET http://localhost:5000/api/v1/users/`
+
+#### Update a user
+
+curl -X PUT http://localhost:5000/api/v1/users/9856e862-8d67-43aa-a8ca-804197bc2698 \
+-H "Content-Type: application/json" \
+-d '{"first_name": "Jane", "last_name": "Smith-Do", "email": "Jane.Smith-Do@example.com"}'
+
 
 ## 📁 Project Structure
 

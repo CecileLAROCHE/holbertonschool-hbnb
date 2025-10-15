@@ -27,5 +27,5 @@ class HBnBFacade:
         for key, value in update_data.items():
             if hasattr(user, key):
                 setattr(user, key, value)
-        self.user_repo.update(user_id, user)
+        self.user_repo._storage[user.id] = user
         return user
