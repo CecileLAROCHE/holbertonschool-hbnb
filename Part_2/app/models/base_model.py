@@ -19,7 +19,7 @@ class BaseModel:
         for key, value in data.items():
             if hasattr(self, key):
                 setattr(self, key, value)
-        self.save()  # Update the updated_at timestamp
+        self.save()
 
     def delete(self):
         """Mark the object as deleted by setting deleted_at"""

@@ -1,4 +1,4 @@
-# README of the project HBnB
+# README of the project HBnH - BL and API
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)\
 ![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
@@ -79,18 +79,8 @@ pip install flask-restx
 ### 📑 Documentation Files
 
 | File                 | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `Class Diagram.png` | High-Level Package Diagram  |
-| `High-Level Diagram.png` | Detailed Class Diagram for Business Logic Layer  |
-| `Sequence Diagrams_Fetching a List of Places diagram.png` |  Sequence Diagrams for API Calls |
-| `Sequence Diagrams_Place Creation.png` | Sequence Diagrams for API Calls  |
-| `Sequence Diagrams_Review Submission.png` | Sequence Diagrams for API Calls  |
-| `Sequence Diagrams_User Registration.png` | Sequence Diagrams for API Calls  |
-| `Technical_Document.md` | Explenation of the Diagrams |
-| `README.md`          | Part 1 project documentation.                           |
-| `` |  |
-| `README.md`          | Main project documentation.                           |
-| `AUTHORS`            | List of project contributors.                                     |
+| -------------------- | ----------------------------------------------------------------- |   
+| `` | '' |
 
 ## 📋 Man page
 
@@ -104,26 +94,41 @@ pip install flask-restx
 
 #### Create a user
 
-`curl -X POST http://localhost:5000/api/v1/users/ \
-     -H "Content-Type: application/json" \
+`curl -X POST http://localhost:5000/api/v1/users/
+     -H "Content-Type: application/json"
      -d '{"first_name": "Jane", "last_name": "Do", "email": "Jane.Do@example.com"}'`
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_user.png?raw=true" alt="create" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### Email already registered
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Error_email_exist.png?raw=true" alt="already" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### Get a user by ID
 
 `curl -X GET http://localhost:5000/api/v1/users/<user_id>`
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Get_a_user_by_ID.png?raw=true" alt="get" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
 #### List all users
 
 `curl -X GET http://localhost:5000/api/v1/users/`
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Get_a_user_by_ID.png?raw=true" alt="list" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
 #### Update a user
 
-curl -X PUT http://localhost:5000/api/v1/users/9856e862-8d67-43aa-a8ca-804197bc2698 \
--H "Content-Type: application/json" \
--d '{"first_name": "Jane", "last_name": "Smith-Do", "email": "Jane.Smith-Do@example.com"}'
+`curl -X PUT http://localhost:5000/api/v1/users/9856e862-8d67-43aa-a8ca-804197bc2698
+-H "Content-Type: application/json"
+-d '{"first_name": "Jane", "last_name": "Smith-Do", "email": "Jane.Smith-Do@example.com"}'`
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Update_a_user.png?raw=true" alt="update" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+### Amenity Endpoints 
+
+#### Create
+
+`curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}'`
 
 
 ## 📁 Project Structure

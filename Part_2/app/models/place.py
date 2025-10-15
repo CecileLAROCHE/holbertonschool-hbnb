@@ -3,7 +3,7 @@ from app.models.user import User
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner):
+    def __init__(self, title, description, price, latitude, longitude, owner_id):
         super().__init__()
         if not title or len(title) > 100:
             raise ValueError("title must be 1-100 characters")
@@ -13,14 +13,13 @@ class Place(BaseModel):
             raise ValueError("latitude must be between -90.0 and 90.0")
         if not (-180.0 <= longitude <= 180.0):
             raise ValueError("longitude must be between -180.0 and 180.0")
-        if not isinstance(owner, User):
-            raise TypeError("owner must be a User instance")
+
         self.title = title
         self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
-        self.owner = owner
+        self.owner_id = owner_id  # on stocke juste l'UUID
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 
@@ -31,3 +30,18 @@ class Place(BaseModel):
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
         self.amenities.append(amenity)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "price": self.price,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "owner_id": self.owner_id,
+            "amenities": self.amenities,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+            "deleted_at": self.deleted_at.isoformat() if self.deleted_at else None
+        }
