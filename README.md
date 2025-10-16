@@ -93,7 +93,7 @@ To have more details, please go see the README of each part
 ├── Part 1\
 │   ├── Diagram pictures\
 │   └── Technical_Document.md\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
+│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)\
 ├── Part 2\
 │   ├── app\
 │   │   ├── api\
@@ -103,8 +103,8 @@ To have more details, please go see the README of each part
 │   │   └── services\
 │   ├── Picture_for_README\
 │   ├── tests\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/README_part2.md)
-├── AUTHOR
+│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/README_part2.md)\
+├── AUTHOR\
 └── README.md
 
 ## 👥 Authors

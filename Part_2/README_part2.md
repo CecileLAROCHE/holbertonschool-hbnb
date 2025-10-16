@@ -45,8 +45,6 @@ this part
 |--------------------------------------------|-------------------------------------------------------|
 | `install flask-restx:` | `pip install flask-restx` |
 
-pip install flask-restx
-
 ### Run the application
 
 | Task |Command|
@@ -82,21 +80,25 @@ pip install flask-restx
 | -------------------- | ----------------------------------------------------------------- |
 | `` | '' |
 
-## 📋 Man page
-
-`to do``
-
 ## 🧪 Tests and Outputs
 
-`to do`
+Exemple of test do during the tasst 1 to 5.
+The test for the task 6 are here :
+- [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
+- [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
 
 ### User Endpoints
 
 #### Create a user
 
-`curl -X POST http://localhost:5000/api/v1/users/
-     -H "Content-Type: application/json"
-     -d '{"first_name": "Jane", "last_name": "Do", "email": "Jane.Do@example.com"}'`
+`curl -X POST "http://127.0.0.1:5000/api/v1/users/" \
+-H "Content-Type: application/json" \
+-d '{
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com"
+}'
+`
 
 <p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_user.png?raw=true" alt="create" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
@@ -118,7 +120,7 @@ pip install flask-restx
 
 #### Update a user
 
-`curl -X PUT http://localhost:5000/api/v1/users/9856e862-8d67-43aa-a8ca-804197bc2698
+`curl -X PUT http://localhost:5000/api/v1/users/<user_id>
 -H "Content-Type: application/json"
 -d '{"first_name": "Jane", "last_name": "Smith-Do", "email": "Jane.Smith-Do@example.com"}'`
 
@@ -130,6 +132,8 @@ pip install flask-restx
 
 `curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}'`
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_amenity.png?raw=true" alt="create_amenity" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
 ### Place Endpoints
 
 #### Create Place
@@ -140,21 +144,25 @@ pip install flask-restx
   "price": 250.0,
   "latitude": 43.2965,
   "longitude": 5.3698,
-  "owner_id": "b6b36360-6488-4004-b7dd-85f15ec6f557"
+  "owner_id": "<user_id>"
 }'`
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/create_place.png?raw=true" alt="create_place" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ### Review Endpoints
 
-#### Create REvieuw
+#### Create Revieuw
 
 `curl -X POST http://localhost:5000/api/v1/reviews/
 -H "Content-Type: application/json"
 -d '{
   "text": "Super séjour !",
   "rating": 5,
-  "user_id": "0f78390b-a75d-4a05-8ec0-3d94b92a6879",
-  "place_id": "ea42e76c-7168-408f-b31c-5008604b7640"
+  "user_id": "<user_id>",
+  "place_id": "<place_id>"
 }'`
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/create_place.png?raw=true" alt="create_revieux" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📁 Project Structure
 
