@@ -14,11 +14,10 @@ this part
 1 - [⚙️ Cloning and Compilation](#️-cloning-and-compilation)\
 2 - [🚀 Features / Limitations](#-features--limitations)\
 3 - [📚 Files in Repository](#-files-in-repository)\
-4 - [📄 Man Page](#-man-page)\
-5 - [🧪 Tests and outputs](#-tests-and-outputs)\
-6 - [📁 Project Structure](#-project-structure)\
-7 - [👥 Author](#-author)\
-8 - [📜 License](#-license)
+4 - [🧪 Tests and outputs](#-tests-and-outputs)\
+5 - [📁 Project Structure](#-project-structure)\
+6 - [👥 Author](#-author)\
+7 - [📜 License](#-license)
 
 ## ⚙️ Cloning and Compilation
 
@@ -84,8 +83,9 @@ this part
 
 Exemple of test do during the tasst 1 to 5.
 The test for the task 6 are here :
-- [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
-- [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
+
+* [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
+* [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/tests/TESTING_REPORT.md)
 
 ### User Endpoints
 

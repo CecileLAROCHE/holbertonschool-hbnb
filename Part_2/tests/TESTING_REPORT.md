@@ -1,32 +1,45 @@
-# API Testing Report
+# Curl Test
+
+1. Users
+2. Amenities
+3. Places
+4. Revieuw
 
 ## 1. Users
+
 **Endpoint:** POST /api/v1/users/
 
-| Test Case | Input | Expected Output | Actual Output | Result |
-|------------|--------|----------------|----------------|---------|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+### Create user
 
-## 2. Places
-**Endpoint:** POST /api/v1/places/
+`curl -X POST "http://127.0.0.1:5000/api/v1/users/"
+-H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com"}'`
 
-| Test Case | Input | Expected | Result |
-|------------|--------|----------|---------|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/T6_create_user.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/T6_create%20user_.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
-## 3. Swagger Documentation
-Accessible at: [http://127.0.0.1:5000/api/v1/](http://127.0.0.1:5000/api/v1/)
-Verified that all endpoints and parameters are correctly described.
+### Duplicate Email
 
----
+`curl -X POST "http://127.0.0.1:5000/api/v1/users/" -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com"}'`
 
-✅ **Summary:**
-- All endpoints tested manually and via unit tests.  
-- Validation rules working as expected.  
-- Swagger documentation accurate.
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_duplicate_email.png?raw=true" alt="duplicate_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_duplicate_email_.png?raw=true" alt="duplicate_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+### Invalid name
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_unvalid_name.png?raw=true" alt="unvalid_name" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_unvalid_name_.png?raw=true" alt="unvalid_name" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+### Invalid email
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_unvalid_email.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_unvalid_email_.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+## 2. Amenities
+
+## 3. Places
+
+## 4. Revieuw
