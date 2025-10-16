@@ -38,8 +38,38 @@
 
 <p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_unvalid_email_.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
+### List of users
+
+`curl -X GET http://localhost:5000/api/v1/users/`
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_list_users.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_list_users_.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
 ## 2. Amenities
+
+### Create Amenity
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_create_amenity.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_create_amenity_.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+### List Amenities
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_list_amenities.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_list_amenities_.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 3. Places
 
+### Create
+
+<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
 ## 4. Revieuw
+
+<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
