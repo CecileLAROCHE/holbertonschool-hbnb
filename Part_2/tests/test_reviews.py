@@ -3,6 +3,17 @@ from app.models.place import Place
 from app.models.review import Review
 
 
+def test_review_creation():
+    user = User(first_name="John",
+                last_name="Doe",
+                email="john.doe@example.com")
+    assert user.first_name == "John"
+    assert user.last_name == "Doe"
+    assert user.email == "john.doe@example.com"
+    assert user.is_admin is False  # Default value
+    print("User creation test passed!")
+
+
 def test_place_creation():
     # Crée un utilisateur pour le lien
     user = User(first_name="John", last_name="Doe", email="john@example.com")

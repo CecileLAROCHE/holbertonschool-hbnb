@@ -40,10 +40,6 @@ this part
 | `activate virtual environment:` | `source venv/bin/activate` |
 | `Install dependencies:` | `pip install -r requirements.txt` |
 
-| Task |Command|
-|--------------------------------------------|-------------------------------------------------------|
-| `install flask-restx:` | `pip install flask-restx` |
-
 ### Run the application
 
 | Task |Command|
@@ -55,13 +51,14 @@ this part
 
 ### ✅ Features
 
-* 
+* Create User, Amenity, Place and Review
 *
 *
 *
 
 ### ⚠️ Limitations
 
+* no passworld
 *
 
 ## 📚 Files in Repository
@@ -84,7 +81,6 @@ this part
 Exemple of test do during the tasst 1 to 5.
 The test for the task 6 are here :
 
-* [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)
 * [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/tests/TESTING_REPORT.md)
 
 ### User Endpoints

@@ -1,4 +1,11 @@
 from app import create_app
+from app.models.amenity import Amenity
+
+
+def test_amenity_creation():
+    amenity = Amenity(name="Wi-Fi")
+    assert amenity.name == "Wi-Fi"
+    print("Amenity creation test passed!")
 
 
 def test_create_valid_amenity():
