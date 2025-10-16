@@ -1,10 +1,10 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+import re
 
 
 api = Namespace('users', description='User operations')
 
-# Define the user model for input validation and documentation
 user_model = api.model('User', {
     'first_name': fields.String(required=True,
                                 description='First name of the user'),
@@ -20,15 +20,25 @@ class UserList(Resource):
     @api.response(201, 'User successfully created')
     @api.response(400, 'Email already registered')
     @api.response(400, 'Invalid input data')
+    @api.response(400, 'Invalid email format')
     def post(self):
         """Register a new user"""
+
         user_data = api.payload
 
-        try:
-            existing_user = facade.get_user_by_email(user_data['email'])
-            if existing_user:
-                return {'error': 'Email already registered'}, 400
+        if (not user_data.get('first_name') or
+            not user_data.get('last_name') or
+            not user_data.get('email')):
+            return {"error": "Invalid input data"}, 400
 
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", user_data['email']):
+            return {"error": "Invalid email format"}, 400
+
+        existing_user = facade.get_user_by_email(user_data['email'])
+        if existing_user:
+            return {"error": "Email already registered"}, 400
+
+        try:
             new_user = facade.create_user(user_data)
             return {
                 'id': new_user.id,
@@ -37,10 +47,7 @@ class UserList(Resource):
                 'email': new_user.email
             }, 201
 
-        except ValueError:
-            return {"error": "Invalid input data"}, 400
-
-        except KeyError:
+        except Exception:
             return {"error": "Invalid input data"}, 400
 
     @api.response(200, 'List of users retrieved successfully')
