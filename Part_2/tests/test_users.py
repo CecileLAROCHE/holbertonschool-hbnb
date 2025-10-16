@@ -1,18 +1,14 @@
 import unittest
-from app import create_app, db
+from app import create_app
 
 
 class TestUserEndpoints(unittest.TestCase):
     def setUp(self):
-        self.app = create_app('testing')
+        self.app = create_app()
         self.client = self.app.test_client()
-        with self.app.app_context():
-            db.create_all()
 
     def tearDown(self):
-        with self.app.app_context():
-            db.session.remove()
-            db.drop_all()
+        pass
 
     def test_create_valid_user(self):
         response = self.client.post('/api/v1/users/', json={
@@ -29,3 +25,13 @@ class TestUserEndpoints(unittest.TestCase):
             "email": "invalid"
         })
         self.assertEqual(response.status_code, 400)
+
+    def test_create_invalid_user_bad_email(self):
+        response = self.client.post('/api/v1/users/', json={
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "invalid-email"
+        })
+        self.assertEqual(response.status_code, 400)
+        data = response.get_json()
+        self.assertEqual(data, {"error": "Invalid email format"})

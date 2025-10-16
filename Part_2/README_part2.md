@@ -55,14 +55,14 @@ this part
 
 ### ✅ Features
 
-* in progress
+* 
 *
 *
 *
 
 ### ⚠️ Limitations
 
-* in progress
+*
 
 ## 📚 Files in Repository
 
@@ -94,9 +94,9 @@ The test for the task 6 are here :
 `curl -X POST "http://127.0.0.1:5000/api/v1/users/" \
 -H "Content-Type: application/json" \
 -d '{
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john.doe@example.com"
+    "first_name": "Jane",
+    "last_name": "Do",
+    "email": "Jane.DO@example.com"
 }'
 `
 
