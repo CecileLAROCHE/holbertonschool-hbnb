@@ -1,5 +1,4 @@
 from flask_restx import Namespace, Resource, fields
-from app.services import facade
 from app.models.base_model import BaseModel
 from app.persistence.repository import InMemoryRepository
 
@@ -42,6 +41,16 @@ class AmenityList(Resource):
     def post(self):
         """Register a new amenity"""
         data = api.payload
+        name = data.get("name", "").strip()
+
+        if not name:
+            return {"error": "Name is required"}, 400
+
+        # Vérifie la duplication
+        existing = [a for a in amenity_repo.get_all() if a.name == name]
+        if existing:
+            return {"error": f"Amenity with name '{name}' already exists"}, 400
+
         try:
             new_amenity = Amenity(**data)
             amenity_repo.add(new_amenity)

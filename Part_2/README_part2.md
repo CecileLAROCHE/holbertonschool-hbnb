@@ -58,8 +58,9 @@ this part
 
 ### ⚠️ Limitations
 
-* no passworld
-*
+* no passworld management
+* no administrator management
+* no delete option
 
 ## 📚 Files in Repository
 

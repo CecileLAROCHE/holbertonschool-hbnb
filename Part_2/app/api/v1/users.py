@@ -26,9 +26,11 @@ class UserList(Resource):
 
         user_data = api.payload
 
-        if (not user_data.get('first_name') or
-            not user_data.get('last_name') or
-            not user_data.get('email')):
+        if (
+            not user_data.get('first_name')
+            or not user_data.get('last_name')
+            or not user_data.get('email')
+            ):
             return {"error": "Invalid input data"}, 400
 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", user_data['email']):
@@ -84,14 +86,31 @@ class UserResource(Resource):
 
     @api.expect(user_model, validate=True)
     @api.response(200, 'User updated successfully')
+    @api.response(400, 'Invalid input data')
     @api.response(404, 'User not found')
     def put(self, user_id):
         """Update an existing user"""
-        user_data = api.payload
-        updated_user = facade.update_user(user_id, user_data)
+        user_data = api.payload or {}
 
-        if not updated_user:
+        # Vérifie que le user existe
+        user = facade.get_user(user_id)
+        if not user:
             return {'error': 'User not found'}, 404
+
+        # Validation du format de l'email si fourni
+        if 'email' in user_data:
+            email = user_data['email']
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return {"error": "Invalid email format"}, 400
+
+        # Met à jour seulement les champs fournis
+        updatable_fields = ['first_name', 'last_name', 'email']
+        for key, value in user_data.items():
+            if key in updatable_fields and value is not None:
+                setattr(user, key, value)
+
+        # Sauvegarde la mise à jour via la façade
+        updated_user = facade.update_user(user_id, user_data)
 
         return {
             'id': updated_user.id,
