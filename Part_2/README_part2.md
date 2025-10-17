@@ -7,7 +7,7 @@
 
 ## 📖 Description
 
-this part
+This part 2 of the project HBnB is about Implementation of Business Logic and API Endpoints
 
 ## 🧭 Index
 
@@ -32,12 +32,19 @@ this part
 |--------------------------------------------|-------------------------------------------------------|
 | `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
 
-### Install dependencies
+### virtual environment
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Create virtual environment:` | `python3 -m venv venv` |
 | `activate virtual environment:` | `source venv/bin/activate` |
+| `Install dependencies:` | `pip install -r requirements.txt` |
+| `deactivate virtual environment:` | `deactivate` |
+
+### Install dependencies
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------
 | `Install dependencies:` | `pip install -r requirements.txt` |
 
 ### Run the application
@@ -52,36 +59,21 @@ this part
 ### ✅ Features
 
 * Create User, Amenity, Place and Review
-*
-*
-*
+* 
+* Tests User, Amenety and Place
 
 ### ⚠️ Limitations
 
 * no passworld management
 * no administrator management
 * no delete option
-
-## 📚 Files in Repository
-
-### 🖥️ Source Code Files
-
-| File                   | Description                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| `none`              | . |
-| ``              | . |
-
-### 📑 Documentation Files
-
-| File                 | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `` | '' |
+* no test for Review
 
 ## 🧪 Tests and Outputs
 
-Exemple of test do during the tasst 1 to 5.
-The test for the task 6 are here :
 
+
+The test for the task 6 are here :
 * [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/tests/TESTING_REPORT.md)
 
 ### User Endpoints
