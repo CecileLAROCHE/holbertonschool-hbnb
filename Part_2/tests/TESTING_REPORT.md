@@ -1,9 +1,9 @@
 # Curl Test
 
-1. Users
-2. Amenities
-3. Places
-4. Revieuw
+1. [Users](#1-users)  
+2. [Amenities](#2-amenities)  
+3. [Places](#3-places)  
+4. [Revieuw](#4-revieuw)
 
 ## 1. Users
 

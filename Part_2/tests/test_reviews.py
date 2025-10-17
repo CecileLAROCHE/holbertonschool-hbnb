@@ -10,15 +10,13 @@ def test_review_creation():
     assert user.first_name == "John"
     assert user.last_name == "Doe"
     assert user.email == "john.doe@example.com"
-    assert user.is_admin is False  # Default value
+    assert user.is_admin is False
     print("User creation test passed!")
 
 
 def test_place_creation():
-    # Crée un utilisateur pour le lien
     user = User(first_name="John", last_name="Doe", email="john@example.com")
 
-    # Crée un lieu associé à l'utilisateur
     place = Place(title="Cozy Apartment",
                   description="A nice place to stay",
                   price=100,
@@ -26,7 +24,6 @@ def test_place_creation():
                   longitude=-122.4194,
                   owner_id=user.id)
 
-    # Crée une review associée à l'utilisateur et au lieu
     review = Review(text="Great stay!",
                     rating=5,
                     user_id=user.id,
