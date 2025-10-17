@@ -14,7 +14,7 @@ I don't know what to do with
 1. [Users](#1-users)  
 2. [Amenities](#2-amenities)  
 3. [Places](#3-places)  
-4. [Revieuw](#4-revieuw)
+4. [Review](#4-review)
 
 ### 1. Users
 
