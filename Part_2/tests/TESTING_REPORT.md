@@ -1,3 +1,12 @@
+# pytest
+
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/pytest.png?raw=true" alt="create_user" width="900"><!-- markdownlint-disable-line MD033 --></p>
+
+# Swagger
+
+`http://127.0.0.1:5000/api/v1/`
+I don't know what to do with
+
 # Curl Test
 
 1. [Users](#1-users)  
@@ -64,12 +73,12 @@
 
 ### Create
 
-<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_create_place.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
-<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/t6_create_place_.png?raw=true" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
-## 4. Revieuw
+No time to do more.
 
-<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+## 4. Review
 
-<p align="center"><img src="" alt="" width="900"><!-- markdownlint-disable-line MD033 --></p>
+No time to do, it's 3:00 am need to sleep!
