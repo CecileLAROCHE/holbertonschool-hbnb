@@ -38,20 +38,18 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 |--------------------------------------------|-------------------------------------------------------|
 | `Create virtual environment:` | `python3 -m venv venv` |
 | `activate virtual environment:` | `source venv/bin/activate` |
-| `Install dependencies:` | `pip install -r requirements.txt` |
 | `deactivate virtual environment:` | `deactivate` |
 
 ### Install dependencies
 
 | Task |Command|
-|--------------------------------------------|-------------------------------------------------------
+|--------------------------------------------|-------------------------------------------------------|
 | `Install dependencies:` | `pip install -r requirements.txt` |
 
 ### Run the application
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
-| `Clone repo:` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
 | `Run:` | `python3 -m run` |
 
 ## 🚀 Features / Limitations
