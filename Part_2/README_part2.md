@@ -59,7 +59,6 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 ### ✅ Features
 
 * Create User, Amenity, Place and Review
-* 
 * Tests User, Amenety and Place
 
 ### ⚠️ Limitations
@@ -71,9 +70,12 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 
 ## 🧪 Tests and Outputs
 
+Verifying the creation of models :
 
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Business_Logic_Classes.png?raw=true" alt="blc" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 The test for the task 6 are here :
+
 * [TESTING_REPORT.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/tests/TESTING_REPORT.md)
 
 ### User Endpoints
@@ -86,8 +88,7 @@ The test for the task 6 are here :
     "first_name": "Jane",
     "last_name": "Do",
     "email": "Jane.DO@example.com"
-}'
-`
+}'`
 
 <p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_user.png?raw=true" alt="create" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
@@ -179,6 +180,14 @@ tree -I "**pycache**|*.pyc|.git"
 │   │   └── services\
 │   │       ├── facade.py\
 │   │       └── \_\_init\_\_.py\
+│   ├── tests\
+│   │   ├── \_\_init\_\_.py\
+│   │   ├── test_amenities\
+│   │   ├── test_base-model\
+│   │   ├── test_Place\
+│   │   ├── test_reviews\
+│   │   ├── test_users\
+│   │   ├──TESTING_REPORT\
 │   ├── config.py\
 │   ├── README.md\
 │   ├── requirements.txt\
