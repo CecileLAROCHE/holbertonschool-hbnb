@@ -13,11 +13,10 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 
 1 - [⚙️ Cloning and Compilation](#️-cloning-and-compilation)\
 2 - [🚀 Features / Limitations](#-features--limitations)\
-3 - [📚 Files in Repository](#-files-in-repository)\
-4 - [🧪 Tests and outputs](#-tests-and-outputs)\
-5 - [📁 Project Structure](#-project-structure)\
-6 - [👥 Author](#-author)\
-7 - [📜 License](#-license)
+3 - [🧪 Tests and outputs](#-tests-and-outputs)\
+4 - [📁 Project Structure](#-project-structure)\
+5 - [👥 Author](#-author)\
+6 - [📜 License](#-license)
 
 ## ⚙️ Cloning and Compilation
 
