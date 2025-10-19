@@ -119,3 +119,69 @@ def test_get_all_places(client, owner, place_payload):
     assert resp.status_code == 200
     data = resp.get_json()
     assert len(data) >= 2
+
+
+def test_title_empty(client, place_payload):
+    place_payload['title'] = ""
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_title_to_long(client, place_payload):
+    place_payload['title'] = "x" * 101
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_price_empty(client, place_payload):
+    place_payload['price'] = ""
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_price_not_number(client, place_payload):
+    place_payload['price'] = "str"
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_price_positive_number(client, place_payload):
+    place_payload['price'] = -10
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_latitude_empty(client, place_payload):
+    place_payload['latitude'] = ""
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_latitude_below_minimum(client, place_payload):
+    place_payload['latitude'] = -200
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_latitude_above_maximum(client, place_payload):
+    place_payload['latitude'] = 200
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_longitude_empty(client, place_payload):
+    place_payload['longitude'] = ""
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_longitude_below_minimum(client, place_payload):
+    place_payload['longitude'] = -200
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
+
+
+def test_longitude_above_maximum(client, place_payload):
+    place_payload['longitude'] = 200
+    response = client.post('/api/v1/places/', json=place_payload)
+    assert response.status_code == 400
