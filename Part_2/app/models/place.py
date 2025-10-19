@@ -43,7 +43,7 @@ class Place(BaseModel):
             raise ValueError("latitude must be a number")
         if not (-90.0 <= latitude <= 90.0):
             raise ValueError("latitude must be between -90.0 and 90.0")
-        
+
         if longitude is None or longitude == "":
             raise ValueError("longitude must be a number")
         if not (-180.0 <= longitude <= 180.0):

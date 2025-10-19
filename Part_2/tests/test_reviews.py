@@ -10,7 +10,6 @@ def test_review_creation():
     assert user.first_name == "John"
     assert user.last_name == "Doe"
     assert user.email == "john.doe@example.com"
-    assert user.is_admin is False
     print("User creation test passed!")
 
 

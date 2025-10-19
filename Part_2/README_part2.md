@@ -62,7 +62,7 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 
 * no passworld management
 * no administrator management
-* no delete option
+* no delete option present just for
 * no test for Review
 
 ## 🧪 Tests and Outputs

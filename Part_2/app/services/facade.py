@@ -9,7 +9,7 @@ class HBnBFacade:
     """
     Facade class providing a simplified interface to interact with
     the underlying repositories and domain models (User, Place,
-    Amenity, Review). 
+    Amenity, Review).
 
     It handles CRUD operations and validation logic for each entity.
     """
@@ -232,7 +232,8 @@ class HBnBFacade:
             review_data (dict): Dictionary containing review details.
 
         Raises:
-            ValueError: If user/place does not exist or invalid data is provided.
+            ValueError: If user/place does not exist
+            or invalid data is provided.
 
         Returns:
             Review: The created review instance.
