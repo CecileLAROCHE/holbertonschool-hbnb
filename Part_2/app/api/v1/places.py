@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 
+
 # Create a namespace for Place-related endpoints
 api = Namespace('places', description='Place operations')
 
@@ -115,3 +116,13 @@ class PlaceResource(Resource):
             return updated_place.to_dict(), 200
         except ValueError as e:
             return {'error': str(e)}, 400
+
+
+@api.route('/<string:place_id>/reviews')
+class PlaceReviews(Resource):
+    def get(self, place_id):
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        reviews = facade.get_reviews_by_place(place_id)
+        return [r.to_dict() for r in reviews], 200

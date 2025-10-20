@@ -51,17 +51,6 @@ def test_update_amenity(client):
     assert data["name"] == "Full Breakfast"
 
 
-def test_get_all_amenities(client):
-    client.post('/api/v1/amenities/', json={"name": "Gym"})
-    client.post('/api/v1/amenities/', json={"name": "Spa"})
-    resp = client.get('/api/v1/amenities/')
-    data = resp.get_json()
-    assert resp.status_code == 200
-    assert len(data) == 2
-    assert any(a["name"] == "Gym" for a in data)
-    assert any(a["name"] == "Spa" for a in data)
-
-
 def test_duplicate_amenity_name(client):
     # Création de la première amenity
     resp1 = client.post('/api/v1/amenities/', json={"name": "Sauna"})
@@ -76,3 +65,41 @@ def test_duplicate_amenity_name(client):
         "already exists" in data["error"]
         or "duplicate" in data["error"].lower()
     )
+
+
+def test_amenity_empty(client):
+    response = client.post('/api/v1/amenities/', json={"name": ""})
+    assert response.status_code == 400
+    data = response.get_json()
+    assert "error" in data
+
+
+def test_amenity_to_long(client):
+    long_name = "A" * 51
+    response = client.post('/api/v1/amenities/', json={"name": long_name})
+    assert response.status_code == 400
+    data = response.get_json()
+    assert "error" in data
+
+
+def test_get_amenities(client):
+    post_resp = client.post('/api/v1/amenities/', json={"name": "Sauna"})
+    assert post_resp.status_code == 201
+    amenity_id = post_resp.get_json()["id"]
+    get_resp = client.get(f'/api/v1/amenities/{amenity_id}')
+    data = get_resp.get_json()
+    assert get_resp.status_code == 200
+    assert isinstance(data, dict)
+    assert data["id"] == amenity_id
+    assert data["name"] == "Sauna"
+
+
+def test_get_all_amenities(client):
+    client.post('/api/v1/amenities/', json={"name": "Gym"})
+    client.post('/api/v1/amenities/', json={"name": "Spa"})
+    resp = client.get('/api/v1/amenities/')
+    data = resp.get_json()
+    assert resp.status_code == 200
+    assert len(data) == 2
+    assert any(a["name"] == "Gym" for a in data)
+    assert any(a["name"] == "Spa" for a in data)

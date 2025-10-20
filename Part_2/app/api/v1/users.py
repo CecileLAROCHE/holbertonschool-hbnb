@@ -30,7 +30,7 @@ class UserList(Resource):
             not user_data.get('first_name')
             or not user_data.get('last_name')
             or not user_data.get('email')
-            ):
+        ):
             return {"error": "Invalid input data"}, 400
 
         if not re.match(r"[^@]+@[^@]+\.[^@]+", user_data['email']):

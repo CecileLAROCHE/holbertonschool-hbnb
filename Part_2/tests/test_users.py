@@ -1,6 +1,7 @@
 import unittest
 from app import create_app
 from app.models.user import User
+from app.persistence.repository import InMemoryRepository
 
 
 def test_user_creation():
@@ -55,11 +56,15 @@ class TestUserEndpoints(unittest.TestCase):
         })
         self.assertEqual(create_resp.status_code, 201)
         user_id = create_resp.get_json()["id"]
-
         get_resp = self.client.get(f'/api/v1/users/{user_id}')
         self.assertEqual(get_resp.status_code, 200)
         data = get_resp.get_json()
         self.assertEqual(data["email"], "alice@example.com")
+
+    def test_get_nonexistent_user(self):
+        repo = InMemoryRepository()
+        result = repo.get("non-existent-user-id")
+        self.assertIsNone(result)
 
     def test_update_user(self):
         create_resp = self.client.post('/api/v1/users/', json={

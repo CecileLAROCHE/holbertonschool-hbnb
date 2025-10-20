@@ -15,7 +15,8 @@ def test_place_creation():
                   latitude=37.7749,
                   longitude=-122.4194,
                   owner_id=user.id)
-
+    Review.user_repo.add(user)
+    Review.place_repo.add(place)
     review = Review(text="Great stay!",
                     rating=5,
                     user_id=user.id,

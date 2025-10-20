@@ -69,7 +69,7 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 
 Verifying the creation of models :
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Business_Logic_Classes.png?raw=true" alt="blc" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Business_Logic_Classes.png?raw=true" alt="blc" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 The test for the task 6 are here :
 
@@ -87,23 +87,23 @@ The test for the task 6 are here :
     "email": "Jane.DO@example.com"
 }'`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_user.png?raw=true" alt="create" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Create_user.png?raw=true" alt="create" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### Email already registered
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Error_email_exist.png?raw=true" alt="already" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Error_email_exist.png?raw=true" alt="already" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### Get a user by ID
 
 `curl -X GET http://localhost:5000/api/v1/users/<user_id>`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Get_a_user_by_ID.png?raw=true" alt="get" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Get_a_user_by_ID.png?raw=true" alt="get" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### List all users
 
 `curl -X GET http://localhost:5000/api/v1/users/`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Get_a_user_by_ID.png?raw=true" alt="list" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Get_a_user_by_ID.png?raw=true" alt="list" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 #### Update a user
 
@@ -111,7 +111,7 @@ The test for the task 6 are here :
 -H "Content-Type: application/json"
 -d '{"first_name": "Jane", "last_name": "Smith-Do", "email": "Jane.Smith-Do@example.com"}'`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Update_a_user.png?raw=true" alt="update" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Update_a_user.png?raw=true" alt="update" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ### Amenity Endpoints
 
@@ -119,7 +119,7 @@ The test for the task 6 are here :
 
 `curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}'`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/Create_amenity.png?raw=true" alt="create_amenity" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/Create_amenity.png?raw=true" alt="create_amenity" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ### Place Endpoints
 
@@ -134,7 +134,7 @@ The test for the task 6 are here :
   "owner_id": "<user_id>"
 }'`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/create_place.png?raw=true" alt="create_place" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/create_place.png?raw=true" alt="create_place" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ### Review Endpoints
 
@@ -149,7 +149,7 @@ The test for the task 6 are here :
   "place_id": "<place_id>"
 }'`
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_README/create_place.png?raw=true" alt="create_revieux" width="900"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/Picture_for_documentation/create_review.png?raw=true" alt="create_revieux" width="900"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📁 Project Structure
 

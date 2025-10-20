@@ -160,7 +160,9 @@ class HBnBFacade:
             raise ValueError("price must be a number")
         if price < 0:
             raise ValueError("Price must be positive")
+        amenities = place_data.pop("amenities", [])
         place = Place(**place_data)
+        place.amenities = amenities
         self.place_repo.add(place)
         return place
 
@@ -255,6 +257,7 @@ class HBnBFacade:
             place_id=place.id,
         )
         place.add_review(review)
+        place.reviews.append(review)
         return review
 
     def get_review(self, review_id):
@@ -284,21 +287,6 @@ class HBnBFacade:
         for place in self.get_all_places():
             reviews.extend(place.reviews)
         return reviews
-
-    def get_reviews_by_place(self, place_id):
-        """
-        Retrieve all reviews associated with a specific place.
-
-        Args:
-            place_id (str): The UUID of the place.
-
-        Returns:
-            list[Review] | None: A list of reviews or None if place not found.
-        """
-        place = self.get_place(place_id)
-        if not place:
-            return None
-        return place.reviews
 
     def update_review(self, review_id, review_data):
         """
