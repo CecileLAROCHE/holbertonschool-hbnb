@@ -1,7 +1,7 @@
 # README of the project HBnH - BL and API
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)\
-![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
+![GitHub last commit](https://img.shields.io/badge/Last_commit-19_Oct_2025-green)
 
 <p align="center"><img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3lsbHE5ZTV6dnFzZXg1ZnVhZTIwaWFyMzd2bzlqaWZrMHY2b2JjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1hBWHsBYoqYOfsmAsL/giphy.gif" alt="fire" width="300"><!-- markdownlint-disable-line MD033 --></p>
 
@@ -62,8 +62,7 @@ This part 2 of the project HBnB is about Implementation of Business Logic and AP
 
 * no passworld management
 * no administrator management
-* no delete option present just for
-* no test for Review
+* no delete option present just for review
 
 ## 🧪 Tests and Outputs
 
@@ -185,6 +184,7 @@ tree -I "**pycache**|*.pyc|.git"
 │   │   ├── test_reviews\
 │   │   ├── test_users\
 │   │   ├──TESTING_REPORT\
+│   │   └── Picture_for_documentation
 │   ├── config.py\
 │   ├── README.md\
 │   ├── requirements.txt\
