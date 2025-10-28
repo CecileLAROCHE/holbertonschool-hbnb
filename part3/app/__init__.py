@@ -1,14 +1,18 @@
 from flask import Flask
 from flask_restx import Api
+from flask_bcrypt import Bcrypt
 
 # importe le dictionnaire de config
-from .config import config
+from config import config
 
 # Import des namespaces
 from app.api.v1.users import api as users_ns
 from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
+
+# instance globale
+bcrypt = Bcrypt()
 
 
 def create_app(config_name='default'):
@@ -17,6 +21,9 @@ def create_app(config_name='default'):
 
     # Charger la configuration choisie
     app.config.from_object(config[config_name])
+
+    # Initialiser Bcrypt avec l’app
+    bcrypt.init_app(app)
 
     # Initialiser l’API RESTX
     api = Api(

@@ -32,8 +32,26 @@ T
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
-| `Compile` | `in progress` |
-| `Run :` | `in progress` |
+
+### virtual environment
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Create virtual environment:` | `python3 -m venv venv` |
+| `activate virtual environment:` | `source venv/bin/activate` |
+| `deactivate virtual environment:` | `deactivate` |
+
+### Install dependencies
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Install dependencies:` | `pip install -r requirements.txt` |
+
+### Run the application
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Run:` | `python3 -m run` |
 
 ## 🚀 Features / Limitations
 
