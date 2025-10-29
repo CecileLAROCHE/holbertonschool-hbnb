@@ -3,10 +3,11 @@ from .user import User
 
 
 class Place(BaseModel):
-    def __init__(self, title: str,
+    def __init__(self,
+                 title: str,
                  price: float,
-                 latitude: str,
-                 longitude,
+                 latitude: float,
+                 longitude: float,
                  owner,
                  description=None):
         super().__init__()
@@ -50,7 +51,7 @@ class Place(BaseModel):
 
     @latitude.setter
     def latitude(self, value):
-        if not isinstance(value, float):
+        if not isinstance(value, (float, int)):
             raise TypeError("Latitude must be a float")
         super().is_between("latitude", value, -90, 90)
         self.__latitude = value
@@ -61,7 +62,7 @@ class Place(BaseModel):
 
     @longitude.setter
     def longitude(self, value):
-        if not isinstance(value, float):
+        if not isinstance(value, (float, int)):
             raise TypeError("Longitude must be a float")
         super().is_between("longitude", value, -180, 180)
         self.__longitude = value

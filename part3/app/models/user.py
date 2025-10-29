@@ -36,7 +36,7 @@ class User(BaseModel):
         """Vérifie si le mot de passe fourni correspond au hash stocké."""
         from app import bcrypt
         return bcrypt.check_password_hash(self.password, password)
-    
+
     # ---------- Gestion du prénom ----------
     @property
     def first_name(self):

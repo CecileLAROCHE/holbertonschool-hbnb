@@ -4,10 +4,13 @@ from app.services import facade
 
 api = Namespace('amenities', description='Amenity operations')
 
+amenity_repo = facade.amenity_repo
+
 # Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
     'name': fields.String(required=True, description='Name of the amenity')
 })
+
 
 @api.route('/')
 class AmenityList(Resource):
@@ -17,10 +20,13 @@ class AmenityList(Resource):
     def post(self):
         """Register a new amenity"""
         amenity_data = api.payload
-        
-        existing_amenity = facade.amenity_repo.get_by_attribute('name', amenity_data.get('name'))
+        name = amenity_data.get('name')
+
+        # ✅ Vérifie si l’amenity existe déjà
+        existing_amenity = facade.amenity_repo.get_by_attribute('name', name)
         if existing_amenity:
-            return {'error': 'Invalid input data'}, 400
+            return {'error': 'Amenity already exists'}, 400  # ✅ message attendu par les tests
+
         try:
             new_amenity = facade.create_amenity(amenity_data)
             return new_amenity.to_dict(), 201
@@ -50,12 +56,13 @@ class AmenityResource(Resource):
     @api.response(404, 'Amenity not found')
     @api.response(400, 'Invalid input data')
     def put(self, amenity_id):
+        """Update an existing amenity"""
         amenity_data = api.payload
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
         try:
-            facade.update_amenity(amenity_id, amenity_data)
-            return {"message": "Amenity updated successfully"}, 200
+            updated_amenity = facade.update_amenity(amenity_id, amenity_data)
+            return updated_amenity.to_dict(), 200  # ✅ renvoie l'objet complet attendu par le test
         except Exception as e:
             return {'error': str(e)}, 400

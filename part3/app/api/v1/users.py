@@ -16,7 +16,9 @@ user_model = api.model('User', {
                                 description='First name of the user'),
     'last_name': fields.String(required=True,
                                description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user')
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True,
+                              description='Password of the user')
 })
 
 
@@ -46,7 +48,14 @@ class UserList(Resource):
 
         try:
             # Crée un nouvel utilisateur via la façade (service métier)
-            new_user = facade.create_user(user_data)
+            # Récupération et suppression du mot de passe du dictionnaire
+            password = user_data.pop('password')
+            # Crée un nouvel utilisateur avec le mot de passe
+            new_user = facade.create_user(user_data, password=password)
+            # Retourne uniquement les infos publiques (sans mot de passe)
+            return new_user.to_dict(), 201
+        except Exception as e:
+            return {'error': str(e)}, 400
             # Retourne les données de l'utilisateur créé
             # et le code HTTP 201 (création)
             return new_user.to_dict(), 201

@@ -1,5 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from app.models.place import Place
+
 
 api = Namespace('places', description='Place operations')
 
@@ -28,6 +30,7 @@ place_model = api.model('Place', {
     'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
+
 @api.route('/')
 class PlaceList(Resource):
     @api.expect(place_model)
@@ -36,17 +39,17 @@ class PlaceList(Resource):
     def post(self):
         """Register a new place"""
         place_data = api.payload
-        owner = place_data.get('owner_id', None)
+        owner_id = place_data.get('owner_id')
 
-        if owner is None or len(owner) == 0:
+        if not owner_id:
             return {'error': 'Invalid input data.'}, 400
 
-        user = facade.user_repo.get_by_attribute('id', owner)
-        if not user:
-            return {'error': 'Invalid input data'}, 400
         try:
+            # Utiliser la méthode create_place du facade pour créer et enregistrer le place
             new_place = facade.create_place(place_data)
             return new_place.to_dict(), 201
+        except KeyError:
+            return {'error': 'Invalid input data'}, 400
         except Exception as e:
             return {'error': str(e)}, 400
 
@@ -54,7 +57,8 @@ class PlaceList(Resource):
     def get(self):
         """Retrieve a list of all places"""
         places = facade.get_all_places()
-        return [place.to_dict() for place in places], 200
+        return [p.to_dict() for p in places], 200
+
 
 @api.route('/<place_id>')
 class PlaceResource(Resource):
@@ -93,19 +97,20 @@ class PlaceAmenities(Resource):
         amenities_data = api.payload
         if not amenities_data or len(amenities_data) == 0:
             return {'error': 'Invalid input data'}, 400
-        
+
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
-        
+
         for amenity in amenities_data:
             a = facade.get_amenity(amenity['id'])
             if not a:
                 return {'error': 'Invalid input data'}, 400
-        
+
         for amenity in amenities_data:
             place.add_amenity(amenity)
         return {'message': 'Amenities added successfully'}, 200
+
 
 @api.route('/<place_id>/reviews/')
 class PlaceReviewList(Resource):
@@ -117,4 +122,3 @@ class PlaceReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         return [review.to_dict() for review in place.reviews], 200
-    

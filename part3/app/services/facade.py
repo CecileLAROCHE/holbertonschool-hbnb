@@ -4,6 +4,7 @@ from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
 
+
 class HBnBFacade:
     def __init__(self):
         self.user_repo = InMemoryRepository()
@@ -12,11 +13,17 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
 
     # USER
-    def create_user(self, user_data):
-        user = User(**user_data)
+    def create_user(self, user_data, password=None):
+        """Crée un utilisateur et hache son mot de passe."""
+        user = User(
+            first_name=user_data['first_name'],
+            last_name=user_data['last_name'],
+            email=user_data['email'],
+            password=password  # le mot de passe sera haché dans le modèle
+        )
         self.user_repo.add(user)
         return user
-    
+
     def get_users(self):
         return self.user_repo.get_all()
 
@@ -25,10 +32,10 @@ class HBnBFacade:
 
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
-    
+
     def update_user(self, user_id, user_data):
         self.user_repo.update(user_id, user_data)
-    
+
     # AMENITY
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
@@ -42,7 +49,11 @@ class HBnBFacade:
         return self.amenity_repo.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
-        self.amenity_repo.update(amenity_id, amenity_data)
+        """Met à jour une amenity et renvoie l’objet mis à jour"""
+        updated = self.amenity_repo.update(amenity_id, amenity_data)
+        if updated is None:
+            raise ValueError("Amenity not found")
+        return updated
 
     # PLACE
     def create_place(self, place_data):
@@ -81,7 +92,7 @@ class HBnBFacade:
             raise KeyError('Invalid input data')
         del review_data['user_id']
         review_data['user'] = user
-        
+
         place = self.place_repo.get(review_data['place_id'])
         if not place:
             raise KeyError('Invalid input data')
@@ -93,7 +104,7 @@ class HBnBFacade:
         user.add_review(review)
         place.add_review(review)
         return review
-        
+
     def get_review(self, review_id):
         return self.review_repo.get(review_id)
 
@@ -111,10 +122,8 @@ class HBnBFacade:
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
-        
         user = self.user_repo.get(review.user.id)
         place = self.place_repo.get(review.place.id)
-
         user.delete_review(review)
         place.delete_review(review)
         self.review_repo.delete(review_id)

@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restx import Api
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+from app.api.v1.auth import api as auth_ns
 
 # importe le dictionnaire de config
 from config import config
@@ -13,6 +15,7 @@ from app.api.v1.reviews import api as reviews_ns
 
 # instance globale
 bcrypt = Bcrypt()
+jwt = JWTManager()
 
 
 def create_app(config_name='default'):
@@ -24,6 +27,7 @@ def create_app(config_name='default'):
 
     # Initialiser Bcrypt avec l’app
     bcrypt.init_app(app)
+    jwt.init_app(app)
 
     # Initialiser l’API RESTX
     api = Api(
@@ -36,5 +40,6 @@ def create_app(config_name='default'):
     api.add_namespace(amenities_ns, path='/api/v1/amenities')
     api.add_namespace(places_ns, path='/api/v1/places')
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
+    api.add_namespace(auth_ns, path='/api/v1/auth')
 
     return app
