@@ -10,7 +10,7 @@ This document is a compilation of the 3 types of diagrams asked at the beginning
 
 ## High-Level Architecture
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/High-Level%20Diagram.png?raw=true" alt="High-Level" width="150"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/High-Level%20Diagram.png?raw=true" alt="High-Level" width="150"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram provide a conceptual overview of how the different components of the application are organized and how they interact with each other.
 This high-level package diagram that illustrates the three-layer architecture of the HBnB application and the communication between these layers via the facade pattern.
@@ -59,7 +59,7 @@ This layer contain 2 items\
 
 ## Business Logic Layer
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/Class%20Diagram.png?raw=true" alt="Class-diagram" width="500"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/Class%20Diagram.png?raw=true" alt="Class-diagram" width="500"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram depict the entities within this layer, their attributes, methods, and the relationships between them. The goal is to provide a clear and detailed visual representation of the core business logic, focusing on the key entities: User, Place, Review, and Amenity.
 
@@ -102,7 +102,7 @@ This 4 sequence diagrams help to visualize how different components of the syste
 
 ### User Registration
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/Sequence%20Diagrams_User%20Registration.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/Sequence%20Diagrams_User%20Registration.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram show the step the program will do to register a new user.
 
@@ -117,7 +117,7 @@ This diagram show the step the program will do to register a new user.
 
 ### Place Creation
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/Sequence%20Diagrams_Place%20Creation.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/Sequence%20Diagrams_Place%20Creation.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram show the step the program will do to create a new Plave.
 
@@ -133,7 +133,7 @@ This diagram show the step the program will do to create a new Plave.
 
 ### Review Submission
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/Sequence%20Diagrams_Review%20Submission.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/Sequence%20Diagrams_Review%20Submission.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram show the step the program will do to submit a new review.
 
@@ -149,7 +149,7 @@ This diagram show the step the program will do to submit a new review.
 
 ## Fetching a List of Places
 
-<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part%201/Diagram%20pictures/Sequence%20Diagrams_Fetching%20a%20List%20of%20Places%20diagram.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/part1/Diagram%20pictures/Sequence%20Diagrams_Fetching%20a%20List%20of%20Places%20diagram.png?raw=true" alt="High-Level" width="800"><!-- markdownlint-disable-line MD033 --></p>
 
 This diagram show the step the program will do to fetching a List of Places.
 
