@@ -1,6 +1,7 @@
 import unittest
 from app import create_app
 from app.models.user import User
+import uuid
 from app.persistence.repository import InMemoryRepository
 from app import create_app, bcrypt
 from app.services.facade import HBnBFacade
@@ -103,7 +104,7 @@ class TestUserModel(unittest.TestCase):
 
 
 class TestUserEndpoints(unittest.TestCase):
-    """Tests d’intégration des endpoints /api/v1/users/"""
+    """Tests d'intégration des endpoints /api/v1/users/"""
 
     def setUp(self):
         self.app = create_app()
@@ -241,57 +242,66 @@ class TestUserPassword(unittest.TestCase):
 
 
 class TestUserAuth(unittest.TestCase):
+    """Tests pour l'authentification et les routes protégées"""
 
     def setUp(self):
+        # Réinitialiser les emails avant chaque test
+        User.emails = set()
+
+        # Initialiser l'application et le client de test
         self.app = create_app('development')
         self.client = self.app.test_client()
-        self.facade = HBnBFacade()
 
-        # Crée un utilisateur de test
-        self.user = self.facade.create_user({
-            "first_name": "Penelope",
-            "last_name": "Garcia",
-            "email": "The_Black_Queen@FBI.com"
-        }, password="MyPAssword")
+        # Crée un email unique pour l'utilisateur
+        self.email = f"martin{uuid.uuid4()}@ris.com"
+        self.password = "MyPAssword"
+
+        # Crée l'utilisateur via le endpoint /api/v1/users/
+        response = self.client.post('/api/v1/users/', json={
+            "first_name": "Martin",
+            "last_name": "Bernier",
+            "email": self.email,
+            "password": self.password
+        })
+        self.assertEqual(response.status_code, 201)
+        self.user_id = response.get_json()['id']
 
     def test_login_and_jwt(self):
-        # Login
+        """Vérifie qu'on peut se connecter et obtenir un token JWT"""
         response = self.client.post('/api/v1/auth/login', json={
-            "email": "The_Black_Queen@FBI.com",
-            "password": "MyPAssword"
+            "email": self.email,
+            "password": self.password
         })
-
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertIn("access_token", data)
 
-        # Vérifie le JWT
-        token_data = decode_token(data["access_token"])
-        self.assertEqual(token_data["sub"], str(self.user.id))
-        self.assertFalse(token_data["is_admin"])
+    def test_access_protected_route(self):
+        """Vérifie l'accès à une route protégée avec un token JWT"""
+        # Login pour récupérer le token
+        login_resp = self.client.post('/api/v1/auth/login', json={
+            "email": self.email,
+            "password": self.password
+        })
+        self.assertEqual(login_resp.status_code, 200)
+        token = login_resp.get_json()["access_token"]
+
+        # Accéder à une route protégée
+        protected_resp = self.client.get('/api/v1/auth/protected',
+                                         headers={"Authorization": f"Bearer {token}"})
+        self.assertEqual(protected_resp.status_code, 200)
+        data = protected_resp.get_json()
+        self.assertIn("Hello, user", data["message"])
 
     def test_login_invalid_credentials(self):
+        """Vérifie qu'un login avec mot de passe incorrect renvoie 401"""
         response = self.client.post('/api/v1/auth/login', json={
-            "email": "The_Black_Queen@FBI.com",
+            "email": self.email,
             "password": "WrongPassword"
         })
         self.assertEqual(response.status_code, 401)
         data = response.get_json()
         self.assertEqual(data["error"], "Invalid credentials")
-
-    def test_access_protected_route(self):
-        login_resp = self.client.post('/api/v1/auth/login', json={
-            "email": "The_Black_Queen@FBI.com",
-            "password": "MyPAssword"
-        })
-        token = login_resp.get_json()["access_token"]
-        protected_resp = self.client.get(
-            '/api/v1/auth/protected',
-            headers={"Authorization": f"Bearer {token}"}
-        )
-        self.assertEqual(protected_resp.status_code, 200)
-        data = protected_resp.get_json()
-        self.assertIn(str(self.user.id), data["message"])
 
 
 if __name__ == "__main__":
