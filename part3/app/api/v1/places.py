@@ -20,14 +20,22 @@ user_model = api.model('PlaceUser', {
 
 # Define the place model for input validation and documentation
 place_model = api.model('Place', {
-    'title': fields.String(required=True, description='Title of the place'),
+    'title': fields.String(required=True,
+                           description='Title of the place'),
     'description': fields.String(description='Description of the place'),
-    'price': fields.Float(required=True, description='Price per night'),
-    'latitude': fields.Float(required=True, description='Latitude of the place'),
-    'longitude': fields.Float(required=True, description='Longitude of the place'),
-    'owner_id': fields.String(required=True, description='ID of the owner'),
-    'owner': fields.Nested(user_model, description='Owner details'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
+    'price': fields.Float(required=True,
+                          description='Price per night'),
+    'latitude': fields.Float(required=True,
+                             description='Latitude of the place'),
+    'longitude': fields.Float(required=True,
+                              description='Longitude of the place'),
+    'owner_id': fields.String(required=True,
+                              description='ID of the owner'),
+    'owner': fields.Nested(user_model,
+                           description='Owner details'),
+    'amenities': fields.List(fields.String,
+                             required=True,
+                             description="List of amenities ID's")
 })
 
 
@@ -45,7 +53,8 @@ class PlaceList(Resource):
             return {'error': 'Invalid input data.'}, 400
 
         try:
-            # Utiliser la méthode create_place du facade pour créer et enregistrer le place
+            # Utiliser la méthode create_place du facade pour créer et
+            # enregistrer le place
             new_place = facade.create_place(place_data)
             return new_place.to_dict(), 201
         except KeyError:
@@ -86,6 +95,7 @@ class PlaceResource(Resource):
             return {'message': 'Place updated successfully'}, 200
         except Exception as e:
             return {'error': str(e)}, 400
+
 
 @api.route('/<place_id>/amenities')
 class PlaceAmenities(Resource):

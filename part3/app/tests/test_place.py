@@ -18,13 +18,13 @@ def test_place_creation_model():
                   price=100.0,
                   latitude=37.7749,
                   longitude=-122.4194,
-                  owner=owner)
+                  owner_id=owner.id)
 
     assert place.title == "Cozy Apartment"
     assert place.price == 100.0
     assert place.latitude == 37.7749
     assert place.longitude == -122.4194
-    assert place.owner == owner
+    assert place.owner == owner.id
     assert place.description == "A nice place to stay"
 
     # Ajout d’un avis
@@ -39,10 +39,18 @@ def test_place_invalid_title():
     owner = User(first_name="Bob", last_name="Lee", email="bob@example.com")
 
     with pytest.raises(ValueError):
-        Place(title="", price=50.0, latitude=48.8, longitude=2.3, owner=owner)
+        Place(title="",
+              price=50.0,
+              latitude=48.8,
+              longitude=2.3,
+              owner_id=owner.id)
 
     with pytest.raises(TypeError):
-        Place(title=123, price=50.0, latitude=48.8, longitude=2.3, owner=owner)
+        Place(title=123,
+              price=50.0,
+              latitude=48.8,
+              longitude=2.3,
+              owner_id=owner.id)
 
 
 def test_place_invalid_price():
@@ -53,37 +61,43 @@ def test_place_invalid_price():
     with pytest.raises(TypeError):
         Place(title="Cottage",
               price="cheap",
-              latitude=48.8, longitude=2.3, owner=owner)
-
-    with pytest.raises(ValueError):
-        Place(title="Cottage", price=-10,
               latitude=48.8,
               longitude=2.3,
-              owner=owner)
+              owner_id=owner.id)
+
+    with pytest.raises(ValueError):
+        Place(title="Cottage",
+              price=-10,
+              latitude=48.8,
+              longitude=2.3,
+              owner_id=owner.id)
 
 
 def test_place_invalid_latitude_longitude():
-    owner = User(first_name="Tom", last_name="Hardy", email="tom@example.com")
+    owner = User(first_name="Tom",
+                 last_name="Hardy",
+                 email="tom@example.com")
 
     with pytest.raises(TypeError):
         Place(title="House",
               price=100,
               latitude="48.8",
               longitude=2.3,
-              owner=owner)
+              owner_id=owner.id)
 
     with pytest.raises(ValueError):
         Place(title="House",
               price=100,
               latitude=200,
               longitude=2.3,
-              owner=owner)
+              owner_id=owner.id)
 
     with pytest.raises(ValueError):
         Place(title="House",
               price=100,
               latitude=48.8,
-              longitude=-200, owner=owner)
+              longitude=-200,
+              owner_id=owner.id)
 
 
 def test_owner_type():

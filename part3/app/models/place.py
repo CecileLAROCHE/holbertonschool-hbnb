@@ -8,7 +8,7 @@ class Place(BaseModel):
                  price: float,
                  latitude: float,
                  longitude: float,
-                 owner,
+                 owner_id,
                  description=None):
         super().__init__()
         self.title = title
@@ -16,7 +16,7 @@ class Place(BaseModel):
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
-        self.owner = owner
+        self.owner = owner_id
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 

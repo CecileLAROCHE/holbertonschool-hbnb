@@ -30,11 +30,14 @@ class User(BaseModel):
     def hash_password(self, password):
         """Hache le mot de passe avant de le stocker."""
         from app import bcrypt
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        if password:
+            self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
         """Vérifie si le mot de passe fourni correspond au hash stocké."""
         from app import bcrypt
+        if not self.password:
+            return False
         return bcrypt.check_password_hash(self.password, password)
 
     # ---------- Gestion du prénom ----------

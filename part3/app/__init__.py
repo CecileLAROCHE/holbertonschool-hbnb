@@ -27,6 +27,7 @@ def create_app(config_name='default'):
 
     # Initialiser Bcrypt avec l’app
     bcrypt.init_app(app)
+    # Initialiser JWT avec l'app
     jwt.init_app(app)
 
     # Initialiser l’API RESTX

@@ -2,6 +2,9 @@ import unittest
 from app import create_app
 from app.models.user import User
 from app.persistence.repository import InMemoryRepository
+from app import create_app, bcrypt
+from app.services.facade import HBnBFacade
+from flask_jwt_extended import decode_token
 
 
 class TestUserModel(unittest.TestCase):
@@ -203,6 +206,92 @@ class TestUserEndpoints(unittest.TestCase):
         emails = [user["email"] for user in data]
         for u in users_to_create:
             self.assertIn(u["email"], emails)
+
+
+class TestUserPassword(unittest.TestCase):
+    """Tests pour la gestion des mots de passe dans le modèle User"""
+
+    def setUp(self):
+        # On vide la liste globale des emails avant chaque test
+        User.emails = set()
+
+    def test_password_hash_and_verify(self):
+        """Vérifie que le mot de passe est haché et vérifié correctement"""
+        user = User(
+            first_name="Alice",
+            last_name="Smith",
+            email="alice@example.com",
+            password="monmotdepasse123"
+        )
+
+        # Le mot de passe stocké ne doit pas être en clair
+        self.assertNotEqual(user.password, "monmotdepasse123")
+        self.assertTrue(user.password.startswith("$2b$")
+                        or user.password.startswith("$2a$"))
+
+        # Vérifie que la vérification fonctionne
+        self.assertTrue(user.verify_password("monmotdepasse123"))
+        self.assertFalse(user.verify_password("motfaux"))
+
+    def test_unique_email(self):
+        """Vérifie que deux utilisateurs ne peuvent pas avoir le même email"""
+        _ = User("Bob", "Jones", "bob@example.com")
+        with self.assertRaises(ValueError):
+            _ = User("Bobby", "Brown", "bob@example.com")
+
+
+class TestUserAuth(unittest.TestCase):
+
+    def setUp(self):
+        self.app = create_app('development')
+        self.client = self.app.test_client()
+        self.facade = HBnBFacade()
+
+        # Crée un utilisateur de test
+        self.user = self.facade.create_user({
+            "first_name": "Penelope",
+            "last_name": "Garcia",
+            "email": "The_Black_Queen@FBI.com"
+        }, password="MyPAssword")
+
+    def test_login_and_jwt(self):
+        # Login
+        response = self.client.post('/api/v1/auth/login', json={
+            "email": "The_Black_Queen@FBI.com",
+            "password": "MyPAssword"
+        })
+
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertIn("access_token", data)
+
+        # Vérifie le JWT
+        token_data = decode_token(data["access_token"])
+        self.assertEqual(token_data["sub"], str(self.user.id))
+        self.assertFalse(token_data["is_admin"])
+
+    def test_login_invalid_credentials(self):
+        response = self.client.post('/api/v1/auth/login', json={
+            "email": "The_Black_Queen@FBI.com",
+            "password": "WrongPassword"
+        })
+        self.assertEqual(response.status_code, 401)
+        data = response.get_json()
+        self.assertEqual(data["error"], "Invalid credentials")
+
+    def test_access_protected_route(self):
+        login_resp = self.client.post('/api/v1/auth/login', json={
+            "email": "The_Black_Queen@FBI.com",
+            "password": "MyPAssword"
+        })
+        token = login_resp.get_json()["access_token"]
+        protected_resp = self.client.get(
+            '/api/v1/auth/protected',
+            headers={"Authorization": f"Bearer {token}"}
+        )
+        self.assertEqual(protected_resp.status_code, 200)
+        data = protected_resp.get_json()
+        self.assertIn(str(self.user.id), data["message"])
 
 
 if __name__ == "__main__":

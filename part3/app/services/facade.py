@@ -34,7 +34,15 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
 
     def update_user(self, user_id, user_data):
+        user = self.user_repo.get(user_id)
+        if not user:
+            raise ValueError("User not found")
+        # Si un mot de passe est fourni, on le hache avant la mise à jour
+        if 'password' in user_data:
+            user.hash_password(user_data['password'])
+            del user_data['password']
         self.user_repo.update(user_id, user_data)
+        return user
 
     # AMENITY
     def create_amenity(self, amenity_data):

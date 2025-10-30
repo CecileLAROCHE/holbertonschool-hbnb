@@ -56,13 +56,6 @@ class UserList(Resource):
             return new_user.to_dict(), 201
         except Exception as e:
             return {'error': str(e)}, 400
-            # Retourne les données de l'utilisateur créé
-            # et le code HTTP 201 (création)
-            return new_user.to_dict(), 201
-        except Exception as e:
-            # Gère toute erreur levée lors de la création
-            # (ex: validation, DB, etc.)
-            return {'error': str(e)}, 400
 
     # Endpoint GET /users/
     # Réponse de succès

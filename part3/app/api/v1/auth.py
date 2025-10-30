@@ -17,7 +17,8 @@ class Login(Resource):
     @api.expect(login_model)
     def post(self):
         """Authenticate user and return a JWT token"""
-        credentials = api.payload  # Get the email and password from the request payload
+        # Get the email and password from the request payload
+        credentials = api.payload
 
         # Step 1: Retrieve the user based on the provided email
         user = facade.get_user_by_email(credentials['email'])
@@ -37,7 +38,7 @@ class Login(Resource):
         return {'access_token': access_token}, 200
 
 
-@api.route('/')
+@api.route('/protected')
 class ProtectedResource(Resource):
     @jwt_required()
     def get(self):
