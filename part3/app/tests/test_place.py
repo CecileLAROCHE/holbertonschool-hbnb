@@ -17,47 +17,6 @@ def app_client():
         yield client
 
 
-@pytest.fixture
-def owner():
-    """Crée un utilisateur pour les tests API"""
-    # On initialise l'email set pour ne pas avoir de doublon
-    User.emails = set()
-
-    user = User(
-        first_name="Dereck",
-        last_name="Morgan",
-        email="M.Dereck@FBI.com",
-        password="SuperSecret123"  # Mot de passe pour login
-    )
-    return user
-
-
-@pytest.fixture
-def auth_header(app_client, owner):
-    """Fixture pour obtenir le header Authorization avec JWT"""
-    # Login pour obtenir le token JWT
-    resp = app_client.post('/api/v1/auth/login', json={
-        "email": owner.email,
-        "password": "SuperSecret123"  # Mot de passe en clair
-    })
-    data = resp.get_json()
-    assert "access_token" in data, f"Login failed, got {data}"
-    token = data["access_token"]
-    return {"Authorization": f"Bearer {token}"}
-
-
-@pytest.fixture
-def place_payload(owner):
-    """Payload template pour API"""
-    return {
-        "title": "Cozy Cottage",
-        "description": "A small cozy place",
-        "latitude": 48.8566,
-        "longitude": 2.3522,
-        "price": 100,
-        "owner_id": owner.id,
-    }
-
 # -------------------- TESTS UNITAIRES DIRECTS (MODÈLE) --------------------
 
 
@@ -168,28 +127,31 @@ def client():
 
 
 @pytest.fixture
-def owner():
-    """Crée un utilisateur réel pour les tests API"""
-    user_data = {
-        "first_name": "Dereck",
-        "last_name": "Morgan",
-        "email": "M.Dereck@FBI.com",
-        "password": "MyPassword123"
-    }
-    try:
-        facade.create_user(**user_data)
-    except Exception:
-        # Ignore si déjà créé
-        pass
-    return facade.get_user_by_email(user_data["email"])
+def owner(client):
+    """Crée un utilisateur via l'API pour que le login fonctionne"""
+    email = "M.Dereck@FBI.com"
+    password = "ffff"
+
+    # Essayer de créer l'utilisateur via l'API
+    resp = client.post('/api/v1/auth/register', json={
+        "first_name": "M.",
+        "last_name": "Dereck",
+        "email": email,
+        "password": password
+    })
+
+    data = resp.get_json()
+    user_id = data.get("id") if data else None
+
+    return {"email": email, "password": password, "id": user_id}
 
 
 @pytest.fixture
 def auth_header(client, owner):
     """Fixture pour obtenir le header Authorization avec JWT"""
     resp = client.post('/api/v1/auth/login', json={
-        "email": owner.email,
-        "password": "MyPassword123"
+        "email": owner["email"],
+        "password": owner["password"]
     })
     token = resp.get_json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
@@ -204,7 +166,7 @@ def place_payload(owner):
         "latitude": 48.8566,
         "longitude": 2.3522,
         "price": 100,
-        "owner_id": owner.id,
+        "owner_id": owner["id"],
     }
 
 

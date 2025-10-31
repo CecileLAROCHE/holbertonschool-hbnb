@@ -2,6 +2,7 @@ from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services import facade
+from flask_jwt_extended import get_jwt
 
 api = Namespace('auth', description='Authentication operations')
 
@@ -44,3 +45,14 @@ class ProtectedResource(Resource):
     def get(self):
         user_id = get_jwt_identity()
         return {'message': f'Hello, user {user_id}'}, 200
+
+
+def is_admin():
+    """Vérifie si l'utilisateur courant est un administrateur."""
+    claims = get_jwt()
+    return claims.get('is_admin', False)
+
+
+def current_user_id():
+    """Retourne l'ID de l'utilisateur courant à partir du JWT."""
+    return get_jwt_identity()
