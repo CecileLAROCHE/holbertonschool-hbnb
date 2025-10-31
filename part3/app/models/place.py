@@ -1,5 +1,4 @@
 from .basemodel import BaseModel
-from .user import User
 
 
 class Place(BaseModel):
@@ -16,7 +15,7 @@ class Place(BaseModel):
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
-        self.owner = owner_id
+        self.owner_id = owner_id
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 
@@ -67,16 +66,6 @@ class Place(BaseModel):
         super().is_between("longitude", value, -180, 180)
         self.__longitude = value
 
-    @property
-    def owner(self):
-        return self.__owner
-
-    @owner.setter
-    def owner(self, value):
-        if not isinstance(value, User):
-            raise TypeError("Owner must be a user instance")
-        self.__owner = value
-
     def add_review(self, review):
         """Add a review to the place."""
         self.reviews.append(review)
@@ -97,7 +86,7 @@ class Place(BaseModel):
             'price': self.price,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'owner_id': self.owner.id
+            'owner_id': self.owner_id
         }
 
     def to_dict_list(self):
@@ -108,7 +97,7 @@ class Place(BaseModel):
             'price': self.price,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'owner': self.owner.to_dict(),
+            'owner_id': self.owner_id,
             'amenities': self.amenities,
             'reviews': self.reviews
         }

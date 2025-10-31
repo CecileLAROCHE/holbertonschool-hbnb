@@ -25,7 +25,7 @@ class AmenityList(Resource):
         # ✅ Vérifie si l’amenity existe déjà
         existing_amenity = facade.amenity_repo.get_by_attribute('name', name)
         if existing_amenity:
-            return {'error': 'Amenity already exists'}, 400  # ✅ message attendu par les tests
+            return {'error': 'Amenity already exists'}, 400
 
         try:
             new_amenity = facade.create_amenity(amenity_data)
@@ -63,6 +63,6 @@ class AmenityResource(Resource):
             return {'error': 'Amenity not found'}, 404
         try:
             updated_amenity = facade.update_amenity(amenity_id, amenity_data)
-            return updated_amenity.to_dict(), 200  # ✅ renvoie l'objet complet attendu par le test
+            return updated_amenity.to_dict(), 200
         except Exception as e:
             return {'error': str(e)}, 400
