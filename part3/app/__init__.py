@@ -13,22 +13,25 @@ from app.api.v1.amenities import api as amenities_ns
 from app.api.v1.places import api as places_ns
 from app.api.v1.reviews import api as reviews_ns
 
+from flask_sqlalchemy import SQLAlchemy
+
 # instance globale
 bcrypt = Bcrypt()
 jwt = JWTManager()
+db = SQLAlchemy()
 
 
-def create_app(config_name='default'):
+def create_app(config_name=['development']):
     """Application Factory : crée et configure l'app Flask"""
     app = Flask(__name__)
 
     # Charger la configuration choisie
     app.config.from_object(config[config_name])
 
-    # Initialiser Bcrypt avec l’app
+    # Initialiser les extensions
     bcrypt.init_app(app)
-    # Initialiser JWT avec l'app
     jwt.init_app(app)
+    db.init_app(app)
 
     # Initialiser l’API RESTX
     api = Api(
