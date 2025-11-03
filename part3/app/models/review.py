@@ -1,64 +1,47 @@
-from .basemodel import BaseModel
-from .place import Place
-from .user import User
+from .basemodel import BaseModel, db
 
 
 class Review(BaseModel):
-    def __init__(self, text, rating, place, user):
-        super().__init__()
-        self.text = text
-        self.rating = rating
-        self.place = place
-        self.user = user
+    __tablename__ = "reviews"
+
+    _text = db.Column("text", db.String(500), nullable=False)
+    _rating = db.Column("rating", db.Integer, nullable=False)
+    place_id = db.Column(db.String(36),
+                         db.ForeignKey("places.id"), nullable=False)
+    user_id = db.Column(db.String(36),
+                        db.ForeignKey("users.id"), nullable=False)
+
+    place = db.relationship("Place", back_populates="reviews")
+    user = db.relationship("User", back_populates="reviews")
 
     @property
     def text(self):
-        return self.__text
+        return self._text
 
     @text.setter
     def text(self, value):
-        if not value:
-            raise ValueError("Text cannot be empty")
         if not isinstance(value, str):
             raise TypeError("Text must be a string")
-        self.__text = value
+        if not value.strip():
+            raise ValueError("Text cannot be empty")
+        self._text = value
 
     @property
     def rating(self):
-        return self.__rating
+        return self._rating
 
     @rating.setter
     def rating(self, value):
         if not isinstance(value, int):
             raise TypeError("Rating must be an integer")
-        super().is_between('Rating', value, 1, 6)
-        self.__rating = value
-
-    @property
-    def place(self):
-        return self.__place
-
-    @place.setter
-    def place(self, value):
-        if not isinstance(value, Place):
-            raise TypeError("Place must be a place instance")
-        self.__place = value
-
-    @property
-    def user(self):
-        return self.__user
-
-    @user.setter
-    def user(self, value):
-        if not isinstance(value, User):
-            raise TypeError("User must be a user instance")
-        self.__user = value
+        super().is_between("Rating", value, 1, 6)
+        self._rating = value
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'text': self.text,
-            'rating': self.rating,
-            'place_id': self.place.id,
-            'user_id': self.user.id
+            "id": self.id,
+            "text": self.text,
+            "rating": self.rating,
+            "place_id": self.place_id,
+            "user_id": self.user_id
         }

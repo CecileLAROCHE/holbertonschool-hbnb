@@ -95,23 +95,45 @@ tree -I "**pycache**|*.pyc|.git"
 
 To have more details, please go see the README of each part
 
-├── AUTHORS\
-├── Part 1\
-│   ├── Diagram pictures\
-│   └── Technical_Document.md\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)\
-├── Part 2\
-│   ├── app\
-│   │   ├── api\
-│   │   │   └── v1\
-│   │   ├── models\
-│   │   ├── persistence\
-│   │   └── services\
-│   ├── Picture_for_README\
-│   ├── tests\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/README_part2.md)\
-├── AUTHOR\
-└── README.md
+├── app
+│   ├── api
+│   │   ├── \_\_init\_\_.py.py
+│   │   └── v1
+│   ├── \_\_init\_\_.py.py
+│   ├── models
+│   │   ├── amenity.py
+│   │   ├── basemodel.py
+│   │   ├── \_\_init\_\_.py.py
+│   │   ├── place.py
+│   │   ├── review.py
+│   │   └── user.py
+│   ├── persistence
+│   │   ├── amenity_repository.py
+│   │   ├── database.py
+│   │   ├── \_\_init\_\_.py.py
+│   │   ├── place_repository.py
+│   │   ├── repository.py
+│   │   ├── review_repository.py
+│   │   └── user_repository.py
+│   ├── services
+│   │   ├── facade.py
+│   │   └── \_\_init\_\_.py.py
+│   └── tests
+│       ├── conftest.py
+│       ├── \_\_init\_\_.py.py
+│       ├── test_amenity.py
+│       ├── test_place.py
+│       ├── test_review.py
+│       └── test_user.py
+├── config.py
+├── create_admin.py
+├── hbnb.db
+├── instance
+│   └── development.db
+├── pyvenv.cfg
+├── README_part3.md
+├── requirements.txt
+└── run.py
 
 ## 👥 Authors
 

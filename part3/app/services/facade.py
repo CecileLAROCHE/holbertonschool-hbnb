@@ -1,52 +1,45 @@
-from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
-from app.persistence.sqlalchemy_repository import SQLAlchemyRepository
+
+from app.persistence.user_repository import UserRepository
+from app.persistence.place_repository import PlaceRepository
+from app.persistence.review_repository import ReviewRepository
+from app.persistence.amenity_repository import AmenityRepository
 
 
 class HBnBFacade:
     def __init__(self):
-        # 🔄 Remplacement de InMemoryRepository par SQLAlchemyRepository
-        self.user_repo = SQLAlchemyRepository(User)
-        self.amenity_repo = SQLAlchemyRepository(Amenity)
-        self.place_repo = SQLAlchemyRepository(Place)
-        self.review_repo = SQLAlchemyRepository(Review)
+        self.user_repo = UserRepository()
+        self.place_repo = PlaceRepository()
+        self.review_repo = ReviewRepository()
+        self.amenity_repo = AmenityRepository()
 
-    # USER
+    # USERS
     def create_user(self, user_data, password=None):
-        """Crée un utilisateur et hache son mot de passe."""
         user = User(
             first_name=user_data['first_name'],
             last_name=user_data['last_name'],
             email=user_data['email'],
-            password=password  # le mot de passe sera haché dans le modèle
+            password=password
         )
         self.user_repo.add(user)
         return user
 
-    def get_users(self):
-        return self.user_repo.get_all()
+    def get_user_by_email(self, email):
+        return self.user_repo.get_by_attribute('email', email)
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
 
-    def get_user_by_email(self, email):
-        return self.user_repo.get_by_attribute('email', email)
+    def get_users(self):
+        return self.user_repo.get_all()
 
     def update_user(self, user_id, user_data):
-        user = self.user_repo.get(user_id)
-        if not user:
-            raise ValueError("User not found")
-        # Si un mot de passe est fourni, on le hache avant la mise à jour
-        if 'password' in user_data:
-            user.hash_password(user_data['password'])
-            del user_data['password']
-        self.user_repo.update(user_id, user_data)
-        return user
+        return self.user_repo.update(user_id, user_data)
 
-    # AMENITY
+    # AMENITIES
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
         self.amenity_repo.add(amenity)
@@ -59,33 +52,12 @@ class HBnBFacade:
         return self.amenity_repo.get_all()
 
     def update_amenity(self, amenity_id, amenity_data):
-        """Met à jour une amenity et renvoie l’objet mis à jour"""
-        updated = self.amenity_repo.update(amenity_id, amenity_data)
-        if updated is None:
-            raise ValueError("Amenity not found")
-        return updated
+        return self.amenity_repo.update(amenity_id, amenity_data)
 
-    # PLACE
+    # PLACES
     def create_place(self, place_data):
-        user = self.user_repo.get_by_attribute('id', place_data['owner_id'])
-        if not user:
-            raise KeyError('Invalid input data')
-
-        amenities = place_data.pop('amenities', None)
-
-        # Ne pas remplacer owner_id par owner
         place = Place(**place_data)
-
         self.place_repo.add(place)
-        user.add_place(place)
-
-        if amenities:
-            for a in amenities:
-                amenity = self.get_amenity(a['id'])
-                if not amenity:
-                    raise KeyError('Invalid input data')
-            for amenity in amenities:
-                place.add_amenity(amenity)
         return place
 
     def get_place(self, place_id):
@@ -95,26 +67,12 @@ class HBnBFacade:
         return self.place_repo.get_all()
 
     def update_place(self, place_id, place_data):
-        self.place_repo.update(place_id, place_data)
+        return self.place_repo.update(place_id, place_data)
 
     # REVIEWS
     def create_review(self, review_data):
-        user = self.user_repo.get(review_data['user_id'])
-        if not user:
-            raise KeyError('Invalid input data')
-        del review_data['user_id']
-        review_data['user'] = user
-
-        place = self.place_repo.get(review_data['place_id'])
-        if not place:
-            raise KeyError('Invalid input data')
-        del review_data['place_id']
-        review_data['place'] = place
-
         review = Review(**review_data)
         self.review_repo.add(review)
-        user.add_review(review)
-        place.add_review(review)
         return review
 
     def get_review(self, review_id):
@@ -123,19 +81,8 @@ class HBnBFacade:
     def get_all_reviews(self):
         return self.review_repo.get_all()
 
-    def get_reviews_by_place(self, place_id):
-        place = self.place_repo.get(place_id)
-        if not place:
-            raise KeyError('Place not found')
-        return place.reviews
-
     def update_review(self, review_id, review_data):
-        self.review_repo.update(review_id, review_data)
+        return self.review_repo.update(review_id, review_data)
 
     def delete_review(self, review_id):
-        review = self.review_repo.get(review_id)
-        user = self.user_repo.get(review.user.id)
-        place = self.place_repo.get(review.place.id)
-        user.delete_review(review)
-        place.delete_review(review)
-        self.review_repo.delete(review_id)
+        return self.review_repo.delete(review_id)

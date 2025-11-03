@@ -2,7 +2,6 @@ import unittest
 from app.models.review import Review
 from app.models.user import User
 from app.models.place import Place
-from app.models.basemodel import BaseModel
 
 
 class TestReviewModel(unittest.TestCase):

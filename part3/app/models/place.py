@@ -1,103 +1,87 @@
-from .basemodel import BaseModel
+from .basemodel import BaseModel, db
 
 
 class Place(BaseModel):
-    def __init__(self,
-                 title: str,
-                 price: float,
-                 latitude: float,
-                 longitude: float,
-                 owner_id,
-                 description=None):
-        super().__init__()
-        self.title = title
-        self.description = description
-        self.price = price
-        self.latitude = latitude
-        self.longitude = longitude
-        self.owner_id = owner_id
-        self.reviews = []  # List to store related reviews
-        self.amenities = []  # List to store related amenities
+    __tablename__ = "places"
+
+    _title = db.Column("title", db.String(100), nullable=False)
+    _description = db.Column("description", db.Text, nullable=True)
+    _price = db.Column("price", db.Float, nullable=False)
+    _latitude = db.Column("latitude", db.Float, nullable=False)
+    _longitude = db.Column("longitude", db.Float, nullable=False)
+    owner_id = db.Column(db.String(36),
+                         db.ForeignKey("users.id"), nullable=False)
+
+    reviews = db.relationship(
+        "Review", back_populates="place",
+        cascade="all, delete-orphan", lazy=True
+    )
+    amenities = db.relationship(
+        "Amenity", secondary="place_amenity",
+        back_populates="places", lazy=True
+    )
 
     @property
     def title(self):
-        return self.__title
+        return self._title
 
     @title.setter
     def title(self, value):
-        if not value:
-            raise ValueError("Title cannot be empty")
         if not isinstance(value, str):
             raise TypeError("Title must be a string")
-        super().is_max_length('title', value, 100)
-        self.__title = value
+        if not value.strip():
+            raise ValueError("Title cannot be empty")
+        super().is_max_length("Title", value, 100)
+        self._title = value
 
     @property
     def price(self):
-        return self.__price
+        return self._price
 
     @price.setter
     def price(self, value):
-        if not isinstance(value, float) and not isinstance(value, int):
-            raise TypeError("Price must be a float")
+        if not isinstance(value, (int, float)):
+            raise TypeError("Price must be numeric")
         if value < 0:
-            raise ValueError("Price must be positive.")
-        self.__price = value
+            raise ValueError("Price must be positive")
+        self._price = value
 
     @property
     def latitude(self):
-        return self.__latitude
+        return self._latitude
 
     @latitude.setter
     def latitude(self, value):
         if not isinstance(value, (float, int)):
-            raise TypeError("Latitude must be a float")
-        super().is_between("latitude", value, -90, 90)
-        self.__latitude = value
+            raise TypeError("Latitude must be numeric")
+        super().is_between("Latitude", value, -90, 90)
+        self._latitude = value
 
     @property
     def longitude(self):
-        return self.__longitude
+        return self._longitude
 
     @longitude.setter
     def longitude(self, value):
         if not isinstance(value, (float, int)):
-            raise TypeError("Longitude must be a float")
-        super().is_between("longitude", value, -180, 180)
-        self.__longitude = value
-
-    def add_review(self, review):
-        """Add a review to the place."""
-        self.reviews.append(review)
-
-    def delete_review(self, review):
-        """Add an amenity to the place."""
-        self.reviews.remove(review)
-
-    def add_amenity(self, amenity):
-        """Add an amenity to the place."""
-        self.amenities.append(amenity)
+            raise TypeError("Longitude must be numeric")
+        super().is_between("Longitude", value, -180, 180)
+        self._longitude = value
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'title': self.title,
-            'description': self.description,
-            'price': self.price,
-            'latitude': self.latitude,
-            'longitude': self.longitude,
-            'owner_id': self.owner_id
+            "id": self.id,
+            "title": self.title,
+            "description": self._description,
+            "price": self.price,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "owner_id": self.owner_id
         }
 
     def to_dict_list(self):
         return {
-            'id': self.id,
-            'title': self.title,
-            'description': self.description,
-            'price': self.price,
-            'latitude': self.latitude,
-            'longitude': self.longitude,
-            'owner_id': self.owner_id,
-            'amenities': self.amenities,
-            'reviews': self.reviews
+            **self.to_dict(),
+            "amenities": [a.to_dict() for a in self.amenities],
+            "reviews": [r.to_dict() for r in self.reviews]
         }
