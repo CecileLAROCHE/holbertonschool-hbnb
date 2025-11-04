@@ -53,6 +53,13 @@ T
 |--------------------------------------------|-------------------------------------------------------|
 | `Run:` | `python3 -m run` |
 
+### First run
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Run flask:` | `flask shell` |
+| `Create all tables:` | `from app import db`<br>`db.create_all()`|
+
 ## 🚀 Features / Limitations
 
 ### ✅ Features
