@@ -1,8 +1,12 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.services import facade
-from flask_jwt_extended import get_jwt
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from app.services import get_facade
+from flask import request
+
+
+# ✅ initialise correctement la façade
+facade = get_facade()
 
 api = Namespace('auth', description='Authentication operations')
 
@@ -13,29 +17,28 @@ login_model = api.model('Login', {
 })
 
 
+
 @api.route('/login')
 class Login(Resource):
     @api.expect(login_model)
     def post(self):
         """Authenticate user and return a JWT token"""
-        # Get the email and password from the request payload
         credentials = api.payload
 
-        # Step 1: Retrieve the user based on the provided email
+        # 1️⃣ Retrieve user from DB
         user = facade.get_user_by_email(credentials['email'])
 
-        # Step 2: Check if the user exists and the password is correct
+        # 2️⃣ Check credentials
         if not user or not user.verify_password(credentials['password']):
             return {'error': 'Invalid credentials'}, 401
 
-        # Step 3: Create a JWT token with the user's id and is_admin flag
+        # 3️⃣ Create JWT
         access_token = create_access_token(
-                       identity=str(user.id),   # only user ID goes here
-                       additional_claims={"is_admin": user.is_admin}
-                       # extra info here
+            identity=str(user.id),
+            additional_claims={"is_admin": user.is_admin}
         )
 
-        # Step 4: Return the JWT token to the client
+        # 4️⃣ Return token
         return {'access_token': access_token}, 200
 
 

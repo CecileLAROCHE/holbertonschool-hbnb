@@ -1,10 +1,9 @@
 from flask_restx import Namespace, Resource, fields
-from app.services import facade
+from app.services import get_facade
 
-
+# ✅ Initialisation du namespace et de la façade
 api = Namespace('amenities', description='Amenity operations')
-
-amenity_repo = facade.amenity_repo
+facade = get_facade()
 
 # Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
@@ -23,7 +22,7 @@ class AmenityList(Resource):
         name = amenity_data.get('name')
 
         # ✅ Vérifie si l’amenity existe déjà
-        existing_amenity = facade.amenity_repo.get_by_attribute('name', name)
+        existing_amenity = facade.get_amenity_by_name(name)
         if existing_amenity:
             return {'error': 'Amenity already exists'}, 400
 
@@ -61,8 +60,23 @@ class AmenityResource(Resource):
         amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {'error': 'Amenity not found'}, 404
+
         try:
             updated_amenity = facade.update_amenity(amenity_id, amenity_data)
             return updated_amenity.to_dict(), 200
+        except Exception as e:
+            return {'error': str(e)}, 400
+
+    @api.response(200, 'Amenity deleted successfully')
+    @api.response(404, 'Amenity not found')
+    def delete(self, amenity_id):
+        """Delete an existing amenity"""
+        amenity = facade.get_amenity(amenity_id)
+        if not amenity:
+            return {'error': 'Amenity not found'}, 404
+
+        try:
+            facade.delete_amenity(amenity_id)
+            return {'message': 'Amenity deleted successfully'}, 200
         except Exception as e:
             return {'error': str(e)}, 400

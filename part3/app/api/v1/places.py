@@ -1,7 +1,9 @@
 from flask_restx import Namespace, Resource, fields
-from app.services import facade
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from app.services import get_facade
 
+# ✅ Initialisation de la façade (manquait)
+facade = get_facade()
 
 api = Namespace('places', description='Place operations')
 
@@ -23,29 +25,22 @@ review_model = api.model('Review', {
     'comment': fields.String(description='Comment for the review')
 })
 
-
 # Define the place model for input validation and documentation
 place_model = api.model('Place', {
-    'title': fields.String(required=True,
-                           description='Title of the place'),
+    'title': fields.String(required=True, description='Title of the place'),
     'description': fields.String(description='Description of the place'),
-    'price': fields.Float(required=True,
-                          description='Price per night'),
-    'latitude': fields.Float(required=True,
-                             description='Latitude of the place'),
-    'longitude': fields.Float(required=True,
-                              description='Longitude of the place'),
-    'owner_id': fields.String(required=True,
-                              description='ID of the owner'),
-    'amenities': fields.List(fields.String,
-                             required=True,
+    'price': fields.Float(required=True, description='Price per night'),
+    'latitude': fields.Float(required=True, description='Latitude of the place'),
+    'longitude': fields.Float(required=True, description='Longitude of the place'),
+    'owner_id': fields.String(required=True, description='ID of the owner'),
+    'amenities': fields.List(fields.String, required=True,
                              description="List of amenities ID's")
 })
 
 
+# ---------- ROUTE : /places ----------
 @api.route('/')
 class PlaceList(Resource):
-    @api.expect(place_model)
     @jwt_required()
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
@@ -72,11 +67,11 @@ class PlaceList(Resource):
         return [p.to_dict() for p in places], 200
 
 
+# ---------- ROUTE : /places/<place_id> ----------
 @api.route('/<place_id>')
 class PlaceResource(Resource):
     @api.response(200, 'Place details retrieved successfully')
     @api.response(404, 'Place not found')
-    @api.response(403, 'Unauthorized action')
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
@@ -108,6 +103,7 @@ class PlaceResource(Resource):
             return {'error': str(e)}, 400
 
 
+# ---------- ROUTE : /places/<place_id>/amenities ----------
 @api.route('/<place_id>/amenities')
 class PlaceAmenities(Resource):
     @api.expect(amenity_model)
@@ -133,6 +129,7 @@ class PlaceAmenities(Resource):
         return {'message': 'Amenities added successfully'}, 200
 
 
+# ---------- ROUTE : /places/<place_id>/reviews ----------
 @api.route('/<place_id>/reviews/')
 class PlaceReviewList(Resource):
     @api.response(200, 'List of reviews for the place retrieved successfully')

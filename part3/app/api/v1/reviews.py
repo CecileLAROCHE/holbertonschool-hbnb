@@ -1,18 +1,17 @@
 from flask_restx import Namespace, Resource, fields
-from app.services import facade
+from app.services import get_facade
+
+# ✅ Initialisation de la façade
+facade = get_facade()
 
 api = Namespace('reviews', description='Review operations')
 
 # Define the review model for input validation and documentation
 review_model = api.model('Review', {
-    'text': fields.String(required=True,
-                          description='Text of the review'),
-    'rating': fields.Integer(required=True,
-                             description='Rating of the place (1-5)'),
-    'user_id': fields.String(required=True,
-                             description='ID of the user'),
-    'place_id': fields.String(required=True,
-                              description='ID of the place')
+    'text': fields.String(required=True, description='Text of the review'),
+    'rating': fields.Integer(required=True, description='Rating of the place (1-5)'),
+    'user_id': fields.String(required=True, description='ID of the user'),
+    'place_id': fields.String(required=True, description='ID of the place')
 })
 
 
@@ -24,14 +23,21 @@ class ReviewList(Resource):
     def post(self):
         """Register a new review"""
         review_data = api.payload
+
+        # Vérifier que le lieu existe
         place = facade.get_place(review_data['place_id'])
         if not place:
             return {'error': 'Place not found'}, 400
+
+        # Vérifier que l'utilisateur existe
         user = facade.get_user(review_data['user_id'])
         if not user:
             return {'error': 'User not found'}, 400
-        if place.owner.id == user.id:
+
+        # Empêcher le propriétaire de se noter lui-même
+        if place.owner_id == user.id:
             return {'error': 'User cannot review their own place'}, 400
+
         try:
             new_review = facade.create_review(review_data)
             return new_review.to_dict(), 201
@@ -41,7 +47,8 @@ class ReviewList(Resource):
     @api.response(200, 'List of reviews retrieved successfully')
     def get(self):
         """Retrieve a list of all reviews"""
-        return [review.to_dict() for review in facade.get_all_reviews()], 200
+        reviews = facade.get_all_reviews()
+        return [review.to_dict() for review in reviews], 200
 
 
 @api.route('/<review_id>')

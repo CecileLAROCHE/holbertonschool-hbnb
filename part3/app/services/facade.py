@@ -18,13 +18,36 @@ class HBnBFacade:
 
     # USERS
     def create_user(self, user_data, password=None):
+        """
+        Crée un utilisateur en hashant le mot de passe et en gérant le cas d'un admin.
+        Évite les doublons sur l'email.
+        """
+        # Vérifie si l'utilisateur existe déjà
+        existing_user = self.get_user_by_email(user_data["email"])
+        if existing_user:
+            print(f"⚠️ Utilisateur déjà existant : {existing_user.email}")
+            return existing_user  # retourne l'utilisateur existant
+
+        # Crée un nouvel utilisateur
         user = User(
-            first_name=user_data['first_name'],
-            last_name=user_data['last_name'],
-            email=user_data['email'],
-            password=password
+            first_name=user_data["first_name"],
+            last_name=user_data["last_name"],
+            email=user_data["email"]
         )
+
+        # Hash du mot de passe si fourni
+        if password:
+            user.hash_password(password)
+        else:
+            raise ValueError("Password is required to create a user")  # optionnel mais recommandé
+
+        # Définir le statut admin si présent dans user_data
+        user.is_admin = user_data.get("is_admin", False)
+
+        # Sauvegarde dans la base via le repository
         self.user_repo.add(user)
+
+        print(f"✅ Utilisateur créé : {user.email} (Admin: {user.is_admin})")
         return user
 
     def get_user_by_email(self, email):

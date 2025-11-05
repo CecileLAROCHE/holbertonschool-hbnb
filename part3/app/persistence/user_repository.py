@@ -1,6 +1,7 @@
 from app import db
 from app.models.user import User
 
+
 class UserRepository:
     def add(self, user):
         db.session.add(user)

@@ -37,6 +37,7 @@ T
 
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
+| `move in the good repo` | `cd holbertonschool-hbnb/part3` |
 | `Create virtual environment:` | `python3 -m venv venv` |
 | `activate virtual environment:` | `source venv/bin/activate` |
 | `deactivate virtual environment:` | `deactivate` |
@@ -46,6 +47,9 @@ T
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Install dependencies:` | `pip install -r requirements.txt` |
+
+## 
+
 
 ### Run the application
 
