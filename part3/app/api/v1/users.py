@@ -35,6 +35,9 @@ class UserList(Resource):
         if existing_user:
             return {'error': 'Email already registered'}, 400
 
+        if not user_data.get('password'):
+            return {'error': 'Password is required'}, 400
+
         try:
             password = user_data.pop('password')
             new_user = facade.create_user(user_data, password=password)
@@ -78,6 +81,8 @@ class AdminUserCreate(Resource):
             return {'error': 'Email already registered'}, 400
 
         password = user_data.pop('password', None)
+        if not password:
+            return {'error': 'Password is required'}, 400
         new_user = facade.create_user(user_data, password=password)
         return new_user.to_dict(), 201
 
