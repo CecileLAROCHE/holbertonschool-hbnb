@@ -17,7 +17,6 @@ login_model = api.model('Login', {
 })
 
 
-
 @api.route('/login')
 class Login(Resource):
     @api.expect(login_model)

@@ -7,13 +7,11 @@ class Review(BaseModel):
     _text = db.Column("text", db.String(500), nullable=False)
     _rating = db.Column("rating", db.Integer, nullable=False)
 
-    place_id = db.Column(db.String(36),
-                         db.ForeignKey("places.id"), nullable=False)
-    user_id = db.Column(db.String(36),
-                        db.ForeignKey("users.id"), nullable=False)
+    place_id = db.Column(db.String(36), db.ForeignKey("places.id"), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
 
     place = db.relationship("Place", back_populates="reviews")
-    user = db.relationship("User", back_populates="reviews")
+    author = db.relationship("User", back_populates="reviews")
 
     @property
     def text(self):
@@ -35,7 +33,7 @@ class Review(BaseModel):
     def rating(self, value):
         if not isinstance(value, int):
             raise TypeError("Rating must be an integer")
-        super().is_between("Rating", value, 1, 6)
+        super().is_between("Rating", value, 1, 5)
         self._rating = value
 
     def to_dict(self):

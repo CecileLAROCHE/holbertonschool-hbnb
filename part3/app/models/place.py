@@ -9,28 +9,14 @@ class Place(BaseModel):
     _price = db.Column("price", db.Float, nullable=False)
     _latitude = db.Column("latitude", db.Float, nullable=False)
     _longitude = db.Column("longitude", db.Float, nullable=False)
-    owner_id = db.Column(db.String(36),
-                         db.ForeignKey("users.id"), nullable=False)
+    owner_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
 
     # Relations
-    reviews = db.relationship(
-        "Review",
-        back_populates="place",
-        cascade="all, delete-orphan",
-        lazy=True
-    )
-    amenities = db.relationship(
-        "Amenity",
-        secondary="place_amenity",
-        back_populates="places",
-        lazy=True
-    )
-    reviews = db.relationship(
-        "Review", back_populates="place",
-        cascade="all, delete-orphan", lazy=True
-    )
+    owner = db.relationship("User", back_populates="places")
+    reviews = db.relationship("Review", back_populates="place", cascade="all, delete-orphan", lazy=True)
+    amenities = db.relationship("Amenity", secondary="place_amenity", back_populates="places", lazy=True)
 
-# ---- PROPERTIES ----
+    # --- Propriétés ---
     @property
     def title(self):
         return self._title
@@ -78,6 +64,7 @@ class Place(BaseModel):
         super().is_between("Longitude", value, -180, 180)
         self._longitude = value
 
+    # --- Dictionnaires ---
     def to_dict(self):
         return {
             "id": self.id,

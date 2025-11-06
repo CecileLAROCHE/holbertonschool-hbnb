@@ -6,9 +6,7 @@ class Amenity(BaseModel):
 
     _name = db.Column("name", db.String(50), nullable=False, unique=True)
 
-    places = db.relationship(
-        "Place", secondary="place_amenity", back_populates="amenities"
-    )
+    places = db.relationship("Place", secondary="place_amenity", back_populates="amenities")
 
     @property
     def name(self):
