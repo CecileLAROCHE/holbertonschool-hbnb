@@ -62,7 +62,13 @@ class HBnBFacade:
     def update_user(self, user_id, user_data):
         return self.user_repo.update(user_id, user_data)
 
+    def get_all_admins():
+        """Return all users with is_admin=True"""
+        from app.models.user import User
+        return User.query.filter_by(is_admin=True).all()
+
     # AMENITIES
+
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
         self.amenity_repo.add(amenity)
