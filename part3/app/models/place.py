@@ -12,15 +12,25 @@ class Place(BaseModel):
     owner_id = db.Column(db.String(36),
                          db.ForeignKey("users.id"), nullable=False)
 
+    # Relations
+    reviews = db.relationship(
+        "Review",
+        back_populates="place",
+        cascade="all, delete-orphan",
+        lazy=True
+    )
+    amenities = db.relationship(
+        "Amenity",
+        secondary="place_amenity",
+        back_populates="places",
+        lazy=True
+    )
     reviews = db.relationship(
         "Review", back_populates="place",
         cascade="all, delete-orphan", lazy=True
     )
-    amenities = db.relationship(
-        "Amenity", secondary="place_amenity",
-        back_populates="places", lazy=True
-    )
 
+# ---- PROPERTIES ----
     @property
     def title(self):
         return self._title

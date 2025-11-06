@@ -59,6 +59,8 @@ T
 |--------------------------------------------|-------------------------------------------------------|
 | `Run flask:` | `flask shell` |
 | `Create all tables:` | `from app import db`<br>`db.create_all()`|
+| `Check:` | `from app.models.user import User`<br>`User.query.all()`|
+| `Exit:` | `exit()` |
 
 ## 🚀 Features / Limitations
 

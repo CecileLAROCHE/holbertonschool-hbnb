@@ -139,7 +139,24 @@ class SetupAdmin(Resource):
         }
 
         if not facade.get_user_by_email(admin_data["email"]):
-            admin = facade.create_user(admin_data, password=admin_data["password"])
+            admin = facade.create_user(admin_data,
+                                       password=admin_data["password"])
             return {"id": str(admin.id), "message": "Admin created"}, 201
         else:
             return {"message": "Admin already exists"}, 200
+
+
+@api.route('/admins/')
+class AdminList(Resource):
+    @jwt_required()
+    def get(self):
+        """Retrieve all admin users (admin only)"""
+        if not is_admin():
+            return {'error': 'Admin privileges required'}, 403
+
+        admins = facade.get_all_admins()
+
+        if not admins:
+            return {'message': 'No admin users found'}, 200
+
+        return [admin.to_dict() for admin in admins], 200

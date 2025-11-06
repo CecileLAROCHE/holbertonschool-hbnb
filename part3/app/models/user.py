@@ -12,8 +12,11 @@ class User(BaseModel):
     password = db.Column(db.String(128), nullable=False)
     _is_admin = db.Column("is_admin", db.Boolean, default=False)
 
-    reviews = db.relationship("Review", back_populates="user", lazy=True)
+    # --- 🔗 Relations ---
+    places = db.relationship('Place', back_populates='owner', lazy=True)
+    reviews = db.relationship('Review', back_populates='author', lazy=True)
 
+    # --- ✅ Validations et propriétés ---
     @property
     def first_name(self):
         return self._first_name
