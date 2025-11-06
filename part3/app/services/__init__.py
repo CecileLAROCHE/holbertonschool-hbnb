@@ -1,3 +1,10 @@
-from .facade import HBnBFacade
+from app.services.facade import HBnBFacade
 
-facade = HBnBFacade()
+facade = None
+
+
+def get_facade():
+    global facade
+    if facade is None:
+        facade = HBnBFacade()
+    return facade
