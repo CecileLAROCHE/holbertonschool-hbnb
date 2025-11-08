@@ -3,6 +3,8 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services import get_facade
 from flask import request
+from app import db
+from app.models.user import User
 
 
 # ✅ initialise correctement la façade
@@ -51,8 +53,19 @@ class ProtectedResource(Resource):
 
 def is_admin():
     """Vérifie si l'utilisateur courant est un administrateur."""
-    claims = get_jwt()
-    return claims.get('is_admin', False)
+    identity = get_jwt_identity()
+    if not identity:
+        return False
+
+    user = db.session.get(User, identity)
+    if not user:
+        return False
+
+    # ⚠️ Si jamais user est un tuple (ça ne devrait pas, mais on sécurise)
+    if isinstance(user, tuple):
+        user = user[0]
+
+    return getattr(user, "is_admin", False)
 
 
 def current_user_id():

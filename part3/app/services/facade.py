@@ -26,7 +26,7 @@ class HBnBFacade:
         existing_user = self.get_user_by_email(user_data["email"])
         if existing_user:
             print(f"⚠️ Utilisateur déjà existant : {existing_user.email}")
-            return existing_user  # retourne l'utilisateur existant
+            return existing_user, False  # <-- ⚠️ ICI on renvoie un tuple (user, False)
 
         # Crée un nouvel utilisateur
         user = User(
@@ -39,7 +39,7 @@ class HBnBFacade:
         if password:
             user.hash_password(password)
         else:
-            raise ValueError("Password is required to create a user")  # optionnel mais recommandé
+            raise ValueError("Password is required to create a user")
 
         # Définir le statut admin si présent dans user_data
         user.is_admin = user_data.get("is_admin", False)
@@ -48,7 +48,7 @@ class HBnBFacade:
         self.user_repo.add(user)
 
         print(f"✅ Utilisateur créé : {user.email} (Admin: {user.is_admin})")
-        return user
+        return user, True  # <-- ⚠️ ICI aussi on renvoie un tuple (user, True)
 
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('_email', email)
@@ -62,7 +62,7 @@ class HBnBFacade:
     def update_user(self, user_id, user_data):
         return self.user_repo.update(user_id, user_data)
 
-    def get_all_admins():
+    def get_all_admins(self):
         """Return all users with is_admin=True"""
         from app.models.user import User
         return User.query.filter_by(is_admin=True).all()
