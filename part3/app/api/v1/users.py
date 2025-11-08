@@ -14,10 +14,14 @@ api = Namespace('users', description='User operations')
 
 # Modèle de données attendu pour un utilisateur
 user_model = api.model('User', {
-    'first_name': fields.String(required=True, description='First name of the user'),
-    'last_name': fields.String(required=True, description='Last name of the user'),
-    'email': fields.String(required=True, description='Email of the user'),
-    'password': fields.String(required=True, description='Password of the user')
+    'first_name': fields.String(required=True,
+                                description='First name of the user'),
+    'last_name': fields.String(required=True,
+                               description='Last name of the user'),
+    'email': fields.String(required=True,
+                           description='Email of the user'),
+    'password': fields.String(required=True,
+                              description='Password of the user')
 })
 
 
@@ -165,6 +169,7 @@ class UserResource(Resource):
         except Exception as e:
             return {'error': str(e)}, 400
 
+
 # ---------- ROUTE : /users/setup-admin/ ----------
 @api.route('/setup-admin')
 class SetupAdmin(Resource):
@@ -178,7 +183,8 @@ class SetupAdmin(Resource):
             "is_admin": True
         }
 
-        admin, created = facade.create_user(admin_data, password=admin_data["password"])
+        admin, created = facade.create_user(admin_data,
+                                            password=admin_data["password"])
 
         if not created:
             return user_exists_response(admin, message="Admin already exists")
@@ -219,5 +225,8 @@ class ClearAllUsers(Resource):
             db.session.delete(user)
         db.session.commit()
 
-        print(f"🗑️ Tous les utilisateurs ({count}) ont été supprimés de la base.")
+        print(
+            f"🗑️ Tous les utilisateurs ({count}) "
+            f"ont été supprimés de la base."
+        )
         return {"message": f"{count} utilisateurs supprimés"}, 200
