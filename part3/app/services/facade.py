@@ -65,7 +65,7 @@ class HBnBFacade:
     def get_all_admins(self):
         """Return all users with is_admin=True"""
         from app.models.user import User
-        return User.query.filter_by(is_admin=True).all()
+        return [u for u in User.query.all() if getattr(u, "is_admin", False)]
 
     # AMENITIES
 
