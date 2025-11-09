@@ -19,15 +19,14 @@ class HBnBFacade:
     # USERS
     def create_user(self, user_data, password=None):
         """
-        Crée un utilisateur en hashant le mot de passe et en gérant le cas d'un admin.
-        Évite les doublons sur l'email.
+        Crée un utilisateur en hashant le mot de passe et
+        en gérant le cas d'un admin. Evite les doublons sur l'email.
         """
         # Vérifie si l'utilisateur existe déjà
         existing_user = self.get_user_by_email(user_data["email"])
         if existing_user:
             print(f"⚠️ Utilisateur déjà existant : {existing_user.email}")
-            return existing_user, False  # <-- ⚠️ ICI on renvoie un tuple (user, False)
-
+            return existing_user, False
         # Crée un nouvel utilisateur
         user = User(
             first_name=user_data["first_name"],
@@ -54,7 +53,11 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('_email', email)
 
     def get_user(self, user_id):
-        return self.user_repo.get(user_id)
+        """Récupère un utilisateur par son ID"""
+        user = self.user_repo.get(user_id)
+        if not user:
+            return None, False
+        return user, True
 
     def get_users(self):
         return self.user_repo.get_all()
@@ -75,7 +78,10 @@ class HBnBFacade:
         return amenity
 
     def get_amenity(self, amenity_id):
-        return self.amenity_repo.get(amenity_id)
+        amenity = self.amenity_repo.get(amenity_id)
+        if not amenity:
+            return None, False
+        return amenity, True
 
     def get_all_amenities(self):
         return self.amenity_repo.get_all()
@@ -85,18 +91,53 @@ class HBnBFacade:
 
     # PLACES
     def create_place(self, place_data):
+        """Crée une nouvelle place si elle n'existe pas déjà"""
+        # Vérifie si une place identique existe déjà
+        existing_place = next(
+            (p for p in self.place_repo.get_all()
+                if p.title == place_data.get('title')
+                and p.owner_id == place_data.get('owner_id')),
+            None
+        )
+        if existing_place:
+            return existing_place, False
+
+        # Crée l'objet Place à partir du dict
         place = Place(**place_data)
+        # Ajoute via le repository
         self.place_repo.add(place)
-        return place
+        return place, True
 
     def get_place(self, place_id):
-        return self.place_repo.get(place_id)
+        """Récupère une place par son ID"""
+        place = self.place_repo.get_by_id(place_id)
+        if not place:
+            return None, False
+        return place, True
 
     def get_all_places(self):
-        return self.place_repo.get_all()
+        """Récupère toutes les places"""
+        places = self.place_repo.get_all()
+        return places, True if places else ([], False)
 
     def update_place(self, place_id, place_data):
-        return self.place_repo.update(place_id, place_data)
+        """Met à jour une place"""
+        updated_place = self.place_repo.update(place_id, place_data)
+        if not updated_place:
+            return None, False
+        return updated_place, True
+
+    def delete_place(self, place_id, user_id):
+        """Supprime une place si l'utilisateur est le propriétaire"""
+        place = self.place_repo.get_by_id(place_id)
+        if not place:
+            return None, False  # place introuvable
+
+        if place.owner_id != user_id:
+            return None, False  # action non autorisée
+
+        self.place_repo.delete(place_id)
+        return place, True
 
     # REVIEWS
     def create_review(self, review_data):

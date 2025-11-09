@@ -31,6 +31,16 @@ class Place(BaseModel):
         self._title = value
 
     @property
+    def description(self):
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        if value is not None and not isinstance(value, str):
+            raise TypeError("Description must be a string or None")
+        self._description = value
+
+    @property
     def price(self):
         return self._price
 

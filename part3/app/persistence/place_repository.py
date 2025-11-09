@@ -3,8 +3,8 @@ from app import db
 
 
 class PlaceRepository:
-    def create(self, data):
-        place = Place(**data)
+    def add(self, place: Place):
+        """Ajoute une place dans la base"""
         db.session.add(place)
         db.session.commit()
         return place

@@ -3,6 +3,11 @@ from app import db
 
 
 class ReviewRepository:
+    def add(self, review: Review):
+        db.session.add(review)
+        db.session.commit()
+        return review
+
     def create(self, data):
         review = Review(**data)
         db.session.add(review)
