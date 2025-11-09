@@ -90,7 +90,6 @@ class HBnBFacade:
             self.amenity_repo.add(amenity)
             return amenity, True
         except Exception as e:
-            from sqlalchemy.exc import IntegrityError
             db.session.rollback()
             return {"error": str(e)}, False
 
