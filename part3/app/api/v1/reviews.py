@@ -25,13 +25,13 @@ class ReviewList(Resource):
         review_data = api.payload
 
         # Vérifier que le lieu existe
-        place = facade.get_place(review_data['place_id'])
-        if not place:
+        place, ok_place = facade.get_place(review_data['place_id'])
+        if not ok_place:
             return {'error': 'Place not found'}, 400
 
         # Vérifier que l'utilisateur existe
-        user = facade.get_user(review_data['user_id'])
-        if not user:
+        user, ok_user = facade.get_user(review_data['user_id'])
+        if not ok_user:
             return {'error': 'User not found'}, 400
 
         # Empêcher le propriétaire de se noter lui-même

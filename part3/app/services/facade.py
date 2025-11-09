@@ -7,6 +7,7 @@ from app.persistence.user_repository import UserRepository
 from app.persistence.place_repository import PlaceRepository
 from app.persistence.review_repository import ReviewRepository
 from app.persistence.amenity_repository import AmenityRepository
+from app import db
 
 
 class HBnBFacade:
@@ -73,21 +74,58 @@ class HBnBFacade:
     # AMENITIES
 
     def create_amenity(self, amenity_data):
-        amenity = Amenity(**amenity_data)
-        self.amenity_repo.add(amenity)
-        return amenity
+        """Crée une amenity si elle n'existe pas déjà (nom unique)"""
+        name = amenity_data.get("name")
+        if not name:
+            return {"error": "Name is required"}, False
+
+        # Vérifie si une amenity avec le même nom existe déjà
+        existing = self.amenity_repo.get_by_attribute("name", name)
+        if existing:
+            return {"error": f"Amenity '{existing.name}' already exists",
+                    "id": existing.id}, False
+
+        try:
+            amenity = Amenity(**amenity_data)
+            self.amenity_repo.add(amenity)
+            return amenity, True
+        except Exception as e:
+            from sqlalchemy.exc import IntegrityError
+            db.session.rollback()
+            return {"error": str(e)}, False
+
+    def get_all_amenities(self):
+        """Récupère toutes les amenities"""
+        amenities = self.amenity_repo.get_all()
+        return amenities if amenities else []
 
     def get_amenity(self, amenity_id):
+        """Récupère une amenity par son ID"""
         amenity = self.amenity_repo.get(amenity_id)
         if not amenity:
             return None, False
         return amenity, True
 
-    def get_all_amenities(self):
-        return self.amenity_repo.get_all()
+    def get_amenity_by_name(self, name):
+        """Retourne une amenity par son nom, ou None si elle n'existe pas"""
+        if not name:
+            return None
+        return self.amenity_repo.get_by_attribute("name", name)
 
     def update_amenity(self, amenity_id, amenity_data):
-        return self.amenity_repo.update(amenity_id, amenity_data)
+        """Met à jour une amenity existante"""
+        amenity = self.amenity_repo.update(amenity_id, amenity_data)
+        if not amenity:
+            return None, False
+        return amenity, True
+
+    def delete_amenity(self, amenity_id):
+        """Supprime une amenity"""
+        amenity = self.amenity_repo.get(amenity_id)
+        if not amenity:
+            return None, False
+        self.amenity_repo.delete(amenity_id)
+        return amenity, True
 
     # PLACES
     def create_place(self, place_data):
