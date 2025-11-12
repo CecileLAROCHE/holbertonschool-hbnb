@@ -10,12 +10,6 @@
 This project is a clone of **Airbnb**.  
 It is divided into four parts:
 
-- **Part 1:** HBnB – UML *(22 Sept → 05 Oct 2025)*
-- **Part 2:** HBnB – Business Logic & API *(08 Oct → 19 Oct 2025)*
-- **Part 3:** HBnB - Auth & DB *(22 Oct → 09 Nov 2025)*
-- **Part 4:** HBnB - Simple Web Client  *(12 Nov → 23 Nov 2025)*
-
-This repo and this README will be uptdate until the end of the project.
 
 ## 🧭 Index
 

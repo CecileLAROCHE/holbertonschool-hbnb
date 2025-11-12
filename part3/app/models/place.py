@@ -9,12 +9,20 @@ class Place(BaseModel):
     _price = db.Column("price", db.Float, nullable=False)
     _latitude = db.Column("latitude", db.Float, nullable=False)
     _longitude = db.Column("longitude", db.Float, nullable=False)
-    owner_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
+    owner_id = db.Column(db.String(36),
+                         db.ForeignKey("users.id"), nullable=False)
 
     # Relations
-    owner = db.relationship("User", back_populates="places")
-    reviews = db.relationship("Review", back_populates="place", cascade="all, delete-orphan", lazy=True)
-    amenities = db.relationship("Amenity", secondary="place_amenity", back_populates="places", lazy=True)
+    owner = db.relationship("User",
+                            back_populates="places")
+    reviews = db.relationship("Review",
+                              back_populates="place",
+                              cascade="all, delete-orphan",
+                              lazy=True)
+    amenities = db.relationship("Amenity",
+                                secondary="place_amenity",
+                                back_populates="places",
+                                lazy=True)
 
     # --- Propriétés ---
     @property
