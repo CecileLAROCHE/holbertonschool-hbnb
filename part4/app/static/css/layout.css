@@ -1,0 +1,94 @@
+/* ===== GLOBAL LAYOUT ===== */
+
+body {
+    background-color: #FEF3E2;
+    color: #333;
+}
+
+
+/* ===== HEADER ===== */
+
+header {
+  width: 100%;
+  background-color: #FAB12F;
+  padding: 15px 30px;
+      padding: 1rem;
+  border-bottom: 1px solid #FEF3E2;
+}
+
+/* Container qui aligne tout sur la même ligne */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* espace entre gauche et droite */
+  align-items: center; /* aligné verticalement au centre */
+}
+
+/* Logo */
+.logo img {
+  height: 50px;
+}
+
+/* Partie droite du header */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right a {
+  text-decoration: none;
+  color: #DD0303;
+  font-weight: bold;
+}
+
+.header-right a:hover {
+  text-decoration: underline;
+}
+
+/* ===== NAVIGATION ===== */
+
+nav {
+    width: 100%;
+    background-color: #FAB12F; /* même couleur que header */
+    border-bottom: 1px solid #FEF3E2; /* même style de séparation */
+}
+
+.navbar {
+    max-width: 1200px;     /* pour recentrer le contenu */
+    margin: 0 auto;        /* centrer */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #DD0303;  /* rouge cohérent avec ta palette */
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #f84a44; /* survol légèrement différent */
+}
+
+/* ===== MAIN ===== */
+
+main {
+    padding: 2rem;
+}
+
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: #FAB12F;
+    color: #DD0303;
+    padding: 1rem;
+    text-align: center;
+
+}

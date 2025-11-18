@@ -61,11 +61,23 @@ class User(BaseModel):
 
         return value
 
+    # @validates("password")
+    # def validate_password(self, key, password: str):
+    #     """Hashes the password before storing it."""
+    #     if not isinstance(password, str):
+    #         raise ValueError("Password must be a string")
+
+    #     return bcrypt.generate_password_hash(password).decode("utf-8")
+
     @validates("password")
     def validate_password(self, key, password: str):
-        """Hashes the password before storing it."""
+        """Hash the password unless it is already hashed."""
         if not isinstance(password, str):
             raise ValueError("Password must be a string")
+
+        # Empêche le double hash si le mot de passe commence par un hash bcrypt
+        if password.startswith("$2b$") or password.startswith("$2a$"):
+            return password
 
         return bcrypt.generate_password_hash(password).decode("utf-8")
 

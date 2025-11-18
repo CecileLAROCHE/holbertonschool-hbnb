@@ -1,0 +1,37 @@
+/* ===== PLACE CARD ===== */
+
+.place-card {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* ===== BUTTONS ===== */
+
+button,
+.details-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ===== REVIEW CARD ===== */
+
+.review-card {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+}
+
+/* ===== FORMS ===== */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
