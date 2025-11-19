@@ -16,11 +16,14 @@
 
 
 <body>
+<body>
     <div id="header"></div>
+    <div id="nav"></div>
 
     <main>
         <form id="login-form">
             <h2>Login</h2>
+            
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             
@@ -29,13 +32,15 @@
             
             <button type="submit">Login</button>
 
-        <p id="error-message" style="color: red; margin-top: 10px;"></p>
+            <p id="error-message" style="color: red; margin-top: 10px;"></p>
         </form>
     </main>
+
     <div id="footer"></div>
 
     <!-- JS -->
-    <script src="js/scripts.js"></script>
-    <script src="js/loader.js"></script>
+    <script src="./js/loader.js"></script>
+    <script type="module" src="./js/login.js"></script>
 </body>
+
 </html>
