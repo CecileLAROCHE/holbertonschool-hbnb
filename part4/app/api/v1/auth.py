@@ -40,27 +40,32 @@ class Login(Resource):
             #        except Exception as ex:
             # return {"error": "Server Error"}, 500
             credentials = api.payload
-            email: str = credentials.get("email", None)
-            password: str = credentials.get("password", None)
+            email: str = credentials.get("email")
+            password: str = credentials.get("password")
+
             if not email or not password:
                 return {"error": "Bad Request"}, 400
 
             user: Optional[User] = facade.get_user_by_email(email=email)
             if not user:
-                api.logger.error(f"Login failed: user {email} not found")
                 return {"error": "Unauthorized"}, 401
 
             if not user.verify_password(password=password):
-                api.logger.error(f"Login failed: invalid password for user {email}")
                 return {"error": "Unauthorized"}, 401
 
             additional_claims = {'is_admin': user.is_admin}
+
             return {
-                "access_token": {
-                    create_access_token(identity=user.id,
-                                        additional_claims=additional_claims)
+                "access_token": create_access_token(
+                    identity=user.id,
+                    additional_claims=additional_claims
+                ),
+                "user": {
+                    "first_name": user.first_name,
+                    "last_name": user.last_name
                 }
             }, 200
+
         except Exception as ex:
             api.logger.exception("Login error:")
             return {"error": "Server Error"}, 500
