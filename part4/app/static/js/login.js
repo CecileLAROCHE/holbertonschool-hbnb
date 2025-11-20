@@ -1,4 +1,3 @@
-// part4/app/static/js/login.js
 import { login, updateUserNav } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {

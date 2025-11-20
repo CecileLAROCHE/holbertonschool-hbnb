@@ -10,7 +10,7 @@ if TYPE_CHECKING == True:
 
 
 class Place(BaseModel):
-    
+
     __tablename__ = 'places'
 
     title = db.Column(db.String(50), nullable=False)
@@ -24,7 +24,6 @@ class Place(BaseModel):
 
     reviews = db.relationship("Review", back_populates="place", cascade="all, delete-orphan")
     amenities = db.relationship("Amenity", secondary="place_amenity", back_populates="places")
-
 
     def __init__(
         self, title, price, latitude, longitude, owner, description=""

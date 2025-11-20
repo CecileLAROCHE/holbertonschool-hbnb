@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Index</title>
 
     <!-- favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icon.png">
@@ -16,32 +16,30 @@
 
 
 <body>
+    <!-- Header & Footer injectés par loader.js -->
     <div id="header"></div>
-    <div id="nav"></div>
-
 
     <main>
-        <form id="login-form">
-            <h2>Login</h2>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
+         <h1>Liste des logements</h1>
 
-        <p id="error-message" style="color: red; margin-top: 10px;"></p>
-        <div id="welcome-message"></div>
+        <!-- Filtre par prix -->
+        <label for="price-filter">Filtrer par prix maximum :</label>
+        <select id="price-filter">
+            <option value="all">Tous</option>
+            <option value="50">≤ 50€</option>
+            <option value="100">≤ 100€</option>
+            <option value="200">≤ 200€</option>
+        </select>
 
-        </form>
+        <!-- Liste des places -->
+        <div id="places-list"></div>
     </main>
+    
     <div id="footer"></div>
 
     <!-- JS -->
-    <script src="js/scripts.js"></script>
-    <script src="js/loader.js"></script>
-    <script src="js/places.js"></script>
-    
+    <script type="module" src="js/loader.js"></script>
+    <script type="module" src="js/places.js"></script>
+
 </body>
 </html>
