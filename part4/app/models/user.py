@@ -34,7 +34,8 @@ class User(BaseModel):
             raise ValueError("First name must be a string")
         if not value or len(value) > 50:
             raise ValueError(
-                "First name cannot be emtpy and must be less than 50 characters"
+                "First name cannot be emtpy and must be less"
+                "than 50 characters"
             )
 
         return value

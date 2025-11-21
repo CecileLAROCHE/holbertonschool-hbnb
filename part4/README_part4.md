@@ -1,15 +1,13 @@
-# README of the project HBnB
+# README of the project HBnB - Auth & DB
 
 ![Project Status](https://img.shields.io/badge/status-development-yellow)  ![License: Edu](https://img.shields.io/badge/license-Educational-lightgrey)  ![buil with](https://img.shields.io/badge/built_with-❤️‍🔥-df0000)\
-![GitHub last commit](https://img.shields.io/github/last-commit/CecileLAROCHE/holbertonschool-hbnb?label=Last%20commit)
+![GitHub last commit](https://img.shields.io/badge/Last_commit-09_11_2025-green)
 
-<p align="center"><img src="https://raw.githubusercontent.com/CecileLAROCHE/CecileLAROCHE/9e312bb7a0828f8bcf6d5171a14d99d431bee680/giphy.gif" alt="rent" width="300"><!-- markdownlint-disable-line MD033 --></p>
+<p align="center"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3k2cWRwYWl6cGFmYzFocDAxOW5zdDd3d3N0MThwbG9iMTE4eDJ3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BROFLJSFhP0cMGk/giphy.gif" alt="password" width="600"><!-- markdownlint-disable-line MD033 --></p>
 
 ## 📖 Description
 
-This project is a clone of **Airbnb**.  
-It is divided into four parts:
-
+T
 
 ## 🧭 Index
 
@@ -34,78 +32,106 @@ It is divided into four parts:
 | Task |Command|
 |--------------------------------------------|-------------------------------------------------------|
 | `Clone repo` | `git clone https://github.com/CecileLAROCHE/holbertonschool-hbnb.git` |
-| `Compile` | `in progress` |
-| `Run :` | `in progress` |
+
+### virtual environment
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `move in the good repo` | `cd holbertonschool-hbnb/part4` |
+| `Create virtual environment:` | `python3 -m venv venv` |
+| `activate virtual environment:` | `source venv/bin/activate` |
+| `deactivate virtual environment:` | `deactivate` |
+
+### Install dependencies
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Install dependencies:` | `pip install -r requirements.txt` |
+
+### Run the application
+
+For this part of the project, we need to have 2 server who run in same time:
+
+### STATIC serveur
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `move in the good repo:` | `cd part4/app/static` |
+| `Run:` | `python3 -m http.server 5000` |
+
+### Flask serveur
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `move in the good repo:` | `cd part4` |
+| `Run:` | `python3 -m run` |
+
+### First run
+
+| Task |Command|
+|--------------------------------------------|-------------------------------------------------------|
+| `Run flask:` | `flask shell` |
+| `Create all tables:` | `from app import db`<br>`db.create_all()`|
+| `Check:` | `from app.models.user import User`<br>`User.query.all()`|
+| `Exit:` | `exit()` |
 
 ## 🚀 Features / Limitations
 
 ### ✅ Features
 
-* in progress
+*
 *
 *
 *
 
 ### ⚠️ Limitations
 
-* in progress
-
-## 📚 Files in Repository
-
-### 🖥️ Source Code Files
-
-| File                   | Description                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| `none`              | . |
-| ``              | . |
-
-### 📑 Documentation Files
-
-| File                 | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `Class Diagram.png` | High-Level Package Diagram  |
-| `High-Level Diagram.png` | Detailed Class Diagram for Business Logic Layer  |
-| `Sequence Diagrams_Fetching a List of Places diagram.png` |  Sequence Diagrams for API Calls |
-| `Sequence Diagrams_Place Creation.png` | Sequence Diagrams for API Calls  |
-| `Sequence Diagrams_Review Submission.png` | Sequence Diagrams for API Calls  |
-| `Sequence Diagrams_User Registration.png` | Sequence Diagrams for API Calls  |
-| `Technical_Document.md` | Explenation of the Diagrams |
-| `README.md`          | Part 1 project documentation.                           |
-| `` |  |
-| `README.md`          | Main project documentation.                           |
-| `AUTHORS`            | List of project contributors.                                     |
-
-## 📋 Man page
-
-`to do`
+*
 
 ## 🧪 Tests and Outputs
 
-`to do`
+do with postman
 
 ## 📁 Project Structure
 
-tree -I "**pycache**|*.pyc|.git"
-
-To have more details, please go see the README of each part
-
-├── AUTHORS\
-├── Part 1\
-│   ├── Diagram pictures\
-│   └── Technical_Document.md\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_1/README.md)\
-├── Part 2\
-│   ├── app\
-│   │   ├── api\
-│   │   │   └── v1\
-│   │   ├── models\
-│   │   ├── persistence\
-│   │   └── services\
-│   ├── Picture_for_README\
-│   ├── tests\
-│   └── [README.md](https://github.com/CecileLAROCHE/holbertonschool-hbnb/blob/main/Part_2/README_part2.md)\
-├── AUTHOR\
-└── README.md
+├── app\
+│   ├── api\
+│   │   ├── \_\_init\_\_.py.py\
+│   │   └── v1\
+│   ├── \_\_init\_\_.py.py\
+│   ├── models\
+│   │   ├── amenity.py\
+│   │   ├── basemodel.py\
+│   │   ├── \_\_init\_\_.py.py\
+│   │   ├── place.py\
+│   │   ├── review.py\
+│   │   └── user.py\
+│   ├── persistence\
+│   │   ├── amenity_repository.py\
+│   │   ├── database.py\
+│   │   ├── \_\_init\_\_.py.py\
+│   │   ├── place_repository.py\
+│   │   ├── repository.py\
+│   │   ├── review_repository.py\
+│   │   └── user_repository.py\
+│   ├── services\
+│   │   ├── facade.py\
+│   │   └── \_\_init\_\_.py.py\
+│   └── tests\
+│       ├── conftest.py\
+│       ├── \_\_init\_\_.py.py\
+│       ├── test_amenity.py\
+│       ├── test_place.py\
+│       ├── test_review.py\
+│       └── test_user.py\
+├── config.py\
+├── create_admin.py\
+├── instance\
+│   └── development.db\
+├── pyvenv.cfg\
+├── README_part3.md\
+├── requirements.txt\
+└── run.py
 
 ## 👥 Authors
 

@@ -1,28 +1,36 @@
 <header>
   <div class="header-container">
-    <div class="logo">
-      <img src="assets/logo.png" alt="HBnB Logo">
+
+    <!-- Bloc 1: Logo (gauche) -->
+    <div class="header-left">
+      <a href="index.html">
+        <img src="assets/logo.png" alt="HBnB Logo">
+      </a>
     </div>
 
-    <nav>
-      <ul>
-        <!-- Auth links -->
-        <li id="auth-links">
-          <a id="login-link" href="login.html">Login</a>
-          <a id="signup-link" href="register.html">Inscription</a>
-        </li>
-
-        <!-- User info -->
-        <li id="user-info" style="display: none;">
-          <span id="user-name"></span>
-          <button id="logout-btn" type="button">Logout</button>
-        </li>
-
-        <!-- Contenu spécifique de nav.html -->
-        <a href="index.html">Home</a>
-        <a href="login.html">Login</a>
+    <!-- Bloc 2: Navigation (centre) -->
+    <nav class="header-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
       </ul>
     </nav>
+
+    <!-- Bloc 3: Auth (droite) -->
+    <div class="header-right">
+      
+      <!-- Links visible quand pas connecté -->
+      <div id="auth-links">
+        <a href="login.html" id="login-link">Login</a>
+        <a href="signup.html" id="signup-link">Signup</a>
+      </div>
+
+      <!-- Links visible quand connecté -->
+      <div id="user-info" style="display: none;">
+        <span id="user-name"></span>
+        <button id="logout-btn" type="button">Logout</button>
+      </div>
+
+    </div>
 
   </div>
 </header>

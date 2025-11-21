@@ -27,9 +27,7 @@ class UserList(Resource):
     def post(self):
         """Register a new user"""
         user_data = api.payload
-        is_admin = get_jwt().get("is_admin", False)
-        if not is_admin:
-            return {'error': 'Admin privileges required'}, 403
+
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
