@@ -6,7 +6,7 @@ import { authHeader, isAuthenticated } from "./auth.js";
 // -------------------------
 async function fetchPlaces() {
     try {
-        const places = await apiGet("/places", authHeader());
+        const places = await apiGet("/places/", authHeader());
         window.allPlaces = places;
         displayPlaces(places);
     } catch (error) {
@@ -18,19 +18,22 @@ async function fetchPlaces() {
 //     DISPLAY PLACES
 // -------------------------
 function displayPlaces(places) {
-    const list = document.getElementById("places-list");
+    const list = document.getElementById("places-container");
     list.innerHTML = "";
 
     places.forEach(place => {
         const placeDiv = document.createElement("div");
-        placeDiv.classList.add("place-item");
+        placeDiv.classList.add("place-card");
         placeDiv.dataset.price = place.price;
 
         placeDiv.innerHTML = `
-            <h3>${place.name}</h3>
+            <img src="${place.image_url || '../assets/default_place.png'}" 
+                alt="${place.title}" 
+                class="place-image">
+            <h3>${place.title || "No name"}</h3>
             <p>${place.description}</p>
             <p><strong>Price:</strong> ${place.price}</p>
-            <p><strong>Location:</strong> ${place.city || "Unknown"}</p>
+            <p><strong>Location:</strong> Lat ${place.latitude}, Lng ${place.longitude}</p>
             <a href="place.html?id=${place.id}" class="details-btn">View details</a>
         `;
 
@@ -43,7 +46,7 @@ function displayPlaces(places) {
 // -------------------------
 document.getElementById("price-filter").addEventListener("change", (event) => {
     const selected = event.target.value;
-    const items = document.querySelectorAll(".place-item");
+    const items = document.querySelectorAll(".place-card");
 
     items.forEach(item => {
         const price = parseFloat(item.dataset.price);

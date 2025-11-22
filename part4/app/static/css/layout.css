@@ -79,3 +79,22 @@ header {
   background: #FA812F;
   color: #FFF;
 }
+
+
+/* ===== FOOTER ===== */
+footer {
+  width: 100%;
+  background-color: #FAB12F;
+  border-top: 2px solid #DD0303;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p {
+  margin: 0;
+  color: #DD0303;
+  font-weight: bold;
+  font-size: 14px;
+}

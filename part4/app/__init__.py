@@ -11,35 +11,47 @@ from flask_cors import CORS
 
 
 def create_app(config_class="config.DevelopmentConfig"):
-    app = Flask(__name__)
-    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+    # Flask app avec dossier static
+    app = Flask(__name__, static_folder="static", static_url_path="")
 
+    # ⚡ CORS pour dev local avec support des cookies
+    CORS(
+        app,
+        resources={r"/api/*": {
+            "origins": [
+                "http://127.0.0.1:5000",
+                "http://localhost:5000"
+            ]
+        }},
+        supports_credentials=True
+    )
+
+    # Configuration
     app.config.from_object(config_class)
 
-    api = Api(app, version='1.0',
-              title='HBnB API',
-              description='HBnB Application API')
+    # API Flask-RESTX
+    api = Api(
+        app,
+        version='1.0',
+        title='HBnB API',
+        description='HBnB Application API'
+    )
 
-    bcrypt.init_app(app=app)
-    jwt.init_app(app=app)
+    # Extensions
+    bcrypt.init_app(app)
+    jwt.init_app(app)
     db.init_app(app)
 
+    # Initialisation base de données
     with app.app_context():
         init_db()
         seed_db()
 
+    # Enregistrement des namespaces
     api.add_namespace(users_ns, path='/api/v1/users')
     api.add_namespace(amenities_ns, path='/api/v1/amenities')
     api.add_namespace(places_ns, path='/api/v1/places')
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(auth_ns, path='/api/v1/auth')
-
-    # 🔥 Ajout du support CORS pour les requêtes OPTIONS
-    @app.after_request
-    def add_cors_headers(response):
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-        return response
 
     return app

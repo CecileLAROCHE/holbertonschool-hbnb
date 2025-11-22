@@ -66,14 +66,8 @@ For this part of the project, we need to have 2 server who run in same time:
 | `move in the good repo:` | `cd part4` |
 | `Run:` | `python3 -m run` |
 
-### First run
-
-| Task |Command|
-|--------------------------------------------|-------------------------------------------------------|
-| `Run flask:` | `flask shell` |
-| `Create all tables:` | `from app import db`<br>`db.create_all()`|
-| `Check:` | `from app.models.user import User`<br>`User.query.all()`|
-| `Exit:` | `exit()` |
+After do all off this, for open to the Home page:
+[http://localhost:5000/index.html](http://localhost:5000/index.html)
 
 ## 🚀 Features / Limitations
 

@@ -1,11 +1,62 @@
 /* ===== PLACE CARD ===== */
 
-.place-card {
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+/* Cards des logements */
+.places-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 }
+
+.place-card {
+  background: #FFFFFF;
+  border: 1px solid #DDD;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.place-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.place-card h3 {
+  color: #DD0303;
+  margin-bottom: 5px;
+}
+
+.place-price {
+  font-weight: bold;
+  color: #FA812F;
+}
+
+.place-location {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Bouton détails */
+.details-button {
+  background: #DD0303;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.details-button:hover {
+  background: #FA812F;
+}
+
 
 /* ===== BUTTONS ===== */
 

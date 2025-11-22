@@ -18,11 +18,9 @@ user_model = api.model('User', {
 
 @api.route('/')
 class UserList(Resource):
-    @jwt_required()
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
     @api.response(400, 'Email already registered')
-    @api.response(403, 'Admin privileges required')
     @api.response(400, 'Invalid input data')
     def post(self):
         """Register a new user"""
@@ -40,6 +38,7 @@ class UserList(Resource):
             return {'error': str(e)}, 400
 
     @api.response(200, 'List of users retrieved successfully')
+    @jwt_required()
     def get(self):
         """Retrieve a list of users"""
         users = facade.get_users()
