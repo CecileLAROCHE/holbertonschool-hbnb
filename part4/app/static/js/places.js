@@ -22,6 +22,7 @@ function displayPlaces(places) {
     list.innerHTML = "";
 
     places.forEach(place => {
+        console.log("PLACE DATA:", place);
         const placeDiv = document.createElement("div");
         placeDiv.classList.add("place-card");
         placeDiv.dataset.price = place.price;

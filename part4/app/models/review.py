@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class Review(BaseModel):
-    
+
     __tablename__ = 'reviews'
 
     text = db.Column(db.String(500), nullable=False)

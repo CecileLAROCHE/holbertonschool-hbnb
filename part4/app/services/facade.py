@@ -98,6 +98,7 @@ class HBnBFacade:
 
     # REVIEWS
     def create_review(self, review_data):
+        """Crée une nouvelle review."""
         user = self.user_repo.get(review_data['user_id'])
         if not user:
             raise KeyError('Invalid input data')
@@ -112,31 +113,31 @@ class HBnBFacade:
 
         review = Review(**review_data)
         self.review_repo.add(review)
-        user.add_review(review)
-        place.add_review(review)
+        # SQLAlchemy gère déjà review.user et review.place
         return review
 
     def get_review(self, review_id):
+        """Récupère une review par son ID."""
         return self.review_repo.get(review_id)
 
     def get_all_reviews(self):
+        """Récupère toutes les reviews."""
         return self.review_repo.get_all()
 
     def get_reviews_by_place(self, place_id):
+        """Récupère toutes les reviews d'un lieu."""
         place = self.place_repo.get(place_id)
         if not place:
             raise KeyError('Place not found')
         return place.reviews
 
     def update_review(self, review_id, review_data):
+        """Met à jour une review existante."""
         self.review_repo.update(review_id, review_data)
 
     def delete_review(self, review_id):
+        """Supprime une review."""
         review = self.review_repo.get(review_id)
-
-        user = self.user_repo.get(review.user.id)
-        place = self.place_repo.get(review.place.id)
-
-        user.delete_review(review)
-        place.delete_review(review)
+        if not review:
+            raise KeyError('Review not found')
         self.review_repo.delete(review_id)

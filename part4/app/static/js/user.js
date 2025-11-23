@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const user = await apiGet(`/users/me`, authHeader()); // optionnel si tu veux afficher l'email
             document.getElementById("user-info").textContent = 
-                `Email: ${user.email} - Nom: ${user.first_name} ${user.last_name}`;
+                `${user.first_name} ${user.last_name} `;
         } catch (err) {
             console.error("Erreur lors du chargement des infos utilisateur:", err);
         }
