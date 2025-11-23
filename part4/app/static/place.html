@@ -5,37 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Place Details</title>
 
-    <!-- favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/icon.png">
-
-    <!-- CSS -->
+    <link rel="icon" type="image/png" href="assets/icon.png">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
 
 <body>
     <div id="header"></div>
 
-    <main>
-        <!-- Section pour les détails du lieu -->
-        <section id="place-details">
-            <!-- Les détails seront injectés par place_details.js -->
+    <main class="place-page">
+
+        <!-- Image -->
+        <section class="place-hero">
+            <img id="place-image" src="assets/default_place.png" alt="Place image">
         </section>
 
-        <!-- Section pour les reviews -->
-        <section id="reviews">
-            <!-- Les reviews seront injectées par place_details.js -->
+        <!-- Upload image form -->
+        <form id="upload-image-form" style="display:none;">
+            <input type="file" id="image-input" accept="image/*">
+            <button type="submit">Upload Image</button>
+        </form>
+
+        <!-- Title -->
+        <h1 id="place-title" class="place-title"></h1>
+
+        <!-- Info section -->
+        <section id="place-info" class="place-info">
+            <p><strong>Description:</strong> <span id="place-description"></span></p>
+            <p><strong>Price:</strong> <span id="place-price"></span> €</p>
+            <p><strong>Location:</strong> <span id="place-location"></span></p>
+            <p><strong>Owner:</strong> <span id="place-owner"></span></p>
+
+            <h3>Amenities</h3>
+            <ul id="amenities-list"></ul>
         </section>
 
-        <!-- Section pour ajouter un review -->
-        <section id="add-review">
-            <a id="add-review-btn">Add Review</a>
+        <!-- Action buttons (edit/delete) -->
+        <section id="place-actions" style="margin-top:20px;"></section>
+
+        <!-- Reviews -->
+        <section class="review-section">
+            <h2>Reviews</h2>
+            <div id="reviews-container"></div>
+            <button id="add-review-btn" class="primary-button" style="margin-top:15px;">
+                ➕ Add Review
+            </button>
         </section>
+
     </main>
 
     <div id="footer"></div>
 
-    <!-- Scripts -->
     <script type="module" src="js/loader.js"></script>
     <script type="module" src="js/place_details.js"></script>
 </body>

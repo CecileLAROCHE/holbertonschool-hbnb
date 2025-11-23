@@ -1,9 +1,14 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
 from app.services import facade
+from flask import request
+from werkzeug.utils import secure_filename
+import os
+from app.extensions import db
 
 api = Namespace('places', description='Place operations')
 
+# --- MODELS ---
 amenity_model = api.model('PlaceAmenity', {
     'id': fields.String(description='Amenity ID'),
     'name': fields.String(description='Name of the amenity')
@@ -17,21 +22,23 @@ user_model = api.model('PlaceUser', {
 })
 
 place_model = api.model('Place', {
-    'title': fields.String(required=True,
-                           description='Title of the place'),
+    'title': fields.String(required=True, description='Title of the place'),
     'description': fields.String(description='Description of the place'),
-    'price': fields.Float(required=True,
-                          description='Price per night'),
-    'latitude': fields.Float(required=True,
-                             description='Latitude of the place'),
-    'longitude': fields.Float(required=True,
-                              description='Longitude of the place'),
-    'amenities': fields.List(fields.String,
-                             required=True,
-                             description="List of amenities ID's")
+    'price': fields.Float(required=True, description='Price per night'),
+    'latitude': fields.Float(required=True, description='Latitude of the place'),
+    'longitude': fields.Float(required=True, description='Longitude of the place'),
+    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
+UPLOAD_FOLDER = "app/static/uploads/places/"
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# --- MAIN ROUTES ---
 @api.route('/')
 class PlaceList(Resource):
     @jwt_required()
@@ -43,7 +50,6 @@ class PlaceList(Resource):
         place_data = api.payload
         sub = get_jwt_identity()
         place_data['owner_id'] = sub
-        print("in")
         try:
             new_place = facade.create_place(place_data)
             return new_place.to_dict(), 201
@@ -147,3 +153,36 @@ class PlaceReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         return [review.to_dict() for review in place.reviews], 200
+
+
+# --- IMAGE UPLOAD ROUTE ---
+@api.route('/<place_id>/image')
+class PlaceImage(Resource):
+    @jwt_required()
+    def post(self, place_id):
+        """Upload a main image for a place (owner only)"""
+        place = facade.get_place(place_id)
+        if not place:
+            return {"error": "Place not found"}, 404
+
+        current_user = get_jwt_identity()
+        if place.owner_id != current_user:
+            return {"error": "Unauthorized"}, 403
+
+        if 'image' not in request.files:
+            return {"error": "No file provided"}, 400
+
+        file = request.files['image']
+
+        if file.filename == '' or not allowed_file(file.filename):
+            return {"error": "Invalid file"}, 400
+
+        filename = secure_filename(f"{place_id}.jpg")
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        file.save(file_path)
+
+        place.image = f"/uploads/places/{filename}"
+        db.session.commit()
+
+        return {"image_url": place.image}, 200

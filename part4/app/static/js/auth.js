@@ -17,8 +17,12 @@ export async function login(email, password) {
         throw new Error(data.error || "Login failed.");
     }
 
-    // Stocker le token dans le cookie
+    // Stocker le token et l'utilisateur dans le localStorage et cookie
     document.cookie = `token=${data.access_token}; path=/;`;
+    if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+    }
+
     return data;
 }
 
@@ -48,6 +52,14 @@ export function authHeader() {
 export function logout() {
     document.cookie = "token=; Max-Age=0; path=/";
     localStorage.removeItem("user");
+}
+
+// -------------------------
+// GET CURRENT USER ID
+// -------------------------
+export function getCurrentUserId() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user ? user.id : null;
 }
 
 // -------------------------

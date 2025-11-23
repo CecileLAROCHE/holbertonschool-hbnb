@@ -90,7 +90,10 @@ class HBnBFacade:
         for review in list(place.reviews):
             self.delete_review(review.id)
 
+        # Enfin supprimer le lieu
         self.place_repo.delete(place_id)
+
+        return True
 
     def get_places_by_user(self, user_id):
         # Si ta relation est 'owner_id' dans Place :
