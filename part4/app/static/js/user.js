@@ -1,5 +1,5 @@
 import { apiGet, apiPost } from "./api.js";
-import { authHeader, getUserId, isAuthenticated } from "./auth.js";
+import { authHeader, isAuthenticated } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     // Vérifier que l'utilisateur est connecté
@@ -10,43 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("add-place-form");
     const placesContainer = document.getElementById("places-list");
+    const noPlacesMsg = document.getElementById("no-places-msg");
 
-    // Ajouter un message quand aucune place n'existe
-    const noPlacesMsg = document.createElement("p");
-    noPlacesMsg.id = "no-places-msg";
-    noPlacesMsg.textContent = "Vous n'avez encore aucune place.";
-    noPlacesMsg.style.display = "none";
-    placesContainer.appendChild(noPlacesMsg);
-
-    // Ajouter une nouvelle place
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const data = {
-            title: document.getElementById("name").value,
-            description: document.getElementById("description").value,
-            latitude: parseFloat(document.getElementById("latitude").value),
-            longitude: parseFloat(document.getElementById("longitude").value),
-            price: parseFloat(document.getElementById("price").value),
-            owner_id: getUserId() // Assure que l'API sait quel user crée la place
-        };
-
-        try {
-            await apiPost("/places/", data, authHeader());
-            // Refresh de la liste des places
-            loadPlaces();
-            form.reset();
-        } catch (err) {
-            console.error("Erreur lors de l'ajout de la place:", err);
-            alert("Erreur lors de l'ajout de la place. Vérifiez vos données.");
-        }
-    });
-
-    // Fonction pour afficher les infos du user
+    // -----------------------------
+    // Charger les infos utilisateur
+    // -----------------------------
     async function loadUserInfo() {
         try {
-            const userId = getUserId();
-            const user = await apiGet(`/users/${userId}`, authHeader());
+            const user = await apiGet(`/users/me`, authHeader()); // optionnel si tu veux afficher l'email
             document.getElementById("user-info").textContent = 
                 `Email: ${user.email} - Nom: ${user.first_name} ${user.last_name}`;
         } catch (err) {
@@ -54,16 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Fonction pour afficher les places du user
+    // -----------------------------
+    // Charger les places de l'utilisateur
+    // -----------------------------
     async function loadPlaces() {
         try {
-            const userId = getUserId();
-            const places = await apiGet(`/users/${userId}/places`, authHeader());
-            
+            const places = await apiGet(`/users/me/places`, authHeader());
+
             // Vider le container sauf le message
             placesContainer.querySelectorAll(".place-card").forEach(el => el.remove());
 
-            if (places.length === 0) {
+            if (!places || places.length === 0) {
                 noPlacesMsg.style.display = "block";
             } else {
                 noPlacesMsg.style.display = "none";
@@ -76,16 +48,45 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${place.description || ''}<br>
                         Prix: €${place.price.toFixed(2)}<br>
                         Latitude: ${place.latitude}, Longitude: ${place.longitude}
+                        <a href="place.html?id=${place.id}">Voir détails</a>
                     `;
                     placesContainer.appendChild(div);
                 });
             }
         } catch (err) {
             console.error("Erreur lors du chargement des places:", err);
+            noPlacesMsg.textContent = "Erreur lors de la récupération des places.";
+            noPlacesMsg.style.display = "block";
         }
     }
 
+    // -----------------------------
+    // Ajouter une nouvelle place
+    // -----------------------------
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+            title: document.getElementById("name").value,
+            description: document.getElementById("description").value,
+            latitude: parseFloat(document.getElementById("latitude").value),
+            longitude: parseFloat(document.getElementById("longitude").value),
+            price: parseFloat(document.getElementById("price").value)
+        };
+
+        try {
+            await apiPost("/places/", data, authHeader());
+            form.reset();
+            await loadPlaces(); // rafraîchir la liste après ajout
+        } catch (err) {
+            console.error("Erreur lors de l'ajout de la place:", err);
+            alert("Erreur lors de l'ajout de la place. Vérifiez vos données.");
+        }
+    });
+
+    // -----------------------------
     // Initialisation
+    // -----------------------------
     loadUserInfo();
     loadPlaces();
 });

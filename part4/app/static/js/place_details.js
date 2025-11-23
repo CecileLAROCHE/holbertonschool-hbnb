@@ -12,7 +12,7 @@ function getCurrentUserId() {
     const token = getCookie('token');
     if (!token) return null;
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.sub; // 'sub' correspond à l'ID utilisateur dans JWT
+    return payload.sub;
 }
 
 // Vérifie si l'utilisateur est admin
@@ -23,7 +23,7 @@ function checkIfAdmin() {
     return payload.is_admin;
 }
 
-// Helper pour récupérer cookie
+// Helper cookie
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -61,27 +61,35 @@ function displayPlaceDetails(place) {
 
     detailsSection.append(nameEl, descEl, priceEl, amenitiesEl);
 
-    // Bouton Delete pour owner ou admin
+    // Bouton delete si owner ou admin
     const currentUserId = getCurrentUserId();
     const isAdmin = checkIfAdmin();
     if (currentUserId === place.owner_id || isAdmin) {
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = "Supprimer le lieu";
-        deleteBtn.style.marginTop = "10px";
         deleteBtn.classList.add('btn', 'btn-danger');
+        deleteBtn.style.marginTop = "10px";
 
         deleteBtn.addEventListener('click', async () => {
             if (!confirm("Voulez-vous vraiment supprimer ce lieu ?")) return;
+
             try {
-                // **Attention : utiliser Flask, pas python3 -m http.server**
                 const response = await fetch(`/api/v1/places/${place.id}`, {
                     method: 'DELETE',
                     headers: { ...authHeader() },
                     credentials: 'include'
                 });
 
+                let data = {};
+                try {
+                    data = await response.json();
+                } catch (_) {}
 
-                if (!response.ok) throw new Error(`Erreur ${response.status}`);
+                if (!response.ok) {
+                    console.error("Erreur DELETE backend:", data);
+                    throw new Error(data.message || `Erreur ${response.status}`);
+                }
+
                 alert("Lieu supprimé !");
                 window.location.href = "index.html";
 
@@ -90,10 +98,10 @@ function displayPlaceDetails(place) {
                 alert("❌ Impossible de supprimer le lieu : " + error.message);
             }
         });
+
         detailsSection.appendChild(deleteBtn);
     }
 
-    // Affichage des reviews
     const reviewsEl = document.getElementById('reviews');
     reviewsEl.innerHTML = "<h3>Reviews:</h3>";
     if (place.reviews?.length > 0) {
@@ -109,7 +117,7 @@ function displayPlaceDetails(place) {
     }
 }
 
-// Code principal
+// Script principal
 document.addEventListener("DOMContentLoaded", async () => {
     const placeId = getPlaceIdFromURL();
     const addReviewSection = document.getElementById('add-review');
@@ -126,7 +134,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const currentUserId = getCurrentUserId();
 
-        // Gestion du formulaire d'ajout de review
         if (!isAuthenticated()) {
             addReviewSection.style.display = 'none';
         } else if (currentUserId === place.owner_id) {
@@ -148,7 +155,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                             headers: { 'Content-Type': 'application/json', ...authHeader() },
                             body: JSON.stringify({ rating, text })
                         });
-
 
                         if (!response.ok) throw new Error(`Erreur ${response.status}`);
 

@@ -77,24 +77,26 @@ class UserResource(Resource):
             return {'error': str(e)}, 400
 
 # -----------------------------
-# USER PLACES
+# USER PLACES (pour l'utilisateur connecté)
 # -----------------------------
 
 
-@api.route('/<int:user_id>/places')
-class UserPlaces(Resource):
+@api.route('/me')
+class MeResource(Resource):
     @jwt_required()
-    def get(self, user_id):
-        """Get all places for a given user"""
-        # On récupère l'utilisateur via le facade
+    def get(self):
+        """Get info of the currently connected user"""
+        user_id = get_jwt_identity()
         user = facade.get_user(user_id)
         if not user:
             return {"error": "User not found"}, 404
+        return user.to_dict(excluded_attr=["password"]), 200
 
-        # Vérification que le user connecté est bien le propriétaire
-        if user.id != get_jwt_identity():
-            return {"error": "Unauthorized"}, 403
 
-        # Récupération des places via le facade
+@api.route('/me/places')
+class MyPlaces(Resource):
+    @jwt_required()
+    def get(self):
+        user_id = get_jwt_identity()
         places = facade.get_places_by_user(user_id)
         return [place.to_dict() for place in places], 200
