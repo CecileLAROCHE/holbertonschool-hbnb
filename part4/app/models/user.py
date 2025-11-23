@@ -28,6 +28,13 @@ class User(BaseModel):
         self.password: str = password
         self.is_admin: bool = is_admin
 
+    def to_dict(self, excluded_attr=None, _visited=None, include_relationships=True):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name
+        }
+
     @validates("first_name")
     def validate_first_name(self, key, value: str):
         if not isinstance(value, str):

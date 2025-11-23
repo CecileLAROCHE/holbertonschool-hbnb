@@ -5,15 +5,15 @@ from app.services import facade
 api = Namespace('users', description='User operations')
 
 user_model = api.model('User', {
-    'first_name': fields.String(required=True,
-                                description='First name of the user'),
-    'last_name': fields.String(required=True,
-                               description='Last name of the user'),
-    'email': fields.String(required=True,
-                           description='Email of the user'),
-    'password': fields.String(required=True,
-                              description='Password of the user')
+    'first_name': fields.String(required=True, description='First name of the user'),
+    'last_name': fields.String(required=True, description='Last name of the user'),
+    'email': fields.String(required=True, description='Email of the user'),
+    'password': fields.String(required=True, description='Password of the user')
 })
+
+# -----------------------------
+# USERS CRUD
+# -----------------------------
 
 
 @api.route('/')
@@ -25,11 +25,9 @@ class UserList(Resource):
     def post(self):
         """Register a new user"""
         user_data = api.payload
-
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
-
         try:
             facade.create_user(user_data)
             new_user = facade.get_user_by_email(user_data["email"])
@@ -67,7 +65,7 @@ class UserResource(Resource):
         user_data = api.payload
         sub = get_jwt_identity()
         is_admin = get_jwt().get("is_admin", False)
-        if sub != user_id or not is_admin:
+        if sub != user_id and not is_admin:
             return {'error': 'Cannot access to this resource'}, 403
         user = facade.get_user(user_id)
         if not user:
@@ -77,3 +75,26 @@ class UserResource(Resource):
             return user.to_dict(), 200
         except Exception as e:
             return {'error': str(e)}, 400
+
+# -----------------------------
+# USER PLACES
+# -----------------------------
+
+
+@api.route('/<int:user_id>/places')
+class UserPlaces(Resource):
+    @jwt_required()
+    def get(self, user_id):
+        """Get all places for a given user"""
+        # On récupère l'utilisateur via le facade
+        user = facade.get_user(user_id)
+        if not user:
+            return {"error": "User not found"}, 404
+
+        # Vérification que le user connecté est bien le propriétaire
+        if user.id != get_jwt_identity():
+            return {"error": "Unauthorized"}, 403
+
+        # Récupération des places via le facade
+        places = facade.get_places_by_user(user_id)
+        return [place.to_dict() for place in places], 200

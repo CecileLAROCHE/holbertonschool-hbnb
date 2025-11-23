@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My account</title>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+
+<body>
+    <!-- Header & Footer injectés par loader.js -->
+    <div id="header"></div>
+
+    <main>
+        <h1>Mon compte</h1>
+        <p id="user-info"></p>
+
+        <h2>Mes places</h2>
+        <div id="places-list">
+            <p id="no-places-msg" style="display:none;">Vous n'avez encore aucune place.</p>
+        </div>
+
+        <h2>Ajouter une nouvelle place</h2>
+        <form id="add-place-form">
+            <input type="text" id="name" placeholder="Nom" required>
+            <textarea id="description" placeholder="Description"></textarea>
+            <input type="number" step="any" id="latitude" placeholder="Latitude" required>
+            <input type="number" step="any" id="longitude" placeholder="Longitude" required>
+            <input type="number" step="0.01" id="price" placeholder="Prix par nuit (€)" required>
+            <button type="submit">Ajouter</button>
+        </form>
+    </main>
+    
+    <div id="footer"></div>
+
+    <!-- JS -->
+    <script type="module" src="js/loader.js"></script>
+    <script type="module" src="js/user.js"></script>
+    <script type="module" src="js/places.js"></script>
+
+</body>
+</html>
