@@ -90,7 +90,10 @@ class HBnBFacade:
         for review in list(place.reviews):
             self.delete_review(review.id)
 
+        # Enfin supprimer le lieu
         self.place_repo.delete(place_id)
+
+        return True
 
     def get_places_by_user(self, user_id):
         # Si ta relation est 'owner_id' dans Place :
@@ -130,6 +133,9 @@ class HBnBFacade:
         if not place:
             raise KeyError('Place not found')
         return place.reviews
+
+    def get_reviews_by_user(self, user_id):
+        return Review.query.filter_by(user_id=user_id).all()
 
     def update_review(self, review_id, review_data):
         """Met à jour une review existante."""

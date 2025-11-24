@@ -1,5 +1,6 @@
+// part4/app/static/js/signup.js
 import { apiPost } from "./api.js";
-import { updateUserNav } from "./auth.js";
+import { login, updateUserNav } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("signup-form");
@@ -8,15 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Récupération des valeurs du formulaire
         const first_name = document.getElementById("first_name").value.trim();
         const last_name = document.getElementById("last_name").value.trim();
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
 
         try {
-            // Appel de l'API pour créer l'utilisateur
-            const newUser = await apiPost("/users", {
+            // 1️⃣ Création de l'utilisateur
+            await apiPost("/users", {
                 first_name,
                 last_name,
                 email,
@@ -24,21 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 is_admin: false
             });
 
-            alert("Compte créé avec succès !");
+            // 2️⃣ Login automatique
+            await login(email, password); // stocke cookie et localStorage correctement
 
-            // Sauvegarde du nouvel utilisateur pour le header
-            localStorage.setItem("user", JSON.stringify(newUser));
-
-            // Mise à jour du header
+            // 3️⃣ Mise à jour du header
             updateUserNav();
 
-            // Redirection vers la page principale
+            // 4️⃣ Redirection vers l'accueil
             window.location.href = "index.html";
 
         } catch (error) {
-            document.getElementById("error-message").textContent =
-                "Erreur : utilisateur déjà existant ou données invalides";
             console.error("Sign up error:", error);
+            const errorEl = document.getElementById("error-message");
+            if (errorEl) {
+                errorEl.textContent =
+                    "Erreur : utilisateur déjà existant ou données invalides";
+            }
         }
     });
 });

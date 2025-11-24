@@ -1,3 +1,4 @@
+// part4/app/static/js/login.js
 import { login, updateUserNav } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,19 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById("password").value.trim();
 
         try {
-            const data = await login(email, password);
+            // Login via auth.js (cookie + localStorage)
+            await login(email, password);
 
-            // Sauvegarder les infos utilisateur pour le header
-            localStorage.setItem("user", JSON.stringify(data.user));
+            // Mise à jour du header
+            updateUserNav();
 
-            updateUserNav(); // Mettre à jour le header directement
-
-            // Redirection vers la page principale
+            // Redirection vers l'accueil
             window.location.href = "index.html";
 
         } catch (error) {
-            alert("Identifiants incorrects !");
-            console.error(error);
+            console.error("Login error:", error);
+            document.getElementById("error-message").textContent =
+                "Email ou mot de passe incorrect";
         }
     });
 });

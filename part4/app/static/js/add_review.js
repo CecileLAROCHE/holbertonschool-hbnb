@@ -1,7 +1,3 @@
-// -------------------------
-// AUTH & UTIL FUNCTIONS
-// -------------------------
-
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -12,6 +8,7 @@ function getCookie(name) {
 function checkAuthentication() {
     const token = getCookie('token');
     if (!token) {
+        alert("Vous devez être connecté pour ajouter un avis.");
         window.location.href = 'index.html';
         return null;
     }
@@ -20,7 +17,7 @@ function checkAuthentication() {
 
 function getPlaceIdFromURL() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('id'); // correspond à l'URL ?id=xxx
+    return params.get('id');
 }
 
 function getCurrentUserId(token) {
@@ -29,17 +26,13 @@ function getCurrentUserId(token) {
     return payload.sub;
 }
 
-// -------------------------
-// SUBMIT REVIEW
-// -------------------------
-
 async function submitReview(token, placeId, userId, reviewText, ratingValue) {
     try {
         const response = await fetch(`/api/v1/reviews/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 text: reviewText,
@@ -48,25 +41,16 @@ async function submitReview(token, placeId, userId, reviewText, ratingValue) {
                 user_id: userId
             })
         });
-
-        // Passer placeId ici pour que handleResponse sache vers où rediriger
         await handleResponse(response, placeId);
-
     } catch (error) {
         console.error("Erreur réseau :", error);
         alert("Erreur réseau lors de la soumission de la review.");
     }
 }
 
-
-// -------------------------
-// RESPONSE HANDLER
-// -------------------------
-
 async function handleResponse(response, placeId) {
     if (response.ok) {
         alert("Review soumise avec succès !");
-        // Redirection vers la fiche du lieu après soumission
         window.location.href = `place.html?id=${placeId}`;
     } else {
         try {
@@ -78,17 +62,20 @@ async function handleResponse(response, placeId) {
     }
 }
 
-// -------------------------
-// EVENT LISTENER
-// -------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
     const token = checkAuthentication();
+    if (!token) return;
+
     const placeId = getPlaceIdFromURL();
+    if (!placeId) {
+        alert("ID du lieu manquant. Retour à l'accueil.");
+        window.location.href = "index.html";
+        return;
+    }
+
     const userId = getCurrentUserId(token);
     const reviewForm = document.getElementById("review-form");
-
-    if (!token || !placeId || !reviewForm) return;
+    if (!reviewForm) return;
 
     reviewForm.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -106,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // désactive le bouton pendant la requête pour éviter double clic
         const submitButton = reviewForm.querySelector('button[type="submit"]');
         submitButton.disabled = true;
 

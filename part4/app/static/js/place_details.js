@@ -1,7 +1,10 @@
 import { apiGet } from "./api.js";
 import { isAuthenticated, authHeader } from "./auth.js";
 
-// Helper cookie
+// -------------------------
+// Helpers
+// -------------------------
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -9,80 +12,149 @@ function getCookie(name) {
     return null;
 }
 
-// Récupère place_id depuis l'URL
 function getPlaceIdFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get("id");
 }
 
-// Récupère l'utilisateur courant depuis le JWT
-function getCurrentUserId() {
+function getCurrentUser() {
     const token = getCookie('token');
     if (!token) return null;
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.sub;
+    return { id: payload.sub, is_admin: payload.is_admin };
 }
 
-function checkIfAdmin() {
-    const token = getCookie('token');
-    if (!token) return false;
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.is_admin;
-}
+// -------------------------
+// Display Functions
+// -------------------------
 
-// Affiche les détails du lieu
 function displayPlaceDetails(place) {
-    const detailsSection = document.getElementById('place-details');
-    detailsSection.innerHTML = "";
 
-    const nameEl = document.createElement('h2');
-    nameEl.textContent = place.title;
+    // Image
+    const placeImage = document.getElementById("place-image");
+    if (place.image_url) {
+        placeImage.src = place.image_url;
+    } else {
+        placeImage.src = "assets/default_place.png";
+    }
 
-    const descEl = document.createElement('p');
-    descEl.textContent = place.description;
+    // Title, description, price, owner, location
+    document.getElementById('place-title').textContent = place.title;
+    document.getElementById('place-description').textContent = place.description;
+    document.getElementById('place-price').textContent = place.price;
+    // Owner
+    const owner = place.owner ? `${place.owner.first_name} ${place.owner.last_name}` : "Unknown";
+    document.getElementById('place-owner').textContent = owner;
+    // Location
+    const location = `Lat ${place.latitude}, Lng ${place.longitude}`;
+    document.getElementById('place-location').textContent = location;
 
-    const priceEl = document.createElement('p');
-    priceEl.textContent = `Price: ${place.price} € per night`;
-
-    const amenitiesEl = document.createElement('ul');
-    amenitiesEl.innerHTML = "<strong>Amenities:</strong>";
-
+    // Amenities
+    const amenitiesList = document.getElementById('amenities-list');
+    amenitiesList.innerHTML = "";
     if (place.amenities?.length > 0) {
         place.amenities.forEach(a => {
             const li = document.createElement('li');
             li.textContent = a.name;
-            amenitiesEl.appendChild(li);
+            amenitiesList.appendChild(li);
         });
     } else {
-        amenitiesEl.innerHTML += "<li>No amenities listed.</li>";
+        const li = document.createElement('li');
+        li.textContent = "No amenities listed";
+        amenitiesList.appendChild(li);
     }
 
-    detailsSection.append(nameEl, descEl, priceEl, amenitiesEl);
-
     // Reviews
-    const reviewsEl = document.getElementById('reviews');
-    reviewsEl.innerHTML = "<h3>Reviews:</h3>";
+    displayReviews(place.reviews);
+}
 
-    if (place.reviews?.length > 0) {
-        place.reviews.forEach(r => {
-            const p = document.createElement('p');
-            p.textContent = `⭐ ${r.rating}/5 - ${r.text}`;
-            reviewsEl.appendChild(p);
+function displayReviews(reviews) {
+    const reviewsContainer = document.getElementById('reviews-container');
+    reviewsContainer.innerHTML = "";
+    const currentUser = getCurrentUser();
+
+    if (!reviews || reviews.length === 0) {
+        reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
+        return;
+    }
+
+    reviews.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'review-card';
+
+        div.innerHTML = `
+            <p><strong>${r.user ? r.user.first_name + " " + r.user.last_name : "Unknown"}</strong></p>
+            <p>${r.text}</p>
+            <small>${r.rating} ★</small>
+            <div class="review-actions"></div>
+        `;
+
+        const actions = div.querySelector(".review-actions");
+
+        // Delete button: owner of review or admin
+        if (currentUser && (currentUser.is_admin || r.user_id === currentUser.id)) {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Supprimer";
+            deleteBtn.classList.add("btn-danger");
+            deleteBtn.addEventListener("click", () => deleteReview(r.id));
+            actions.appendChild(deleteBtn);
+        }
+
+        // Edit button: only owner
+        if (currentUser && r.user_id === currentUser.id) {
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Modifier";
+            editBtn.classList.add("btn-edit");
+            editBtn.addEventListener("click", () => editReview(r, getPlaceIdFromURL()));
+            actions.appendChild(editBtn);
+        }
+
+        reviewsContainer.appendChild(div);
+    });
+}
+
+// -------------------------
+// Actions
+// -------------------------
+
+async function deleteReview(reviewId) {
+    if (!confirm("Supprimer cet avis ?")) return;
+
+    try {
+        const response = await fetch(`/api/v1/reviews/${reviewId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                ...authHeader()
+            }
         });
-    } else {
-        reviewsEl.innerHTML += "<p>No reviews yet.</p>";
+
+        if (!response.ok) throw new Error("Erreur " + response.status);
+
+        alert("Avis supprimé !");
+        location.reload();
+    } catch (error) {
+        console.error("Erreur delete review:", error);
+        alert("❌ Impossible de supprimer l'avis !");
     }
 }
 
+function editReview(review, placeId) {
+    // Rediriger vers add_review.html en mode édition si besoin
+    window.location.href = `add_review.html?id=${placeId}&edit=${review.id}`;
+}
+
+// -------------------------
 // Main
+// -------------------------
+
 document.addEventListener("DOMContentLoaded", async () => {
     const placeId = getPlaceIdFromURL();
     const addReviewBtn = document.getElementById("add-review-btn");
-    const addReviewSection = document.getElementById("add-review");
 
     if (!placeId) {
-        document.getElementById('place-details').innerHTML =
-            "<p style='color:red;'>ID du lieu manquant dans l'URL.</p>";
+        alert("ID du lieu manquant. Retour à l'accueil.");
+        window.location.href = "index.html";
         return;
     }
 
@@ -90,21 +162,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         const place = await apiGet(`/places/${placeId}`, authHeader());
         displayPlaceDetails(place);
 
-        const currentUserId = getCurrentUserId();
+        const currentUser = getCurrentUser();
 
-        // Gestion affichage formulaire selon user
-        if (!isAuthenticated()) {
-            addReviewSection.style.display = 'none';
-        } else if (currentUserId === place.owner_id) {
-            addReviewSection.innerHTML = "<p>Vous êtes le propriétaire, vous ne pouvez pas laisser d’avis.</p>";
+        // Afficher bouton Add Review seulement pour users non propriétaires
+        if (!isAuthenticated() || currentUser.id === place.owner_id) {
+            addReviewBtn.style.display = "none";
         } else {
             addReviewBtn.addEventListener("click", () => {
-                window.location.href = `/add_review.html?id=${placeId}`;
+                window.location.href = `add_review.html?id=${placeId}`;
             });
         }
     } catch (error) {
         console.error("❌ Impossible de charger le lieu :", error);
-        document.getElementById('place-details').innerHTML =
-            "<p style='color:red;'>Erreur lors du chargement du lieu.</p>";
+        alert("Erreur lors du chargement du lieu.");
     }
 });

@@ -28,13 +28,15 @@ function displayPlaces(places) {
         placeDiv.dataset.price = place.price;
 
         placeDiv.innerHTML = `
-            <img src="${place.image_url || '../assets/default_place.png'}" 
-                alt="${place.title}" 
-                class="place-image">
+            <img src="${place.image_url}" 
+                 alt="${place.title}" 
+                 class="place-image">
             <h3>${place.title || "No name"}</h3>
             <p>${place.description}</p>
-            <p><strong>Price:</strong> ${place.price}</p>
+            <p><strong>Price:</strong> ${place.price} € / night </p>
             <p><strong>Location:</strong> Lat ${place.latitude}, Lng ${place.longitude}</p>
+            <p><strong>Owner:</strong> ${place.owner ? place.owner.first_name + " " + place.owner.last_name : "Unknown"}</p>
+            <p><strong>Rating:</strong> ${place.average_rating ? place.average_rating.toFixed(1) : "No rating yet"}</p>
             <a href="place.html?id=${place.id}" class="details-btn">View details</a>
         `;
 
@@ -64,3 +66,4 @@ document.getElementById("price-filter").addEventListener("change", (event) => {
 //     INIT ON LOAD
 // -------------------------
 document.addEventListener("DOMContentLoaded", fetchPlaces);
+

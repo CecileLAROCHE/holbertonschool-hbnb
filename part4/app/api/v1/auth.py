@@ -61,8 +61,10 @@ class Login(Resource):
                     additional_claims=additional_claims
                 ),
                 "user": {
+                    "id": str(user.id),
                     "first_name": user.first_name,
-                    "last_name": user.last_name
+                    "last_name": user.last_name,
+                    "is_admin": user.is_admin
                 }
             }, 200
 

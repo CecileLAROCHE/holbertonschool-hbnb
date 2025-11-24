@@ -4,6 +4,7 @@ from app.extensions import db
 
 T = TypeVar('T')
 
+
 class Repository(ABC, Generic[T]):
     @abstractmethod
     def add(self, obj: T) -> None:
