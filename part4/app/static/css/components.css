@@ -78,7 +78,7 @@ button,
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background: #fff;
+    background: #ffa48d;
 }
 
 /* ===== FORMS ===== */
@@ -106,9 +106,9 @@ form {
 
 /* Bloc informations */
 .place-info {
-    background: #fff;
+    background: #ffa48d;
     padding: 20px;
-    margin-top: -40px;
+    margin-top: 10px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,.1);
 }
@@ -136,4 +136,41 @@ form {
     border: 1px solid #DDD;
     border-radius: 10px;
     margin-bottom: 10px;
+}
+
+.review-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.review-actions .btn-danger {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+.place-hero {
+    position: relative; /* nécessaire pour que le titre soit positionné par rapport à l'image */
+    width: 100%;
+    max-height: 350px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.place-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.place-title-overlay {
+    position: absolute;
+    bottom: 15px; /* distance depuis le bas de l'image */
+    left: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent pour contraste */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.5rem;
 }

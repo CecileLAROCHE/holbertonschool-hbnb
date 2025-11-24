@@ -3,7 +3,7 @@ from app.models.base import BaseModel
 from sqlalchemy.orm import validates
 from app.extensions import db
 
-if TYPE_CHECKING == True:
+if TYPE_CHECKING:
     from app.models.user import User
     from app.models.review import Review
     from app.models.amenity import Amenity
@@ -25,7 +25,7 @@ class Place(BaseModel):
     reviews = db.relationship("Review", back_populates="place", cascade="all, delete-orphan")
     amenities = db.relationship("Amenity", secondary="place_amenity", back_populates="places")
 
-    # ✅ Nouveau champ pour l'image principale
+    # Champ image principale
     image = db.Column(db.String(255), nullable=True)
 
     def __init__(
@@ -38,49 +38,79 @@ class Place(BaseModel):
         self.latitude: float = latitude
         self.longitude: float = longitude
         self.owner: User = owner
-        self.reviews: list[Review] = []
-        self.amenities: list[Amenity] = []
+        self.reviews: list['Review'] = []
+        self.amenities: list['Amenity'] = []
 
+    # ----------------------------------------------------------------------
+    # 🔥 VERSION FIXÉE : PAS DE RECURSION, PAS D’APPEL à super().to_dict()
+    # ----------------------------------------------------------------------
     def to_dict(self, excluded_attr=None, _visited=None, include_relationships=True):
-        """
-        Convert a Place instance to a dictionary ready for API response.
-        Includes owner info, amenities, reviews, image URL, average rating.
-        """
-        base = super().to_dict(excluded_attr, _visited, include_relationships) or {}
+        if excluded_attr is None:
+            excluded_attr = []
+        if _visited is None:
+            _visited = set()
+        if id(self) in _visited:
+            return {"id": self.id}
+        _visited.add(id(self))
 
-        # Champs principaux
-        base.update({
+        data = {
             "id": self.id,
             "title": self.title,
             "description": self.description,
             "price": self.price,
             "latitude": self.latitude,
             "longitude": self.longitude,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+            "owner_id": self.owner_id,
             "image_url": self.image.replace("static/", "") if self.image else "../assets/default_place.png",
-            "average_rating": self.average_rating
-        })
+            "average_rating": self.average_rating,
+        }
 
-        # Owner info
-        if self.owner:
-            base["owner"] = {
+        # --- Owner ---
+        if include_relationships and self.owner:
+            data["owner"] = {
                 "id": self.owner.id,
                 "first_name": self.owner.first_name,
                 "last_name": self.owner.last_name,
-                "email": self.owner.email
             }
-            base["owner_id"] = self.owner.id
         else:
-            base["owner"] = None
-            base["owner_id"] = None
+            data["owner"] = None
 
-        # Amenities
-        base["amenities"] = [{"id": a.id, "name": a.name} for a in self.amenities] if self.amenities else []
+        # --- Amenities ---
+        if include_relationships:
+            data["amenities"] = [
+                {"id": a.id, "name": a.name}
+                for a in self.amenities
+            ]
+        else:
+            data["amenities"] = []
 
-        # Reviews
-        base["reviews"] = [r.to_dict() for r in self.reviews] if self.reviews else []
+        # --- Reviews (pas de récursion place → review → place) ---
+        if include_relationships:
+            data["reviews"] = [
+                {
+                    "id": r.id,
+                    "rating": r.rating,
+                    "text": r.text,
+                    "created_at": r.created_at.isoformat() if r.created_at else None,
+                    "user_id": r.user_id,
+                    "user": {
+                        "id": r.user.id,
+                        "first_name": r.user.first_name,
+                        "last_name": r.user.last_name,
+                    } if r.user else None,
+                }
+                for r in self.reviews
+            ]
+        else:
+            data["reviews"] = []
 
-        return base
+        return data
 
+    # ----------------------------------------------------------------------
+    # VALIDATIONS
+    # ----------------------------------------------------------------------
 
     @validates("title")
     def validate_title(self, key, title):
@@ -94,7 +124,7 @@ class Place(BaseModel):
     def validate_description(self, key, description):
         if not isinstance(description, str):
             raise TypeError("description must be a string")
-        if len(description) > 500:
+        if description and len(description) > 500:
             raise ValueError("description must be less than 500 characters")
         return description
 
@@ -129,6 +159,9 @@ class Place(BaseModel):
             raise ValueError("longitude must be between -180 and 180")
         return longitude
 
+    # ----------------------------------------------------------------------
+    # Average Rating
+    # ----------------------------------------------------------------------
     @property
     def average_rating(self):
         if not self.reviews:

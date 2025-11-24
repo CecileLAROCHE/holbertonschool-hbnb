@@ -134,6 +134,9 @@ class HBnBFacade:
             raise KeyError('Place not found')
         return place.reviews
 
+    def get_reviews_by_user(self, user_id):
+        return Review.query.filter_by(user_id=user_id).all()
+
     def update_review(self, review_id, review_data):
         """Met à jour une review existante."""
         self.review_repo.update(review_id, review_data)
