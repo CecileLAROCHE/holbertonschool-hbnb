@@ -50,15 +50,6 @@ T
 
 ### Run the application
 
-For this part of the project, we need to have 2 server who run in same time:
-
-### STATIC serveur
-
-| Task |Command|
-|--------------------------------------------|-------------------------------------------------------|
-| `move in the good repo:` | `cd part4/app/static` |
-| `Run:` | `python3 -m http.server 5000` |
-
 ### Flask serveur
 
 | Task |Command|
@@ -67,7 +58,7 @@ For this part of the project, we need to have 2 server who run in same time:
 | `Run:` | `python3 -m run` |
 
 After do all off this, for open to the Home page:
-[http://localhost:5000/index.html](http://localhost:5000/index.html)
+[http://127.0.0.1:5000/index.html](http://127.0.0.1:5000/index.html)
 
 ## 🚀 Features / Limitations
 
